@@ -13,11 +13,11 @@ public abstract class Entity
 
     protected void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
 
-    protected void CheckRule(IBusinessRule businessRule)
+    protected void CheckRule(IBusinessRule rule)
     {
-        if (businessRule.IsBroken())
+        if (rule.IsBroken())
         {
-            throw new NotImplementedException();
+            throw new BusinessRuleValidationException(rule);
         }
     }
 }

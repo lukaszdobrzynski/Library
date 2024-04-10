@@ -18,6 +18,7 @@ bld/
 .idea/
 .ideavimrc
 *.sln.iml
+default.editorconfig
 
 # .NET Core
 project.lock.json
