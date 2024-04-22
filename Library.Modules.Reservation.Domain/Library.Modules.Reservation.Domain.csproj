@@ -3,13 +3,15 @@
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
         <LangVersion>preview</LangVersion>
-        <RootNamespace>Library.Modules.Lending.Domain</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Library.BuildingBlocks.Domain\Library.BuildingBlocks.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Checkouts\" />
     </ItemGroup>
 
 </Project>

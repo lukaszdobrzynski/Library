@@ -1,0 +1,9 @@
+﻿using Library.Modules.Reservation.Domain.Books;
+
+namespace Library.Modules.Reservation.Domain.Patrons;
+
+public class OverdueCheckout(BookId bookId, LibraryBranchId libraryBranchId)
+{
+    public BookId BookId { get; set; } = bookId;
+    public LibraryBranchId LibraryBranchId { get; set; } = libraryBranchId;
+}
