@@ -23,7 +23,7 @@ public class RegularPatron : Entity, IAggregateRoot
 
     public void PlaceOnHold(BookToHold bookToHold, List<ActiveHold> activeHolds, List<OverdueCheckout> overdueCheckouts)
     {
-        CheckRule(new PatronCannotPlaceHoldOnAlreadyRegisteredHoldRule(activeHolds, bookToHold.BookId));
+        CheckRule(new PatronCannotPlaceHoldOnExistingHoldRule(activeHolds, bookToHold.BookId));
         CheckRule(new RegularPatronCannotPlaceHoldOnRestrictedBookRule(bookToHold.BookCategory));
         CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(activeHolds));
         CheckRule(new PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule(overdueCheckouts));
@@ -34,7 +34,7 @@ public class RegularPatron : Entity, IAggregateRoot
     public void CancelHold(BookOnHold bookOnHold, List<ActiveHold> activeHolds)
     {
         CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, bookOnHold));
-        CheckRule(new PatronCannotCancelUnregisteredHoldRule(bookOnHold, activeHolds));
+        CheckRule(new PatronCannotCancelNonExistingHoldRule(bookOnHold, activeHolds));
 
         AddDomainEvent(new BookHoldCanceledDomainEvent(bookOnHold.BookId, bookOnHold.PatronId, bookOnHold.LibraryBranchId));
     }

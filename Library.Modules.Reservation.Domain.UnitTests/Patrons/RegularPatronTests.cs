@@ -5,24 +5,24 @@ using Library.Modules.Reservation.Domain.Patrons.Events;
 using Library.Modules.Reservation.Domain.Patrons.Rules;
 using NUnit.Framework;
 
-namespace Library.Modules.Reservation.Domain.UnitTests.PatronTests;
+namespace Library.Modules.Reservation.Domain.UnitTests.Patrons;
 
-public class ResearcherPatronTests : PatronTestBase
+public class RegularPatronTests : PatronTestBase
 {
     [Test]
     public void Create_Succeeds()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
 
-        var researcherPatronCreated = AssertDomainEventPublished<ResearcherPatronCreatedDomainEvent>(patron);
+        var regularPatronCreated = AssertDomainEventPublished<RegularPatronCreatedDomainEvent>(patron);
         
-        Assert.That(researcherPatronCreated.PatronId, Is.EqualTo(patron.Id));
+        Assert.That(regularPatronCreated.PatronId, Is.EqualTo(patron.Id));
     }
 
     [Test]
     public void PlaceOnHold_Succeeds_WhenNoHolds()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
         var book = CreateBookToHold_Circulating();
         
         patron.PlaceOnHold(book, WithEmptyActiveHolds, WithEmptyOverdueCheckouts);
@@ -32,31 +32,43 @@ public class ResearcherPatronTests : PatronTestBase
     }
 
     [Test]
-    public void PlaceOnHold_Fails_WhenHoldAlreadyRegistered()
+    public void PlaceOnHold_Fails_WhenHoldAlreadyExists()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
         var book = CreateBookToHold_Circulating();
         
-        AssertBusinessRuleBroken<PatronCannotPlaceHoldOnAlreadyRegisteredHoldRule>(
+        AssertBusinessRuleBroken<PatronCannotPlaceHoldOnExistingHoldRule>(
             () => patron.PlaceOnHold(book, WithActiveHolds(ActiveHold.Create(book.BookId)), WithEmptyOverdueCheckouts));
     }
 
     [Test]
-    public void PlaceOnHold_Succeeds_When_BookCategory_IsRestricted()
+    public void PlaceOnHold_Fails_When_BookCategory_IsRestricted()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
         var book = CreateBookToHold_Restricted();
-
-        patron.PlaceOnHold(book, WithEmptyActiveHolds, WithEmptyOverdueCheckouts);
         
-        var bookPlacedOnHold = AssertDomainEventPublished<BookPlacedOnHoldDomainEvent>(patron);
-        Assert.That(bookPlacedOnHold.BookId, Is.EqualTo(book.BookId));
+        AssertBusinessRuleBroken<RegularPatronCannotPlaceHoldOnRestrictedBookRule>(
+            () => patron.PlaceOnHold(book, WithEmptyActiveHolds, WithEmptyOverdueCheckouts));
+    }
+
+    [Test]
+    public void PlaceOnHold_Fails_When_MaxHoldsLimitExceeded()
+    {
+        var patron = CreateRegularPatron();
+        var book = CreateBookToHold_Circulating();
+        
+        var activeHolds = CreateMany(
+            RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule.MaxAllowedHolds, 
+            () => ActiveHold.Create(new BookId(Guid.NewGuid())));
+        
+        AssertBusinessRuleBroken<RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule>(
+            () => patron.PlaceOnHold(book, activeHolds, WithEmptyOverdueCheckouts));
     }
 
     [Test]
     public void PlaceOnHold_Fails_When_MaxOverdueCheckoutsLimitExceeded()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
         var book = CreateBookToHold_Circulating();
         
         var overdueCheckouts = CreateMany(
@@ -70,7 +82,7 @@ public class ResearcherPatronTests : PatronTestBase
     [Test]
     public void CancelHold_Fails_WhenHoldNotOwnedByCancellingPatron()
     {
-        var owningPatron = CreateResearcherPatron();
+        var owningPatron = CreateRegularPatron();
         var notOwningPatronId = new PatronId(Guid.NewGuid());
         
         var bookOnHoldToCancel = BookOnHold.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid()), notOwningPatronId);
@@ -84,19 +96,19 @@ public class ResearcherPatronTests : PatronTestBase
     [Test]
     public void CancelHold_Fails_WhenHoldNotExists()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
 
         var notExistingHold = BookOnHold.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid()),
             patron.Id);
         
-        AssertBusinessRuleBroken<PatronCannotCancelUnregisteredHoldRule>(() => patron.CancelHold(notExistingHold, 
+        AssertBusinessRuleBroken<PatronCannotCancelNonExistingHoldRule>(() => patron.CancelHold(notExistingHold, 
             WithActiveHolds(ActiveHold.Create(new BookId(Guid.NewGuid())))));
     }
 
     [Test]
     public void CancelHold_Succeeds()
     {
-        var patron = CreateResearcherPatron();
+        var patron = CreateRegularPatron();
 
         var holdToCancel = BookOnHold.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid()), patron.Id);
         patron.CancelHold(holdToCancel, [ActiveHold.Create(holdToCancel.BookId)]);
@@ -104,5 +116,5 @@ public class ResearcherPatronTests : PatronTestBase
         AssertDomainEventPublished<BookHoldCanceledDomainEvent>(patron);
     }
 
-    private static ResearcherPatron CreateResearcherPatron() => ResearcherPatron.Create(Guid.NewGuid());
+    private static RegularPatron CreateRegularPatron() => RegularPatron.Create(Guid.NewGuid());
 }

@@ -6,7 +6,7 @@ namespace Library.Modules.Reservation.Domain.Patrons.Events;
 public class BookPlacedOnHoldDomainEvent(BookId bookId, PatronId patronId, LibraryBranchId libraryBranchId)
     : DomainEventBase
 {
-    public BookId BookId { get; set; } = bookId;
-    public PatronId PatronId { get; set; } = patronId;
-    public LibraryBranchId LibraryBranchId { get; set; } = libraryBranchId;
+    public BookId BookId { get; private set; } = bookId;
+    public PatronId PatronId { get; private set; } = patronId;
+    public LibraryBranchId LibraryBranchId { get; private set; } = libraryBranchId;
 }

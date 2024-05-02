@@ -5,9 +5,9 @@ namespace Library.Modules.Reservation.Domain.Patrons.Events;
 
 public class BookHoldCanceledDomainEvent : DomainEventBase
 {
-    public BookId BookId { get; set; }
-    public PatronId PatronId { get; set; }
-    public LibraryBranchId LibraryBranchId { get; set; }
+    public BookId BookId { get; private set; }
+    public PatronId PatronId { get; private set; }
+    public LibraryBranchId LibraryBranchId { get; private set; }
 
     public BookHoldCanceledDomainEvent(BookId bookId, PatronId patronId, LibraryBranchId libraryBranchId)
     {

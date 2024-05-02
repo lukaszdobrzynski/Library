@@ -2,7 +2,7 @@
 using Library.Modules.Reservation.Domain.Holds;
 using Library.Modules.Reservation.Domain.Patrons;
 
-namespace Library.Modules.Reservation.Domain.UnitTests.PatronTests;
+namespace Library.Modules.Reservation.Domain.UnitTests.Patrons;
 
 public abstract class PatronTestBase : TestBase
 {

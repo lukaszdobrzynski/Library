@@ -23,7 +23,7 @@ public class ResearcherPatron : Entity, IAggregateRoot
 
     public void PlaceOnHold(BookToHold bookToHold, List<ActiveHold> activeHolds, List<OverdueCheckout> overdueCheckouts)
     {
-        CheckRule(new PatronCannotPlaceHoldOnAlreadyRegisteredHoldRule(activeHolds, bookToHold.BookId));
+        CheckRule(new PatronCannotPlaceHoldOnExistingHoldRule(activeHolds, bookToHold.BookId));
         CheckRule(new PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule(overdueCheckouts));
 
         AddDomainEvent(new BookPlacedOnHoldDomainEvent(bookToHold.BookId, Id, bookToHold.LibraryBranchId));
@@ -32,7 +32,7 @@ public class ResearcherPatron : Entity, IAggregateRoot
     public void CancelHold(BookOnHold bookOnHold, List<ActiveHold> activeHolds)
     {
         CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, bookOnHold));
-        CheckRule(new PatronCannotCancelUnregisteredHoldRule(bookOnHold, activeHolds));
+        CheckRule(new PatronCannotCancelNonExistingHoldRule(bookOnHold, activeHolds));
 
         AddDomainEvent(new BookHoldCanceledDomainEvent(bookOnHold.BookId, bookOnHold.PatronId, bookOnHold.LibraryBranchId));
     }

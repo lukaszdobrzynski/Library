@@ -2,9 +2,9 @@
 
 namespace Library.Modules.Reservation.Domain.Holds;
 
-public class LibraryManagedHoldId : TypedIdBase
+public class PatronHoldDecisionId : TypedIdBase
 {
-    public LibraryManagedHoldId(Guid value) : base(value)
+    public PatronHoldDecisionId(Guid value) : base(value)
     {
     }
 }

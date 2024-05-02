@@ -7,50 +7,60 @@ public class HoldStatus : ValueObject
     private string Value { get; set; }
 
     public const string Pending = nameof(Pending);
+    public const string Cancelled = nameof(Cancelled);
     public const string Granted = nameof(Granted);
     public const string Rejected = nameof(Rejected);
-    public const string Cancelled = nameof(Cancelled);
+    public const string Loaned = nameof(Loaned);
     public const string ReadyToPick = nameof(ReadyToPick);
-    public const string Picked = nameof(Picked);
-    
+
     private HoldStatus(string value)
     {
         Value = value;
     }
-    
-    public static HoldStatus From(PatronManagedHoldStatus status)
-    {
-        switch (status)
-        {
-            case PatronManagedHoldStatus.Cancelled:
-                return Cancelled;
-            case PatronManagedHoldStatus.Pending:
-                return Pending;
-            default:
-                throw new ArgumentException();
-        }
-    }
-
-    public static HoldStatus From(LibraryManagedHoldStatus status)
-    {
-        switch (status)
-        {
-            case LibraryManagedHoldStatus.Granted:
-                return Granted;
-            case LibraryManagedHoldStatus.Cancelled:
-                return Cancelled;
-            case LibraryManagedHoldStatus.Rejected:
-                return Rejected;
-            case LibraryManagedHoldStatus.ReadyToPick:
-                return ReadyToPick;
-            case LibraryManagedHoldStatus.Picked:
-                return Picked;
-            default:
-                throw new ArgumentException();
-        }
-    }
 
     public static implicit operator string(HoldStatus status) => status.Value;
-
     public static implicit operator HoldStatus(string value) => new(value);
+
+    public static HoldStatus From(PatronHoldDecisionStatus patronHoldDecisionStatus,
+        LibraryHoldDecisionStatus libraryHoldDecisionStatus)
+    {
+        switch (patronHoldDecisionStatus)
+        {
+            case PatronHoldDecisionStatus.NoDecision
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.NoDecision:
+                return Pending;
+            case PatronHoldDecisionStatus.NoDecision
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Granted:
+                return Granted;
+            case PatronHoldDecisionStatus.NoDecision
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Rejected:
+                return Rejected;
+            case PatronHoldDecisionStatus.NoDecision
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Cancelled:
+                return Cancelled;
+            case PatronHoldDecisionStatus.NoDecision
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.ReadyToPick:
+                return ReadyToPick;
+            case PatronHoldDecisionStatus.NoDecision
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Loaned:
+                return Loaned;
+            case PatronHoldDecisionStatus.Cancelled
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.NoDecision:
+                return Cancelled;
+            case PatronHoldDecisionStatus.Cancelled
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Granted:
+                return Cancelled;
+            case PatronHoldDecisionStatus.Cancelled
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Rejected:
+                return Rejected;
+            case PatronHoldDecisionStatus.Cancelled
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.Cancelled:
+                return Cancelled;
+            case PatronHoldDecisionStatus.Cancelled
+                when libraryHoldDecisionStatus == LibraryHoldDecisionStatus.ReadyToPick:
+                return ReadyToPick;
+            default:
+                throw new ArgumentException($"Unrecognized {nameof(PatronHoldDecisionStatus)} and {nameof(libraryHoldDecisionStatus)} mapping.");
+        }
+    }
 }

@@ -10,8 +10,4 @@
       <ProjectReference Include="..\Library.BuildingBlocks.Domain\Library.BuildingBlocks.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Checkouts\" />
-    </ItemGroup>
-
 </Project>
