@@ -73,7 +73,7 @@ public class PatronTests : PatronTestBase
         
         var overdueCheckouts = CreateMany(
             PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule.MaxAllowedOverdueCheckouts,
-            () => new OverdueCheckout(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid())));
+            () => OverdueCheckout.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid())));
 
         AssertBusinessRuleBroken<PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule>(
             () => patron.PlaceOnHold(book, WithEmptyActiveHolds, overdueCheckouts));
