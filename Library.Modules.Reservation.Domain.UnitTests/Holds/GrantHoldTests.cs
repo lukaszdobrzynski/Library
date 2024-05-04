@@ -11,20 +11,10 @@ public class GrantHoldTests : HoldTestBase
     {
         var hold = CreatePendingHold();
         
-        hold.Grant();
+        hold.ApplyLibraryGrantDecision();
 
         var holdGrantedDomainEvent = AssertDomainEventPublished<HoldGrantedDomainEvent>(hold);
         Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldStatusGranted(hold);
-        AssertHoldActive(hold);
-    }
-
-    [Test]
-    public void Grant_Fails_WhenHoldGranted()
-    {
-        var hold = CreateGrantedHold();
-        
-        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldGrantedRule>(() => hold.Grant());
         AssertHoldStatusGranted(hold);
         AssertHoldActive(hold);
     }
@@ -34,7 +24,7 @@ public class GrantHoldTests : HoldTestBase
     {
         var hold = CreateRejectedHold();
         
-        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldRejectedRule>(() => hold.Grant());
+        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldRejectedRule>(() => hold.ApplyLibraryGrantDecision());
         AssertHoldStatusRejected(hold);
         AssertHoldNotActive(hold);
     }
@@ -44,7 +34,7 @@ public class GrantHoldTests : HoldTestBase
     {
         var hold = CreateLoanedHold();
         
-        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldLoanedRule>(() => hold.Grant());
+        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldLoanedRule>(() => hold.ApplyLibraryGrantDecision());
         AssertHoldStatusLoaned(hold);
         AssertHoldNotActive(hold);
     }
@@ -54,7 +44,7 @@ public class GrantHoldTests : HoldTestBase
     {
         var hold = CreateCancelledHold();
 
-        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldCancelledRule>(() => hold.Grant());
+        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldCancelledRule>(() => hold.ApplyLibraryGrantDecision());
         AssertHoldStatusCancelled(hold);
         AssertHoldNotActive(hold);
     }
@@ -64,7 +54,7 @@ public class GrantHoldTests : HoldTestBase
     {
         var hold = CreateHoldReadyToPick();
         
-        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldReadyToPickRule>(() => hold.Grant());
+        AssertBusinessRuleBroken<CannotGrantHoldWhenHoldReadyToPickRule>(() => hold.ApplyLibraryGrantDecision());
         AssertHoldStatusReadyToPick(hold);
         AssertHoldActive(hold);
     }

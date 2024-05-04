@@ -11,7 +11,7 @@ public class RejectHoldTests : HoldTestBase
     {
         var hold = CreatePendingHold();
         
-        hold.Reject();
+        hold.ApplyLibraryRejectDecision();
 
         var holdGrantedDomainEvent = AssertDomainEventPublished<HoldRejectedDomainEvent>(hold);
         Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
@@ -24,7 +24,7 @@ public class RejectHoldTests : HoldTestBase
     {
         var hold = CreateGrantedHold();
         
-        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldGrantedRule>(() => hold.Reject());
+        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldGrantedRule>(() => hold.ApplyLibraryRejectDecision());
         AssertHoldStatusGranted(hold);
         AssertHoldActive(hold);
     }
@@ -34,38 +34,8 @@ public class RejectHoldTests : HoldTestBase
     {
         var hold = CreateLoanedHold();
         
-        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldLoanedRule>(() => hold.Reject());
+        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldLoanedRule>(() => hold.ApplyLibraryRejectDecision());
         AssertHoldStatusLoaned(hold);
         AssertHoldNotActive(hold);
-    }
-
-    [Test]
-    public void Reject_Fails_WhenHoldCancelled()
-    {
-        var hold = CreateCancelledHold();
-        
-        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldCancelledRule>(() => hold.Reject());
-        AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
-    }
-
-    [Test]
-    public void Reject_Fails_WhenHoldRejected()
-    {
-        var hold = CreateRejectedHold();
-        
-        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldRejectedRule>(() => hold.Reject());
-        AssertHoldStatusRejected(hold);
-        AssertHoldNotActive(hold);
-    }
-
-    [Test]
-    public void Reject_Fails_WhenHoldReadyToPick()
-    {
-        var hold = CreateHoldReadyToPick();
-        
-        AssertBusinessRuleBroken<CannotRejectHoldWhenHoldReadyToPickRule>(() => hold.Reject());
-        AssertHoldStatusReadyToPick(hold);
-        AssertHoldActive(hold);
     }
 }

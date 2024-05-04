@@ -2,15 +2,15 @@
 
 namespace Library.Modules.Reservation.Domain.Holds.Rules;
 
-public class CannotCancelHoldWhenHoldReadyToPickRule : IBusinessRule
+public class PatronCannotCancelHoldWhenHoldReadyToPickRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotCancelHoldWhenHoldReadyToPickRule(HoldStatus holdStatus)
+    public PatronCannotCancelHoldWhenHoldReadyToPickRule(HoldStatus holdStatus)
     {
         _holdStatus = holdStatus;
     }
-    
+
     public bool IsBroken() => _holdStatus == HoldStatus.ReadyToPick;
-    public string Message => "Cannot cancel hold when hold is ready to pick.";
+    public string Message => "Patron cannot cancel a ready to pick rule";
 }

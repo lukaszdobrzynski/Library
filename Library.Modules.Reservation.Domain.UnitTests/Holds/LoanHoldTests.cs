@@ -11,7 +11,7 @@ public class LoanHoldTests : HoldTestBase
     {
         var hold = CreateHoldReadyToPick();
         
-        hold.Loan();
+        hold.ApplyLibraryLoanDecision();
 
         var holdCheckedOutDomainEvent = AssertDomainEventPublished<HoldLoanedDomainEvent>(hold);
         Assert.That(holdCheckedOutDomainEvent.HoldId, Is.EqualTo(hold.Id));
@@ -20,11 +20,11 @@ public class LoanHoldTests : HoldTestBase
     }
     
     [Test]
-    public void Loan_Fails_WhenHoldGranted()
+    public void Loan_Fails_WhenHoldGranted_AndHoldDecisionParty_IsLibrary()
     {
         var hold = CreateGrantedHold();
         
-        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldGrantedRule>(() => hold.Loan());
+        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldGrantedRule>(() => hold.ApplyLibraryLoanDecision());
         
         AssertHoldStatusGranted(hold);
         AssertHoldActive(hold);
@@ -35,7 +35,7 @@ public class LoanHoldTests : HoldTestBase
     {
         var hold = CreatePendingHold();
         
-        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldPendingRule>(() => hold.Loan());
+        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldPendingRule>(() => hold.ApplyLibraryLoanDecision());
         AssertHoldStatusPending(hold);
         AssertHoldActive(hold);
     }
@@ -45,7 +45,7 @@ public class LoanHoldTests : HoldTestBase
     {
         var hold = CreateRejectedHold();
         
-        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldRejectedRule>(() => hold.Loan());
+        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldRejectedRule>(() => hold.ApplyLibraryLoanDecision());
         AssertHoldStatusRejected(hold);
         AssertHoldNotActive(hold);
     }
@@ -55,18 +55,8 @@ public class LoanHoldTests : HoldTestBase
     {
         var hold = CreateCancelledHold();
         
-        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldCancelledRule>(() => hold.Loan());
+        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldCancelledRule>(() => hold.ApplyLibraryLoanDecision());
         AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
-    }
-
-    [Test]
-    public void Loan_Fails_WhenHoldLoaned()
-    {
-        var hold = CreateLoanedHold();
-        
-        AssertBusinessRuleBroken<CannotLoanHoldWhenHoldLoanedRule>(() => hold.Loan());
-        AssertHoldStatusLoaned(hold);
         AssertHoldNotActive(hold);
     }
 }

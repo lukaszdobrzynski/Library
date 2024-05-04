@@ -11,7 +11,7 @@ public class HoldTestBase : TestBase
     protected Hold CreateGrantedHold()
     {
         var hold = CreatePendingHold();
-        hold.Grant();
+        hold.ApplyLibraryGrantDecision();
         hold.ClearDomainEvents();
         return hold;
     }
@@ -19,9 +19,9 @@ public class HoldTestBase : TestBase
     protected Hold CreateLoanedHold()
     {
         var hold = CreatePendingHold();
-        hold.Grant();
-        hold.TagReadyToPick();
-        hold.Loan();
+        hold.ApplyLibraryGrantDecision();
+        hold.ApplyLibraryReadyToPickDecision();
+        hold.ApplyLibraryLoanDecision();
         hold.ClearDomainEvents();
         return hold;
     }
@@ -29,7 +29,7 @@ public class HoldTestBase : TestBase
     protected Hold CreateRejectedHold()
     {
         var hold = CreatePendingHold();
-        hold.Reject();
+        hold.ApplyLibraryRejectDecision();
         hold.ClearDomainEvents();
         return hold;
     }
@@ -37,8 +37,8 @@ public class HoldTestBase : TestBase
     protected Hold CreateCancelledHold()
     {
         var hold = CreatePendingHold();
-        hold.Grant();
-        hold.CancelByLibrary();
+        hold.ApplyLibraryGrantDecision();
+        hold.ApplyLibraryCancelDecision();
         hold.ClearDomainEvents();
         return hold;
     }
@@ -46,8 +46,8 @@ public class HoldTestBase : TestBase
     protected Hold CreateHoldReadyToPick()
     {
         var hold = CreatePendingHold();
-        hold.Grant();
-        hold.TagReadyToPick();
+        hold.ApplyLibraryGrantDecision();
+        hold.ApplyLibraryReadyToPickDecision();
         hold.ClearDomainEvents();
         return hold;
     }
