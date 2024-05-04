@@ -6,26 +6,36 @@ using Library.Modules.Reservation.Domain.Patrons.Rules;
 
 namespace Library.Modules.Reservation.Domain.Patrons;
 
-public class RegularPatron : Entity, IAggregateRoot
+public class Patron : Entity, IAggregateRoot
 {
     public PatronId Id { get; private set; }
+
+    private PatronType _patronType;
     
-    private RegularPatron(PatronId id)
+    private Patron(PatronId id, PatronType patronType)
     {
         Id = id;
-        AddDomainEvent(new RegularPatronCreatedDomainEvent(Id));
+        _patronType = patronType;
+        
+        AddDomainEvent(new PatronCreatedDomainEvent(Id));
     }
 
-    public static RegularPatron Create(Guid id)
+    public static Patron CreateRegular(Guid id)
     {
-        return new RegularPatron(new PatronId(id));
+        return new Patron(new PatronId(id), PatronType.Regular);
     }
+    
+    public static Patron CreateResearcher(Guid id)
+    {
+        return new Patron(new PatronId(id), PatronType.Researcher);
+    }
+    
 
     public void PlaceOnHold(BookToHold bookToHold, List<ActiveHold> activeHolds, List<OverdueCheckout> overdueCheckouts)
     {
         CheckRule(new PatronCannotPlaceHoldOnExistingHoldRule(activeHolds, bookToHold.BookId));
-        CheckRule(new RegularPatronCannotPlaceHoldOnRestrictedBookRule(bookToHold.BookCategory));
-        CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(activeHolds));
+        CheckRule(new RegularPatronCannotPlaceHoldOnRestrictedBookRule(_patronType, bookToHold.BookCategory));
+        CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(_patronType, activeHolds));
         CheckRule(new PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule(overdueCheckouts));
 
         AddDomainEvent(new BookPlacedOnHoldDomainEvent(bookToHold.BookId, Id, bookToHold.LibraryBranchId));

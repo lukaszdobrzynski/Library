@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Domain.Patrons.Events;
 
-public class RegularPatronCreatedDomainEvent(PatronId patronId) : DomainEventBase
+public class PatronCreatedDomainEvent(PatronId patronId) : DomainEventBase
 {
     public PatronId PatronId { get; private set; } = patronId;
 }

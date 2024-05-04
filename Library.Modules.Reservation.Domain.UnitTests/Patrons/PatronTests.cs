@@ -7,14 +7,14 @@ using NUnit.Framework;
 
 namespace Library.Modules.Reservation.Domain.UnitTests.Patrons;
 
-public class RegularPatronTests : PatronTestBase
+public class PatronTests : PatronTestBase
 {
     [Test]
     public void Create_Succeeds()
     {
         var patron = CreateRegularPatron();
 
-        var regularPatronCreated = AssertDomainEventPublished<RegularPatronCreatedDomainEvent>(patron);
+        var regularPatronCreated = AssertDomainEventPublished<PatronCreatedDomainEvent>(patron);
         
         Assert.That(regularPatronCreated.PatronId, Is.EqualTo(patron.Id));
     }
@@ -116,5 +116,5 @@ public class RegularPatronTests : PatronTestBase
         AssertDomainEventPublished<BookHoldCanceledDomainEvent>(patron);
     }
 
-    private static RegularPatron CreateRegularPatron() => RegularPatron.Create(Guid.NewGuid());
+    private static Patron CreateRegularPatron() => Patron.CreateRegular(Guid.NewGuid());
 }

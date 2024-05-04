@@ -14,11 +14,4 @@ public class BookCategory : ValueObject
     {
         _value = value;
     }
-
-    public static BookCategory Create(string value)
-    {
-        CheckRule(new BookCategoryMustBeDefinedRule(value));
-
-        return new BookCategory(value);
-    }
 }

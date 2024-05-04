@@ -14,7 +14,7 @@ public class ResearcherPatronTests : PatronTestBase
     {
         var patron = CreateResearcherPatron();
 
-        var researcherPatronCreated = AssertDomainEventPublished<ResearcherPatronCreatedDomainEvent>(patron);
+        var researcherPatronCreated = AssertDomainEventPublished<PatronCreatedDomainEvent>(patron);
         
         Assert.That(researcherPatronCreated.PatronId, Is.EqualTo(patron.Id));
     }
@@ -104,5 +104,5 @@ public class ResearcherPatronTests : PatronTestBase
         AssertDomainEventPublished<BookHoldCanceledDomainEvent>(patron);
     }
 
-    private static ResearcherPatron CreateResearcherPatron() => ResearcherPatron.Create(Guid.NewGuid());
+    private static Patron CreateResearcherPatron() => Patron.CreateResearcher(Guid.NewGuid());
 }
