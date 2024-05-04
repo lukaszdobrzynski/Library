@@ -8,7 +8,7 @@ namespace Library.Modules.Reservation.Domain.Patrons;
 
 public class Patron : Entity, IAggregateRoot
 {
-    public PatronId Id { get; private set; }
+    public PatronId Id { get; }
 
     private PatronType _patronType;
     
@@ -29,7 +29,6 @@ public class Patron : Entity, IAggregateRoot
     {
         return new Patron(new PatronId(id), PatronType.Researcher);
     }
-    
 
     public void PlaceOnHold(BookToHold bookToHold, List<ActiveHold> activeHolds, List<OverdueCheckout> overdueCheckouts)
     {
