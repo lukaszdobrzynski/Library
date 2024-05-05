@@ -1,21 +1,29 @@
-﻿using Library.Modules.Reservation.Application.Contracts;
+﻿using Autofac;
+using Library.Modules.Reservation.Application.Contracts;
+using Library.Modules.Reservation.Infrastructure.Configuration;
+using Library.Modules.Reservation.Infrastructure.Configuration.Processing;
+using MediatR;
 
 namespace Library.Modules.Reservation.Infrastructure;
 
 public class ReservationModule : IReservationModule
 {
-    public Task ExecuteCommandAsync(ICommand command)
+    public async Task ExecuteCommandAsync(ICommand command)
     {
-        throw new NotImplementedException();
+        await CommandsExecutor.Execute(command);
     }
 
-    public Task<TResult> ExecuteCommandAsync<TResult>(ICommand<TResult> command)
+    public async Task<TResult> ExecuteCommandAsync<TResult>(ICommand<TResult> command)
     {
-        throw new NotImplementedException();
+        return await CommandsExecutor.Execute(command);
     }
 
-    public Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query)
+    public async Task<TResult> ExecuteQueryAsync<TResult>(IQuery<TResult> query)
     {
-        throw new NotImplementedException();
+        using (var scope = ReservationCompositionRoot.BeginLifetimeScope())
+        {
+            var mediator = scope.Resolve<IMediator>();
+            return await mediator.Send(query);
+        }
     }
 }
