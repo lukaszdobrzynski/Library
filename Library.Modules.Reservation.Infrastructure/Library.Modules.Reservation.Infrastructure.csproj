@@ -6,4 +6,12 @@
         <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Library.Modules.Reservation.Application\Library.Modules.Reservation.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="8.0.0" />
+    </ItemGroup>
+
 </Project>
