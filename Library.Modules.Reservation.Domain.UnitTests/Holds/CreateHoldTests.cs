@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Library.Modules.Reservation.Domain.Holds.Events;
+using NUnit.Framework;
 
 namespace Library.Modules.Reservation.Domain.UnitTests.Holds;
 
@@ -8,8 +9,10 @@ public class CreateHoldTests : HoldTestBase
     public void Create_Succeeds()
     {
         var hold = CreatePendingHold();
+
+        var domainEvent = AssertDomainEventPublished<HoldCreatedDomainEvent>(hold);
         
-        Assert.NotNull(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldActive(hold);
         AssertHoldStatusPending(hold);
     }

@@ -1,5 +1,6 @@
 ﻿using Library.BuildingBlocks.Domain;
 using Library.Modules.Reservation.Domain.Books;
+using Library.Modules.Reservation.Domain.Holds.Events;
 using Library.Modules.Reservation.Domain.Holds.Rules;
 
 namespace Library.Modules.Reservation.Domain.Holds;
@@ -25,6 +26,8 @@ public class Hold : Entity, IAggregateRoot
         LibraryBranchId = libraryBranchId;
         PatronHoldDecision = PatronHoldDecision.NoDecision(Id);
         LibraryHoldDecision = LibraryHoldDecision.NoDecision(Id);
+        
+        AddDomainEvent(new HoldCreatedDomainEvent(Id));
     }
 
     public static Hold Create(BookId bookId, LibraryBranchId libraryBranchId) =>
