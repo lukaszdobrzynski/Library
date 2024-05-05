@@ -1,8 +1,21 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+namespace Library.API;
 
-app.MapGet("/", () => "Hello World!");
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        CreateWebHostBuilder(args).Build().Run();
+    }
 
-app.Run();
+    public static IHostBuilder CreateWebHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .ConfigureWebHostDefaults(
+                webBuilder => { webBuilder.UseStartup<Startup>(); });
+    }
+}
