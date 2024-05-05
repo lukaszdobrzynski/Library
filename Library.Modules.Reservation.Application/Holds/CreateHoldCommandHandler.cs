@@ -1,11 +1,15 @@
 ﻿using Library.Modules.Reservation.Application.Contracts;
+using Library.Modules.Reservation.Domain.Books;
+using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Application.Holds;
 
-public class CreateHoldCommandHandler : ICommandHandler<CreateHoldCommand>
+public class CreateHoldCommandHandler(IHoldRepository holdRepository) : ICommandHandler<CreateHoldCommand>
 {
-    public Task Handle(CreateHoldCommand command, CancellationToken cancellationToken)
+    public async Task Handle(CreateHoldCommand command, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var hold = Hold.Create(new BookId(command.BookId), new LibraryBranchId(command.LibraryBranchId));
+
+        await holdRepository.AddAsync(hold);
     }
 }
