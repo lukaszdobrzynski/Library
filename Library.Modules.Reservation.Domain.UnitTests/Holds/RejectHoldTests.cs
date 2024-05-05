@@ -13,8 +13,8 @@ public class RejectHoldTests : HoldTestBase
         
         hold.ApplyLibraryRejectDecision();
 
-        var holdGrantedDomainEvent = AssertDomainEventPublished<HoldRejectedDomainEvent>(hold);
-        Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
+        var domainEvent = AssertDomainEventPublished<LibraryRejectHoldDecisionAppliedDomainEvent>(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldStatusRejected(hold);
         AssertHoldNotActive(hold);
     }

@@ -13,8 +13,8 @@ public class GrantHoldTests : HoldTestBase
         
         hold.ApplyLibraryGrantDecision();
 
-        var holdGrantedDomainEvent = AssertDomainEventPublished<HoldGrantedDomainEvent>(hold);
-        Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
+        var domainEvent = AssertDomainEventPublished<GrantHoldLibraryDecisionAppliedDomainEvent>(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldStatusGranted(hold);
         AssertHoldActive(hold);
     }

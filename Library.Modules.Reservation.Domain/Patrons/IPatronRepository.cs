@@ -2,5 +2,5 @@
 
 public interface IPatronRepository
 {
-   Task<Patron> GetByIdAsync(PatronId patronId);
+   Task<RegularPatron> GetByIdAsync(PatronId patronId);
 }

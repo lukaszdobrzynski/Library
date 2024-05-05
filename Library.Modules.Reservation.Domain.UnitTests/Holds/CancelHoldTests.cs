@@ -13,8 +13,8 @@ public class CancelHoldTests : HoldTestBase
         
         hold.ApplyPatronCancelDecision();
         
-        var holdGrantedDomainEvent = AssertDomainEventPublished<HoldCancelledByPatronDomainEvent>(hold);
-        Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
+        var domainEvent = AssertDomainEventPublished<CancelHoldPatronDecisionAppliedDomainEvent>(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldStatusCancelled(hold);
         AssertHoldNotActive(hold);
     }
@@ -26,8 +26,8 @@ public class CancelHoldTests : HoldTestBase
         
         hold.ApplyLibraryCancelDecision();
         
-        var holdGrantedDomainEvent = AssertDomainEventPublished<HoldCancelledByLibraryDomainEvent>(hold);
-        Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
+        var domainEvent = AssertDomainEventPublished<CancelHoldLibraryDecisionAppliedDomainEvent>(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldStatusCancelled(hold);
         AssertHoldNotActive(hold);
     }
@@ -39,8 +39,8 @@ public class CancelHoldTests : HoldTestBase
         
         hold.ApplyLibraryCancelDecision();
         
-        var holdGrantedDomainEvent = AssertDomainEventPublished<HoldCancelledByLibraryDomainEvent>(hold);
-        Assert.That(holdGrantedDomainEvent.HoldId, Is.EqualTo(hold.Id));
+        var domainEvent = AssertDomainEventPublished<CancelHoldLibraryDecisionAppliedDomainEvent>(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldStatusCancelled(hold);
         AssertHoldNotActive(hold);
     }

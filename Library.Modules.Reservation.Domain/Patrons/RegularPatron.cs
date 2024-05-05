@@ -6,13 +6,13 @@ using Library.Modules.Reservation.Domain.Patrons.Rules;
 
 namespace Library.Modules.Reservation.Domain.Patrons;
 
-public class Patron : Entity, IAggregateRoot
+public class RegularPatron : Entity, IAggregateRoot
 {
     public PatronId Id { get; }
 
     private PatronType _patronType;
     
-    private Patron(PatronId id, PatronType patronType)
+    private RegularPatron(PatronId id, PatronType patronType)
     {
         Id = id;
         _patronType = patronType;
@@ -20,14 +20,14 @@ public class Patron : Entity, IAggregateRoot
         AddDomainEvent(new PatronCreatedDomainEvent(Id));
     }
 
-    public static Patron CreateRegular(Guid id)
+    public static RegularPatron CreateRegular(Guid id)
     {
-        return new Patron(new PatronId(id), PatronType.Regular);
+        return new RegularPatron(new PatronId(id), PatronType.Regular);
     }
     
-    public static Patron CreateResearcher(Guid id)
+    public static RegularPatron CreateResearcher(Guid id)
     {
-        return new Patron(new PatronId(id), PatronType.Researcher);
+        return new RegularPatron(new PatronId(id), PatronType.Researcher);
     }
 
     public void PlaceOnHold(BookToHold bookToHold, List<ActiveHold> activeHolds, List<OverdueCheckout> overdueCheckouts)

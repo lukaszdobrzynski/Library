@@ -13,8 +13,8 @@ public class LoanHoldTests : HoldTestBase
         
         hold.ApplyLibraryLoanDecision();
 
-        var holdCheckedOutDomainEvent = AssertDomainEventPublished<HoldLoanedDomainEvent>(hold);
-        Assert.That(holdCheckedOutDomainEvent.HoldId, Is.EqualTo(hold.Id));
+        var domainEvent = AssertDomainEventPublished<LoanHoldLibraryDecisionAppliedDomainEvent>(hold);
+        Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
         AssertHoldStatusLoaned(hold);
         AssertHoldNotActive(hold);
     }

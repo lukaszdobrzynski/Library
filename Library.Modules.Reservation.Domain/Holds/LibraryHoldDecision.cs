@@ -21,30 +21,30 @@ public class LibraryHoldDecision : Entity
     public void Grant()
     {
         DecisionStatus = LibraryHoldDecisionStatus.Granted;
-        AddDomainEvent(new HoldGrantedDomainEvent(HoldId));
+        AddDomainEvent(new GrantHoldLibraryDecisionAppliedDomainEvent(HoldId));
     }
 
     public void Cancel()
     {
         DecisionStatus = LibraryHoldDecisionStatus.Cancelled;
-        AddDomainEvent(new HoldCancelledByLibraryDomainEvent(HoldId));
+        AddDomainEvent(new CancelHoldLibraryDecisionAppliedDomainEvent(HoldId));
     }
 
     public void Loan()
     {
         DecisionStatus = LibraryHoldDecisionStatus.Loaned;
-        AddDomainEvent(new HoldLoanedDomainEvent(HoldId));
+        AddDomainEvent(new LoanHoldLibraryDecisionAppliedDomainEvent(HoldId));
     }
 
     public void Reject()
     {
         DecisionStatus = LibraryHoldDecisionStatus.Rejected;
-        AddDomainEvent(new HoldRejectedDomainEvent(HoldId));
+        AddDomainEvent(new LibraryRejectHoldDecisionAppliedDomainEvent(HoldId));
     }
 
     public void TagReadyToPick()
     {
         DecisionStatus = LibraryHoldDecisionStatus.ReadyToPick;
-        AddDomainEvent(new HoldTaggedReadyToPickDomainEvent(HoldId));
+        AddDomainEvent(new HoldReadyToPickLibraryDecisionAppliedDomainEvent(HoldId));
     } 
 }

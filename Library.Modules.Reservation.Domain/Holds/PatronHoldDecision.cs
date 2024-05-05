@@ -21,6 +21,6 @@ public class PatronHoldDecision : Entity
     public void Cancel()
     {
         DecisionStatus = PatronHoldDecisionStatus.Cancelled;
-        AddDomainEvent(new HoldCancelledByPatronDomainEvent(HoldId));
+        AddDomainEvent(new CancelHoldPatronDecisionAppliedDomainEvent(HoldId));
     }
 }

@@ -14,9 +14,9 @@ public class ResearcherPatronTests : PatronTestBase
     {
         var patron = CreateResearcherPatron();
 
-        var researcherPatronCreated = AssertDomainEventPublished<PatronCreatedDomainEvent>(patron);
+        var domainEvent = AssertDomainEventPublished<PatronCreatedDomainEvent>(patron);
         
-        Assert.That(researcherPatronCreated.PatronId, Is.EqualTo(patron.Id));
+        Assert.That(domainEvent.PatronId, Is.EqualTo(patron.Id));
     }
 
     [Test]
@@ -27,8 +27,8 @@ public class ResearcherPatronTests : PatronTestBase
         
         patron.PlaceOnHold(book, WithEmptyActiveHolds, WithEmptyOverdueCheckouts);
 
-        var bookPlacedOnHold = AssertDomainEventPublished<BookPlacedOnHoldDomainEvent>(patron);
-        Assert.That(bookPlacedOnHold.BookId, Is.EqualTo(book.BookId));
+        var domainEvent = AssertDomainEventPublished<BookPlacedOnHoldDomainEvent>(patron);
+        Assert.That(domainEvent.BookId, Is.EqualTo(book.BookId));
     }
 
     [Test]
@@ -49,8 +49,8 @@ public class ResearcherPatronTests : PatronTestBase
 
         patron.PlaceOnHold(book, WithEmptyActiveHolds, WithEmptyOverdueCheckouts);
         
-        var bookPlacedOnHold = AssertDomainEventPublished<BookPlacedOnHoldDomainEvent>(patron);
-        Assert.That(bookPlacedOnHold.BookId, Is.EqualTo(book.BookId));
+        var domainEvent = AssertDomainEventPublished<BookPlacedOnHoldDomainEvent>(patron);
+        Assert.That(domainEvent.BookId, Is.EqualTo(book.BookId));
     }
 
     [Test]
@@ -104,5 +104,5 @@ public class ResearcherPatronTests : PatronTestBase
         AssertDomainEventPublished<BookHoldCanceledDomainEvent>(patron);
     }
 
-    private static Patron CreateResearcherPatron() => Patron.CreateResearcher(Guid.NewGuid());
+    private static RegularPatron CreateResearcherPatron() => RegularPatron.CreateResearcher(Guid.NewGuid());
 }
