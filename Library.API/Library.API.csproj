@@ -8,4 +8,9 @@
       <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Library.Modules.Reservation.Application\Library.Modules.Reservation.Application.csproj" />
+      <ProjectReference Include="..\Library.Modules.Reservation.Infrastructure\Library.Modules.Reservation.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Library.API.Modules.Reservation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +24,7 @@ public class Startup
     
     public void ConfigureContainer(ContainerBuilder containerBuilder)
     {
-        //TODO: containerBuilder.RegisterModule(new ReservationAutofacModule());
+        containerBuilder.RegisterModule(new ReservationRootModule());
     }
     
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
