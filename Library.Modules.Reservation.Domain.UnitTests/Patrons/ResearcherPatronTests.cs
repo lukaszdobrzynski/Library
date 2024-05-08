@@ -104,5 +104,5 @@ public class ResearcherPatronTests : PatronTestBase
         AssertDomainEventPublished<BookHoldCanceledDomainEvent>(patron);
     }
 
-    private static RegularPatron CreateResearcherPatron() => RegularPatron.CreateResearcher(Guid.NewGuid());
+    private static Patron CreateResearcherPatron() => Patron.CreateResearcher(Guid.NewGuid());
 }

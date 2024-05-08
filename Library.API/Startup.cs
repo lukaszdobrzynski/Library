@@ -2,6 +2,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Library.API.Modules.Reservation;
+using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -20,6 +21,8 @@ public class Startup
     {
         services.AddControllers();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        
+        InitializeModules();
     }
     
     public void ConfigureContainer(ContainerBuilder containerBuilder)
@@ -34,5 +37,10 @@ public class Startup
         app.UseRouting();
 
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+    }
+
+    private void InitializeModules()
+    {
+        ReservationStartup.Init();
     }
 }

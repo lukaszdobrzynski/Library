@@ -116,5 +116,5 @@ public class RegularPatronTests : PatronTestBase
         AssertDomainEventPublished<BookHoldCanceledDomainEvent>(patron);
     }
 
-    private static RegularPatron CreateRegularPatron() => RegularPatron.CreateRegular(Guid.NewGuid());
+    private static Patron CreateRegularPatron() => Patron.CreateRegular(Guid.NewGuid());
 }
