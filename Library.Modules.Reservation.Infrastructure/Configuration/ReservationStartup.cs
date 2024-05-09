@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration.Mediation;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration;
@@ -17,6 +18,7 @@ public static class ReservationStartup
         var containerBuilder = new ContainerBuilder();
 
         containerBuilder.RegisterModule(new MediationModule());
+        containerBuilder.RegisterModule(new DataAccessModule());
 
         _container = containerBuilder.Build();
         

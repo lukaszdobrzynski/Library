@@ -23,5 +23,14 @@ public class PatronController : ControllerBase
         await _reservationModule.ExecuteCommandAsync(new PlaceBookOnHoldCommand(Guid.NewGuid(), Guid.NewGuid()));
 
         return Ok();
-    } 
+    }
+
+    [HttpPost("cancel-hold")]
+    public async Task<IActionResult> CancelHold()
+    {
+        await _reservationModule.ExecuteCommandAsync(new CancelHoldCommand(Guid.NewGuid(), Guid.NewGuid(),
+            Guid.NewGuid()));
+
+        return Ok();
+    }
 }
