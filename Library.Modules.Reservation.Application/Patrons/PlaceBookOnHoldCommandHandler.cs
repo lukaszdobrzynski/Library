@@ -15,7 +15,7 @@ public class PlaceBookOnHoldCommandHandler(
 {
     public async Task Handle(PlaceBookOnHoldCommand command, CancellationToken cancellationToken)
     {
-        var patron =  await patronRepository.GetByIdAsync(new PatronId(command.PatronId));
+        var patron = await patronRepository.GetByIdAsync(new PatronId(command.PatronId));
         var book = await bookRepository.GetByIdAsync(new BookId(command.BookId));
         var activeHolds = await holdRepository.GetActiveHoldsByPatronIdAsync(new PatronId(command.PatronId));
         var overdueCheckouts =
