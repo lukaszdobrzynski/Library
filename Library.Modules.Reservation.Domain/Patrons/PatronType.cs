@@ -4,13 +4,18 @@ namespace Library.Modules.Reservation.Domain.Patrons;
 
 public class PatronType : ValueObject
 {
-    private string _value;
-    
+    public string Type { get; }
+
     private PatronType(string value)
     {
-        _value = value;
+        Type = value;
     }
 
-    public static PatronType Regular => new (nameof(Regular));
+    private PatronType()
+    {
+        //EF Core only
+    }
+
+public static PatronType Regular => new (nameof(Regular));
     public static PatronType Researcher => new(nameof(Researcher));
 }

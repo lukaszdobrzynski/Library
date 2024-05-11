@@ -11,6 +11,11 @@ public class Patron : Entity, IAggregateRoot
     public PatronId Id { get; }
 
     private PatronType _patronType;
+
+    private Patron()
+    {
+        // for EF only
+    }
     
     private Patron(PatronId id, PatronType patronType)
     {

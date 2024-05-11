@@ -1,11 +1,19 @@
 ﻿using Library.Modules.Reservation.Domain.Patrons;
+using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Patrons;
 
 public class PatronRepository : IPatronRepository
 {
+    private readonly ReservationContext _reservationContext;
+    
+    public PatronRepository(ReservationContext reservationContext)
+    {
+        _reservationContext = reservationContext;
+    }
+    
     public Task<Patron> GetByIdAsync(PatronId patronId)
     {
-        return Task.FromResult(Patron.CreateRegular(Guid.NewGuid()));
+        return _reservationContext.Patrons.FirstOrDefaultAsync(x => x.Id == patronId);
     }
 }

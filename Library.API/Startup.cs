@@ -41,6 +41,6 @@ public class Startup
 
     private void InitializeModules()
     {
-        ReservationStartup.Init();
+        ReservationStartup.Init("Host=localhost;Database=library;Username=postgres;Password=admin");
     }
 }
