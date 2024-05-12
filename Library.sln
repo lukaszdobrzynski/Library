@@ -36,6 +36,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.BuildingBlocks.Infr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Modules.Reservation.ArchTests", "Library.Modules.Reservation.ArchTests\Library.Modules.Reservation.ArchTests.csproj", "{D19D608B-E593-4572-A40C-FA4201D28DDA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{0A8F97C6-B9C1-47E0-AC1C-11A14B44FE05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Database.Migrator", "Database\Library.Database.Migrator\Library.Database.Migrator.csproj", "{572D47EB-8AA7-4B55-B497-2F2DAB28DD73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +86,13 @@ Global
 		{D19D608B-E593-4572-A40C-FA4201D28DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D19D608B-E593-4572-A40C-FA4201D28DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D19D608B-E593-4572-A40C-FA4201D28DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{572D47EB-8AA7-4B55-B497-2F2DAB28DD73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572D47EB-8AA7-4B55-B497-2F2DAB28DD73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572D47EB-8AA7-4B55-B497-2F2DAB28DD73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572D47EB-8AA7-4B55-B497-2F2DAB28DD73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A63586CB-EF0E-4E62-86B0-CC1E778B21E0} = {AAEF9491-6590-4F60-860F-FE8D1AFB3A3C}
@@ -99,5 +110,9 @@ Global
 		{F4BAE4AD-0CFE-49FF-8653-A3BF3B678236} = {34BB1C9B-94B3-4FEA-B81A-E904C086DE13}
 		{50196293-BBD9-4359-BB5B-732867835286} = {34BB1C9B-94B3-4FEA-B81A-E904C086DE13}
 		{D19D608B-E593-4572-A40C-FA4201D28DDA} = {9D565BFC-514A-494C-8C92-BFDBA8A056D1}
+		{572D47EB-8AA7-4B55-B497-2F2DAB28DD73} = {0A8F97C6-B9C1-47E0-AC1C-11A14B44FE05}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01232196-1024-44C3-A3D3-63D96C719D09}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,3 @@
+CREATE SCHEMA IF NOT EXISTS circulation;
+
+CREATE SCHEMA IF NOT EXISTS reservations;
