@@ -1,0 +1,1 @@
+TRUNCATE reservations.patrons, reservations.holds, app.migrations_journal CASCADE;
