@@ -20,7 +20,7 @@ public class PatronController : ControllerBase
     [HttpPost("place-book-on-hold")]
     public async Task<IActionResult> PlaceBookOnHold()
     {
-        await _reservationModule.ExecuteCommandAsync(new PlaceBookOnHoldCommand(Guid.NewGuid(), Guid.Parse("5130ebf9-1aa9-4c8b-8dc5-c804282f26ef")));
+        await _reservationModule.ExecuteCommandAsync(new PlaceBookOnHoldCommand(Guid.NewGuid(), Guid.Parse("aa4f2581-9307-4d4f-b2fe-e7afb13a78ba")));
 
         return Ok();
     }

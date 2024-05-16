@@ -8,13 +8,14 @@ public class PatronEntityTypeConfiguration : IEntityTypeConfiguration<Patron>
 {
     public void Configure(EntityTypeBuilder<Patron> builder)
     {
-        builder.ToTable("Patrons", "reservations");
-        
+        builder.ToTable("patrons", "reservations");
+
         builder.HasKey(x => x.Id);
+        builder.Property(p => p.Id).HasColumnName("id");
 
         builder.OwnsOne<PatronType>("_patronType", b =>
         {
-            b.Property(p => p.Type).HasColumnName("PatronType");
+            b.Property(p => p.Type).HasColumnName("patron_type");
         });
     }
 }
