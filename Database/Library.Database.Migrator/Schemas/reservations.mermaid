@@ -1,0 +1,47 @@
+﻿erDiagram
+        
+    Patron {
+        id uuid PK
+        patron_type string
+    }
+    
+    Book {
+        id uuid PK
+        library_branch_id uuid
+        book_category string
+    }
+    
+    Hold {
+        id uuid PK
+        patron_id uuid FK
+        book_id uuid FK
+        library_branch_id uuid
+        status string
+    }
+    
+    PatronHoldDecision {
+        id uuid PK
+        hold_id uuid FK
+        decision_status string
+    }
+    
+    LibraryHoldDecision {
+        id uuid PK
+        hold_id uuid FK
+        decision_status string
+    }
+    
+    Checkout {
+        id uuid PK
+        patron_id uuid FK
+        book_id uuid FK
+        library_branch_id uuid
+        due_date date
+    }
+    
+    Hold || -- || LibraryHoldDecision : has
+    Hold || -- || PatronHoldDecision: has
+    Hold || -- || Patron: is_placed_by
+    Hold || -- || Book: is_placed_on
+    Patron || -- o{ Checkout: has
+    Book || -- o| Checkout: is_under   

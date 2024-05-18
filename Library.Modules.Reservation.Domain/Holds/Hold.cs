@@ -9,7 +9,6 @@ namespace Library.Modules.Reservation.Domain.Holds;
 public class Hold : Entity, IAggregateRoot
 {
     private HoldStatus _holdStatus;
-    
     public HoldId Id { get; private set; }
     public BookId BookId { get; private set; }
     public PatronId PatronId { get; set; }

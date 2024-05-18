@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS reservations.patrons (
 
 CREATE TABLE IF NOT EXISTS app.migrations_journal (
     id SERIAL NOT NULL,
-    script_name VARCHAR(250) NOT NULL,
+    script_name VARCHAR NOT NULL,
     applied DATE NOT NULL,
     PRIMARY KEY (id)
 );
