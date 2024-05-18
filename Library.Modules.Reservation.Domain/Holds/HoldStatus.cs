@@ -4,7 +4,7 @@ namespace Library.Modules.Reservation.Domain.Holds;
 
 public class HoldStatus : ValueObject
 {
-    private string Value { get; set; }
+    public string Value { get; }
 
     public const string Pending = nameof(Pending);
     public const string Cancelled = nameof(Cancelled);

@@ -11,9 +11,18 @@ CREATE TABLE IF NOT EXISTS app.migrations_journal (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS reservations.books (
+   id uuid NOT NULL,
+   library_branch_id uuid NOT NULL,
+   book_category VARCHAR NOT NULL,
+   PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS reservations.holds (
     id uuid NOT NULL,
-    bookId uuid NOT NULL,
+    patron_id uuid NOT NULL REFERENCES reservations.patrons (id),
+    book_id uuid NOT NULL REFERENCES reservations.books (id),
+    library_branch_id uuid NOT NULL,
     status VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );

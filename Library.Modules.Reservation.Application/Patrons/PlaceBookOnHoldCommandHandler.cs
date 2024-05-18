@@ -17,11 +17,12 @@ public class PlaceBookOnHoldCommandHandler(
     {
         var patron = await patronRepository.GetByIdAsync(new PatronId(command.PatronId));
         var book = await bookRepository.GetByIdAsync(new BookId(command.BookId));
-        var activeHolds = await holdRepository.GetActiveHoldsByPatronIdAsync(new PatronId(command.PatronId));
+        var holds = await holdRepository.GetActiveHoldsByPatronIdAsync(new PatronId(command.PatronId));
         var overdueCheckouts =
             await checkoutRepository.GetOverdueCheckoutsByPatronIdAsync(new PatronId(command.PatronId));
         
         var bookToHold = BookToHold.Create(book.Id, book.LibraryBranchId, patron.Id, book.BookCategory);
+        var activeHolds = holds.Select(x => ActiveHold.Create(x.BookId)).ToList();
         
         patron.PlaceOnHold(bookToHold, activeHolds, overdueCheckouts);
     }

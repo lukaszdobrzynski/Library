@@ -9,6 +9,11 @@ public class PatronHoldDecision : Entity
     public HoldId HoldId { get; private set; }
     public PatronHoldDecisionStatus DecisionStatus { get; private set; }
 
+    public PatronHoldDecision()
+    {
+        //EF only
+    }
+
     private PatronHoldDecision(HoldId holdId)
     {
         DecisionStatus = PatronHoldDecisionStatus.NoDecision;

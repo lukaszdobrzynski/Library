@@ -4,10 +4,15 @@ namespace Library.Modules.Reservation.Domain.Holds;
 
 public class PatronHoldDecisionStatus : ValueObject
 {
-    private string Value { get; }
+    public string Value { get; }
 
     public const string NoDecision = nameof(NoDecision);
     public const string Cancelled = nameof(Cancelled);
+
+    private PatronHoldDecisionStatus()
+    {
+        //EF only
+    }
     
     private PatronHoldDecisionStatus(string value)
     {

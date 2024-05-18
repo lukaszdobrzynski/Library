@@ -14,6 +14,6 @@ public class PatronRepository : IPatronRepository
     
     public Task<Patron> GetByIdAsync(PatronId patronId)
     {
-        return _reservationContext.Patrons.FirstOrDefaultAsync(x => x.Id == patronId);
+        return _reservationContext.Patrons.SingleOrDefaultAsync(x => x.Id == patronId);
     }
 }

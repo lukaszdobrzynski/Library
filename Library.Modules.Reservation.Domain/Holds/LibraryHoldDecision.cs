@@ -8,6 +8,11 @@ public class LibraryHoldDecision : Entity
     public LibraryHoldDecisionId Id { get; private set; }
     public HoldId HoldId { get; private set; }
     public LibraryHoldDecisionStatus DecisionStatus { get; private set; }
+
+    private LibraryHoldDecision()
+    {
+        //EF only
+    }
     
     private LibraryHoldDecision(HoldId holdId)
     {

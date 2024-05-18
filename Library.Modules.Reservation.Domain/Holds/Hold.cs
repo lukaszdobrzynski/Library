@@ -2,17 +2,24 @@
 using Library.Modules.Reservation.Domain.Books;
 using Library.Modules.Reservation.Domain.Holds.Events;
 using Library.Modules.Reservation.Domain.Holds.Rules;
+using Library.Modules.Reservation.Domain.Patrons;
 
 namespace Library.Modules.Reservation.Domain.Holds;
 
 public class Hold : Entity, IAggregateRoot
 {
+    private HoldStatus _holdStatus;
+    
     public HoldId Id { get; private set; }
     public BookId BookId { get; private set; }
+    public PatronId PatronId { get; set; }
     public LibraryBranchId LibraryBranchId { get; private set; }
     public PatronHoldDecision PatronHoldDecision { get; private set; }
     public LibraryHoldDecision LibraryHoldDecision { get; private set; }
-    public HoldStatus Status => HoldStatus.From(PatronHoldDecision.DecisionStatus, LibraryHoldDecision.DecisionStatus);
+    public HoldStatus Status {
+        get => HoldStatus.From(PatronHoldDecision.DecisionStatus, LibraryHoldDecision.DecisionStatus);
+        set => _holdStatus = value;
+    }
 
     public bool IsActive =>
         Status == HoldStatus.Pending || 
