@@ -10,4 +10,10 @@ public class Checkout : Entity, IAggregateRoot
     public PatronId PatronId { get; private set; }
     public BookId BookId { get; private set; }
     public LibraryBranchId LibraryBranchId { get; private set; }
+    public DateTime DueDate { get; set; }
+
+    private Checkout()
+    {
+        // EF only
+    }
 }

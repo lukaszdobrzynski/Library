@@ -1,7 +1,9 @@
 ﻿using Library.Modules.Reservation.Domain.Books;
+using Library.Modules.Reservation.Domain.Checkouts;
 using Library.Modules.Reservation.Domain.Holds;
 using Library.Modules.Reservation.Domain.Patrons;
 using Library.Modules.Reservation.Infrastructure.Domain.Books;
+using Library.Modules.Reservation.Infrastructure.Domain.Checkouts;
 using Library.Modules.Reservation.Infrastructure.Domain.Holds;
 using Library.Modules.Reservation.Infrastructure.Domain.Patrons;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,8 @@ public class ReservationContext : DbContext
     internal DbSet<Book> Books { get; set; }
     internal DbSet<Hold> Holds { get; set; }
 
+    internal DbSet<Checkout> Checkouts { get; set; }
+
     public ReservationContext(DbContextOptions options) : base(options)
     {
     }
@@ -25,5 +29,6 @@ public class ReservationContext : DbContext
         modelBuilder.ApplyConfiguration(new HoldEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new LibraryHoldDecisionEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new PatronHoldDecisionEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new CheckoutEntityTypeConfiguration());
     }
 }

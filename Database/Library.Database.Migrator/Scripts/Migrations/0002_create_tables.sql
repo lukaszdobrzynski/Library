@@ -40,3 +40,12 @@ CREATE TABLE IF NOT EXISTS  reservations.library_hold_decisions (
     decision_status VARCHAR,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS reservations.checkouts (
+    id uuid NOT NULL,
+    patron_id uuid NOT NULL REFERENCES reservations.patrons (id),
+    book_id uuid NOT NULL REFERENCES reservations.books (id),
+    library_branch_id uuid NOT NULL,
+    due_date DATE NOT NULL, 
+    PRIMARY KEY (id)                                             
+)
