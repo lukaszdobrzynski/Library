@@ -6,9 +6,9 @@ public class CannotRejectHoldWhenHoldCancelledRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotRejectHoldWhenHoldCancelledRule(HoldStatus holdStatus)
+    public CannotRejectHoldWhenHoldCancelledRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
     {
-        _holdStatus = holdStatus;
+        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
     }
 
     public bool IsBroken() => _holdStatus == HoldStatus.Cancelled;

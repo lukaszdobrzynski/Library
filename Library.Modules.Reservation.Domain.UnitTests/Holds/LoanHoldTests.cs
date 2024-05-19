@@ -15,8 +15,6 @@ public class LoanHoldTests : HoldTestBase
 
         var domainEvent = AssertDomainEventPublished<LoanHoldLibraryDecisionAppliedDomainEvent>(hold);
         Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldStatusLoaned(hold);
-        AssertHoldNotActive(hold);
     }
     
     [Test]
@@ -25,9 +23,6 @@ public class LoanHoldTests : HoldTestBase
         var hold = CreateGrantedHold();
         
         AssertBusinessRuleBroken<CannotLoanHoldWhenHoldGrantedRule>(() => hold.ApplyLibraryLoanDecision());
-        
-        AssertHoldStatusGranted(hold);
-        AssertHoldActive(hold);
     }
 
     [Test]
@@ -36,8 +31,6 @@ public class LoanHoldTests : HoldTestBase
         var hold = CreatePendingHold();
         
         AssertBusinessRuleBroken<CannotLoanHoldWhenHoldPendingRule>(() => hold.ApplyLibraryLoanDecision());
-        AssertHoldStatusPending(hold);
-        AssertHoldActive(hold);
     }
 
     [Test]
@@ -46,8 +39,6 @@ public class LoanHoldTests : HoldTestBase
         var hold = CreateRejectedHold();
         
         AssertBusinessRuleBroken<CannotLoanHoldWhenHoldRejectedRule>(() => hold.ApplyLibraryLoanDecision());
-        AssertHoldStatusRejected(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -56,7 +47,5 @@ public class LoanHoldTests : HoldTestBase
         var hold = CreateCancelledHold();
         
         AssertBusinessRuleBroken<CannotLoanHoldWhenHoldCancelledRule>(() => hold.ApplyLibraryLoanDecision());
-        AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
     }
 }

@@ -6,9 +6,9 @@ public class CannotTagHoldReadyToPickWhenHoldPendingRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotTagHoldReadyToPickWhenHoldPendingRule(HoldStatus holdStatus)
+    public CannotTagHoldReadyToPickWhenHoldPendingRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
     {
-        _holdStatus = holdStatus;
+        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
     }
     
     public bool IsBroken() => _holdStatus == HoldStatus.Pending;

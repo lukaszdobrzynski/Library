@@ -13,7 +13,5 @@ public class CreateHoldTests : HoldTestBase
         var domainEvent = AssertDomainEventPublished<HoldCreatedDomainEvent>(hold);
         
         Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldActive(hold);
-        AssertHoldStatusPending(hold);
     }
 }

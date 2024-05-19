@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS reservations.holds (
     patron_id uuid NOT NULL REFERENCES reservations.patrons (id),
     book_id uuid NOT NULL REFERENCES reservations.books (id),
     library_branch_id uuid NOT NULL,
-    status VARCHAR NOT NULL,
+    created_at date NOT NULL,
+    period VARCHAR NOT NULL,
     PRIMARY KEY (id)
 );
 

@@ -15,8 +15,6 @@ public class CancelHoldTests : HoldTestBase
         
         var domainEvent = AssertDomainEventPublished<CancelHoldPatronDecisionAppliedDomainEvent>(hold);
         Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -28,8 +26,6 @@ public class CancelHoldTests : HoldTestBase
         
         var domainEvent = AssertDomainEventPublished<CancelHoldLibraryDecisionAppliedDomainEvent>(hold);
         Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -41,8 +37,6 @@ public class CancelHoldTests : HoldTestBase
         
         var domainEvent = AssertDomainEventPublished<CancelHoldLibraryDecisionAppliedDomainEvent>(hold);
         Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
     }
     
     [Test]
@@ -51,8 +45,6 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreatePendingHold();
         
         AssertBusinessRuleBroken<CannotCancelHoldWhenHoldPendingRule>(() => hold.ApplyPatronCancelDecision());
-        AssertHoldStatusPending(hold);
-        AssertHoldActive(hold);
     }
     
     [Test]
@@ -61,8 +53,6 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreatePendingHold();
         
         AssertBusinessRuleBroken<CannotCancelHoldWhenHoldPendingRule>(() => hold.ApplyLibraryCancelDecision());
-        AssertHoldStatusPending(hold);
-        AssertHoldActive(hold);
     }
 
     [Test]
@@ -71,8 +61,6 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreateRejectedHold();
         
         AssertBusinessRuleBroken<CannotCancelHoldWhenHoldRejectedRule>(() => hold.ApplyPatronCancelDecision());
-        AssertHoldStatusRejected(hold);
-        AssertHoldNotActive(hold);
     }
     
     [Test]
@@ -81,8 +69,6 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreateRejectedHold();
         
         AssertBusinessRuleBroken<CannotCancelHoldWhenHoldRejectedRule>(() => hold.ApplyLibraryCancelDecision());
-        AssertHoldStatusRejected(hold);
-        AssertHoldNotActive(hold);
     }
     
     [Test]
@@ -91,8 +77,6 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreateLoanedHold();
         
         AssertBusinessRuleBroken<CannotCancelHoldWhenHoldLoanedRule>(() => hold.ApplyPatronCancelDecision());
-        AssertHoldStatusLoaned(hold);
-        AssertHoldNotActive(hold);
     }
     
     [Test]
@@ -101,8 +85,6 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreateLoanedHold();
         
         AssertBusinessRuleBroken<CannotCancelHoldWhenHoldLoanedRule>(() => hold.ApplyLibraryCancelDecision());
-        AssertHoldStatusLoaned(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -111,7 +93,5 @@ public class CancelHoldTests : HoldTestBase
         var hold = CreateHoldReadyToPick();
         
         AssertBusinessRuleBroken<PatronCannotCancelHoldWhenHoldReadyToPickRule>(() => hold.ApplyPatronCancelDecision());
-        AssertHoldStatusReadyToPick(hold);
-        AssertHoldActive(hold);
     }
 }

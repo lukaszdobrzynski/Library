@@ -6,9 +6,9 @@ public class CannotLoanHoldWhenHoldPendingRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
     
-    public CannotLoanHoldWhenHoldPendingRule(HoldStatus holdStatus)
+    public CannotLoanHoldWhenHoldPendingRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
     {
-        _holdStatus = holdStatus;
+        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
     }
 
     public bool IsBroken() => _holdStatus == HoldStatus.Pending;

@@ -6,9 +6,9 @@ public class CannotTagHoldReadyToPickWhenHoldLoanedRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotTagHoldReadyToPickWhenHoldLoanedRule(HoldStatus holdStatus)
+    public CannotTagHoldReadyToPickWhenHoldLoanedRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
     {
-        _holdStatus = holdStatus;
+        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
     }
 
     public bool IsBroken() => _holdStatus == HoldStatus.Loaned;

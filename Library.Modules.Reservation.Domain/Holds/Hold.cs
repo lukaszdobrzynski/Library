@@ -8,92 +8,92 @@ namespace Library.Modules.Reservation.Domain.Holds;
 
 public class Hold : Entity, IAggregateRoot
 {
-    private HoldStatus _holdStatus;
     public HoldId Id { get; private set; }
     public BookId BookId { get; private set; }
-    public PatronId PatronId { get; set; }
+    public PatronId PatronId { get; private set; }
     public LibraryBranchId LibraryBranchId { get; private set; }
     public PatronHoldDecision PatronHoldDecision { get; private set; }
     public LibraryHoldDecision LibraryHoldDecision { get; private set; }
-    public HoldStatus Status {
-        get => HoldStatus.From(PatronHoldDecision.DecisionStatus, LibraryHoldDecision.DecisionStatus);
-        set => _holdStatus = value;
+    public DateTime CreatedAt { get; private set; }
+    public HoldPeriod Period { get; private set; }
+
+    private Hold()
+    {
+        // EF only
     }
 
-    public bool IsActive =>
-        Status == HoldStatus.Pending || 
-        Status == HoldStatus.Granted || 
-        Status == HoldStatus.ReadyToPick;
-
-    private Hold(BookId bookId, LibraryBranchId libraryBranchId)
+    private Hold(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId, HoldPeriod period)
     {
         Id = new HoldId(Guid.NewGuid());
         BookId = bookId;
         LibraryBranchId = libraryBranchId;
+        PatronId = patronId;
         PatronHoldDecision = PatronHoldDecision.NoDecision(Id);
         LibraryHoldDecision = LibraryHoldDecision.NoDecision(Id);
+        Period = period;
+        CreatedAt = DateTime.UtcNow;
         
         AddDomainEvent(new HoldCreatedDomainEvent(Id));
     }
 
-    public static Hold Create(BookId bookId, LibraryBranchId libraryBranchId) =>
-        new (bookId, libraryBranchId);
+    public static Hold Create(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId, HoldPeriod period) =>
+        new (bookId, libraryBranchId, patronId, period);
 
     public void ApplyLibraryRejectDecision()
     {
-        CheckRule(new CannotRejectHoldWhenHoldGrantedRule(Status));
-        CheckRule(new CannotRejectHoldWhenHoldLoanedRule(Status));
-        CheckRule(new CannotRejectHoldWhenHoldCancelledRule(Status));
-        CheckRule(new CannotRejectHoldWhenHoldReadyToPickRule(Status));
+        CheckRule(new CannotRejectHoldWhenHoldGrantedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotRejectHoldWhenHoldLoanedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotRejectHoldWhenHoldCancelledRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotRejectHoldWhenHoldReadyToPickRule(PatronHoldDecision, LibraryHoldDecision));
         
         LibraryHoldDecision.Reject();
     }
 
     public void ApplyLibraryGrantDecision()
     {
-        CheckRule(new CannotGrantHoldWhenHoldCancelledRule(Status));
-        CheckRule(new CannotGrantHoldWhenHoldLoanedRule(Status));
-        CheckRule(new CannotGrantHoldWhenHoldRejectedRule(Status));
-        CheckRule(new CannotGrantHoldWhenHoldReadyToPickRule(Status));
+        CheckRule(new CannotGrantHoldWhenHoldCancelledRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotGrantHoldWhenHoldLoanedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotGrantHoldWhenHoldRejectedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotGrantHoldWhenHoldReadyToPickRule(PatronHoldDecision, LibraryHoldDecision));
         
         LibraryHoldDecision.Grant();
     }
 
     public void ApplyLibraryLoanDecision()
     {
-        CheckRule(new CannotLoanHoldWhenHoldGrantedRule(Status));
-        CheckRule(new CannotLoanHoldWhenHoldCancelledRule(Status));
-        CheckRule(new CannotLoanHoldWhenHoldRejectedRule(Status));
-        CheckRule(new CannotLoanHoldWhenHoldPendingRule(Status));
+        CheckRule(new CannotLoanHoldWhenHoldGrantedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotLoanHoldWhenHoldCancelledRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotLoanHoldWhenHoldRejectedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotLoanHoldWhenHoldPendingRule(PatronHoldDecision, LibraryHoldDecision));
         
         LibraryHoldDecision.Loan();
     }
 
     public void ApplyLibraryCancelDecision()
     {
-        CheckRule(new CannotCancelHoldWhenHoldPendingRule(Status));
-        CheckRule(new CannotCancelHoldWhenHoldRejectedRule(Status));
-        CheckRule(new CannotCancelHoldWhenHoldLoanedRule(Status));
+        CheckRule(new CannotCancelHoldWhenHoldPendingRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotCancelHoldWhenHoldRejectedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotCancelHoldWhenHoldLoanedRule(PatronHoldDecision, LibraryHoldDecision));
 
         LibraryHoldDecision.Cancel();
     }
 
     public void ApplyPatronCancelDecision()
     {
-        CheckRule(new CannotCancelHoldWhenHoldPendingRule(Status));
-        CheckRule(new CannotCancelHoldWhenHoldRejectedRule(Status));
-        CheckRule(new CannotCancelHoldWhenHoldLoanedRule(Status));
-        CheckRule(new PatronCannotCancelHoldWhenHoldReadyToPickRule(Status));
+        CheckRule(new CannotCancelHoldWhenHoldPendingRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotCancelHoldWhenHoldRejectedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotCancelHoldWhenHoldLoanedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new PatronCannotCancelHoldWhenHoldReadyToPickRule(PatronHoldDecision, LibraryHoldDecision));
         
         PatronHoldDecision.Cancel();
     }
 
     public void ApplyLibraryReadyToPickDecision()
     {
-        CheckRule(new CannotTagHoldReadyToPickWhenHoldCancelledRule(Status));
-        CheckRule(new CannotTagHoldReadyToPickWhenHoldPendingRule(Status));
-        CheckRule(new CannotTagHoldReadyToPickWhenHoldRejectedRule(Status));
-        CheckRule(new CannotTagHoldReadyToPickWhenHoldLoanedRule(Status));
+        CheckRule(new CannotTagHoldReadyToPickWhenHoldCancelledRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotTagHoldReadyToPickWhenHoldPendingRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotTagHoldReadyToPickWhenHoldRejectedRule(PatronHoldDecision, LibraryHoldDecision));
+        CheckRule(new CannotTagHoldReadyToPickWhenHoldLoanedRule(PatronHoldDecision, LibraryHoldDecision));
         
         LibraryHoldDecision.TagReadyToPick();
     }

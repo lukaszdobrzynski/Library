@@ -15,8 +15,6 @@ public class GrantHoldTests : HoldTestBase
 
         var domainEvent = AssertDomainEventPublished<GrantHoldLibraryDecisionAppliedDomainEvent>(hold);
         Assert.That(domainEvent.HoldId, Is.EqualTo(hold.Id));
-        AssertHoldStatusGranted(hold);
-        AssertHoldActive(hold);
     }
 
     [Test]
@@ -25,8 +23,6 @@ public class GrantHoldTests : HoldTestBase
         var hold = CreateRejectedHold();
         
         AssertBusinessRuleBroken<CannotGrantHoldWhenHoldRejectedRule>(() => hold.ApplyLibraryGrantDecision());
-        AssertHoldStatusRejected(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -35,8 +31,6 @@ public class GrantHoldTests : HoldTestBase
         var hold = CreateLoanedHold();
         
         AssertBusinessRuleBroken<CannotGrantHoldWhenHoldLoanedRule>(() => hold.ApplyLibraryGrantDecision());
-        AssertHoldStatusLoaned(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -45,8 +39,6 @@ public class GrantHoldTests : HoldTestBase
         var hold = CreateCancelledHold();
 
         AssertBusinessRuleBroken<CannotGrantHoldWhenHoldCancelledRule>(() => hold.ApplyLibraryGrantDecision());
-        AssertHoldStatusCancelled(hold);
-        AssertHoldNotActive(hold);
     }
 
     [Test]
@@ -55,7 +47,5 @@ public class GrantHoldTests : HoldTestBase
         var hold = CreateHoldReadyToPick();
         
         AssertBusinessRuleBroken<CannotGrantHoldWhenHoldReadyToPickRule>(() => hold.ApplyLibraryGrantDecision());
-        AssertHoldStatusReadyToPick(hold);
-        AssertHoldActive(hold);
     }
 }

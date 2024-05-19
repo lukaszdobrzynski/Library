@@ -6,9 +6,9 @@ public class CannotRejectHoldWhenHoldGrantedRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotRejectHoldWhenHoldGrantedRule(HoldStatus holdStatus)
+    public CannotRejectHoldWhenHoldGrantedRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
     {
-        _holdStatus = holdStatus;
+        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
     }
 
     public bool IsBroken() => _holdStatus == HoldStatus.Granted;

@@ -6,9 +6,9 @@ public class CannotRejectHoldWhenHoldLoanedRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotRejectHoldWhenHoldLoanedRule(HoldStatus holdStatus)
+    public CannotRejectHoldWhenHoldLoanedRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
     {
-        _holdStatus = holdStatus;
+        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
     }
 
     public bool IsBroken() => _holdStatus == HoldStatus.Loaned;

@@ -1,6 +1,8 @@
-﻿namespace Library.BuildingBlocks.Domain;
+﻿using MediatR;
 
-public interface IDomainEvent
+namespace Library.BuildingBlocks.Domain;
+
+public interface IDomainEvent : INotification
 {
     Guid Id { get; }
 
