@@ -8,15 +8,15 @@ namespace Library.Modules.Reservation.Domain.Patrons.Rules
         public const int MaxAllowedHolds = 5;
 
         private readonly PatronType _patronType;
-        private readonly List<ActiveHold> _existingHolds;
+        private readonly WeeklyHolds _weeklyHolds;
     
-        public RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(PatronType patronType, List<ActiveHold> existingHolds)
+        public RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(PatronType patronType, WeeklyHolds weeklyHolds)
         {
             _patronType = patronType;
-            _existingHolds = existingHolds;
+            _weeklyHolds = weeklyHolds;
         }
     
-        public bool IsBroken() => _patronType == PatronType.Regular && _existingHolds.Count >= MaxAllowedHolds;
+        public bool IsBroken() => _patronType == PatronType.Regular && _weeklyHolds.Holds.Count >= MaxAllowedHolds;
         public string Message => "Patron has reached maximum number of holds.";
     }
 }

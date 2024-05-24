@@ -6,11 +6,11 @@ public class CannotLoanHoldWhenHoldGrantedRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotLoanHoldWhenHoldGrantedRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
+    public CannotLoanHoldWhenHoldGrantedRule(HoldStatus holdStatus)
     {
-        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
+        _holdStatus = holdStatus;
     }
-    
+
     public bool IsBroken() => _holdStatus == HoldStatus.Granted;
     public string Message => "Cannot loan a granted hold.";
 }

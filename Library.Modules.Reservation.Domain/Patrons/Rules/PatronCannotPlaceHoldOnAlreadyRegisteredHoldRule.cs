@@ -1,21 +1,17 @@
 ﻿using Library.BuildingBlocks.Domain;
 using Library.Modules.Reservation.Domain.Books;
-using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Domain.Patrons.Rules;
 
 public class PatronCannotPlaceHoldOnExistingHoldRule : IBusinessRule
 {
-    private readonly List<ActiveHold> _holds;
-    private readonly BookId _bookIdToHold;
-
-    public PatronCannotPlaceHoldOnExistingHoldRule(List<ActiveHold> holds, BookId bookIdToHold)
+    private readonly BookToHold _bookToHold;
+    
+    public PatronCannotPlaceHoldOnExistingHoldRule(BookToHold bookToHold)
     {
-        _holds = holds;
-        _bookIdToHold = bookIdToHold;
+        _bookToHold = bookToHold;
     }
 
-    public bool IsBroken() => _holds.Any(x => x.BookId == _bookIdToHold);
-
+    public bool IsBroken() => _bookToHold.IsOnActiveHold;
     public string Message => "Patron cannot place hold on existing hold.";
 }

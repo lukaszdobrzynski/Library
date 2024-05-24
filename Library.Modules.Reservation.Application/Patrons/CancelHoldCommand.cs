@@ -2,9 +2,8 @@
 
 namespace Library.Modules.Reservation.Application.Patrons;
 
-public class CancelHoldCommand(Guid bookId, Guid libraryBranchId, Guid patronId) : CommandBase
+public class CancelHoldCommand(Guid patronId,  Guid holdId) : CommandBase
 {
-    public Guid BookId { get; private set; } = bookId;
-    public Guid LibraryBranchId { get; private set; } = libraryBranchId;
-    public Guid PatronId { get; private set; } = patronId;
+    public Guid PatronId { get; set; } = patronId;
+    public Guid HoldId { get; private set; } = holdId;
 }

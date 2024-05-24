@@ -16,5 +16,6 @@ public class CheckoutEntityTypeConfiguration : IEntityTypeConfiguration<Checkout
         builder.Property(p => p.BookId).HasColumnName("book_id");
         builder.Property(p => p.PatronId).HasColumnName("patron_id");
         builder.Property(p => p.DueDate).HasColumnName("due_date");
+        builder.Property(p => p.VersionId).HasColumnName("version_id").IsConcurrencyToken();
     }
 }

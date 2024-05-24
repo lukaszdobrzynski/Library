@@ -10,6 +10,6 @@ public class ApplyLibraryLoanHoldDecisionCommandHandler(IHoldRepository holdRepo
     {
         var hold = await holdRepository.GetByIdAsync(new HoldId(command.HoldId));
         
-        hold.ApplyLibraryLoanDecision();
+        hold.ApplyLoanDecision();
     }
 }

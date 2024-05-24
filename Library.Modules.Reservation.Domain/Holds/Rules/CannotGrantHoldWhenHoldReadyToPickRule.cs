@@ -6,9 +6,9 @@ public class CannotGrantHoldWhenHoldReadyToPickRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotGrantHoldWhenHoldReadyToPickRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
+    public CannotGrantHoldWhenHoldReadyToPickRule(HoldStatus holdStatus)
     {
-        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
+        _holdStatus = holdStatus;
     }
     
     public bool IsBroken() => _holdStatus == HoldStatus.ReadyToPick;

@@ -1,18 +1,10 @@
-﻿INSERT INTO reservations.books (id, library_branch_id, book_category) VALUES
-('1c7b1942-0f10-40f1-89b4-80612b594bae', 'f88e3c52-2ff1-4da3-bf58-49af81d61a62', 'Restricted'),
-('fc21cc7f-6d09-4f8e-b4f7-30ffca5f4be0', 'ff1e9a65-805d-45d5-9f6d-f3a78f8d7be6', 'Circulating'),
-('9a65ee64-f3d5-4b7e-b3f4-59aa57c76b1e', '0f52a80e-8483-4d19-9910-faeeb50f61c4', 'Circulating'),
-('a0e34936-6d8f-47d8-917e-c66e44152770', '9da9ef37-7cd3-4cd2-842d-1f7208ecfe4b', 'Restricted'),
-('77d4ff79-717e-4f68-ba7e-69de6117ef10', '43b298c3-243a-41ac-9b3d-105ed5105e90', 'Circulating'),
-('2f1f6e44-0b27-4d54-b43c-ae4566eeac8c', '3aeb7a78-2e84-41e3-88e7-84866b847731', 'Restricted'),
-('fd9b1b2e-4464-4463-bb62-0b55f7bb4e2b', 'f8425a49-cc55-4429-9a8e-91d9bdf68e9f', 'Circulating'),
-('3fe6879e-52f7-42a1-9f4b-8a4528bcb5a0', 'c7193827-d164-4f06-85e4-9fd0913fcd61', 'Restricted'),
-('aeb1de54-8675-45c2-8f55-4c6f94c1645f', '1470bc2b-3f1b-493b-ba6d-0f3a13cdd9bb', 'Circulating'),
-('9f091233-ee1a-448d-84aa-4b3778d0178d', 'b09ad75e-98d2-4f7e-99aa-8305e7438c12', 'Restricted'),
-('c636a695-00b4-4370-b02b-7d8933a8b5e2', '9e0cb11d-7b83-4041-8f0d-0893b0678851', 'Circulating'),
-('a65d2cf4-74b9-4e0b-b470-b9f12b9ef8d2', '7894a70e-132a-4fc0-ba15-27e3a7c30806', 'Restricted'),
-('75ab83f8-bc26-4f80-99dc-4fded6c18bb5', 'feb50dc0-4c95-4cd4-9d89-e6dd4fc2b452', 'Circulating'),
-('49a94f9e-d80e-49a5-9f89-975db54268ae', '80e3c6b2-7d45-43b4-9fa9-51fe0ee4229f', 'Restricted'),
-('529206ef-0d02-420a-aa6b-005e3c054867', '94a26860-63fc-4e8f-b4a8-6a8ed018a0ad', 'Circulating'),
-('0eaf7c86-c22a-4fe1-9508-08d3d52a8c78', '37a82c7c-9b4a-43cd-8091-1bcbbebcf79b', 'Restricted'),
-('01ff5291-1051-4e5d-99ad-1a97874cc8cd', 'fbf62a6e-c47e-4516-b1a5-d4485d1cb4b7', 'Circulating');
+﻿INSERT INTO reservations.books (id, library_branch_id, book_category, version_id) VALUES
+('01ff5291-1051-4e5d-99ad-1a97874cc8cd', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Restricted', 1),
+('9a65ee64-f3d5-4b7e-b3f4-59aa57c76b1e', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1),
+('77d4ff79-717e-4f68-ba7e-69de6117ef10', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1),
+('aeb1de54-8675-45c2-8f55-4c6f94c1645f', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Restricted', 1),
+('529206ef-0d02-420a-aa6b-005e3c054867', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1),
+('75ab83f8-bc26-4f80-99dc-4fded6c18bb5', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Restricted', 1),
+('49a94f9e-d80e-49a5-9f89-975db54268ae', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1),
+('1f2f8fb5-3a80-4b07-b537-07a28d4b6d29', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Restricted', 1),
+('0eaf7c86-c22a-4fe1-9508-08d3d52a8c78', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1);

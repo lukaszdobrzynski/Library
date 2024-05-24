@@ -16,11 +16,14 @@ public class HoldEntityTypeConfiguration : IEntityTypeConfiguration<Hold>
         builder.Property(x => x.BookId).HasColumnName("book_id");
         builder.Property(x => x.PatronId).HasColumnName("patron_id");
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
+        builder.Property(x => x.Till).HasColumnName("till");
+        builder.Property(x => x.IsActive).HasColumnName("is_active");
+        builder.Property(x => x.VersionId).HasColumnName("version_id").IsConcurrencyToken();
         builder.Ignore(x => x.DomainEvents);
-
-        builder.OwnsOne<HoldPeriod>("Period", b =>
+        
+        builder.OwnsOne<HoldStatus>("Status", b =>
         {
-            b.Property(p => p.Value).HasColumnName("period");
+            b.Property(p => p.Value).HasColumnName("status");
         });
     }
 }

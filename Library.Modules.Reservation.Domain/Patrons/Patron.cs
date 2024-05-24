@@ -6,7 +6,7 @@ using Library.Modules.Reservation.Domain.Patrons.Rules;
 
 namespace Library.Modules.Reservation.Domain.Patrons;
 
-public class Patron : Entity, IAggregateRoot
+public class Patron : AggregateRootBase
 {
     public PatronId Id { get; }
 
@@ -23,6 +23,7 @@ public class Patron : Entity, IAggregateRoot
         _patronType = patronType;
         
         AddDomainEvent(new PatronCreatedDomainEvent(Id));
+        IncreaseVersion();
     }
 
     public static Patron CreateRegular(Guid id)
@@ -35,33 +36,36 @@ public class Patron : Entity, IAggregateRoot
         return new Patron(new PatronId(id), PatronType.Researcher);
     }
 
-    public void PlaceOnHold(BookToHold bookToHold, List<ActiveHold> activeHolds, List<OverdueCheckout> overdueCheckouts)
+    public void PlaceOnHold(BookToHold bookToHold, List<OverdueCheckout> overdueCheckouts, WeeklyHolds weeklyHolds)
     {
-        CheckRule(new PatronCannotPlaceHoldOnExistingHoldRule(activeHolds, bookToHold.BookId));
+        CheckRule(new PatronCannotPlaceHoldOnExistingHoldRule(bookToHold));
         CheckRule(new RegularPatronCannotPlaceHoldOnRestrictedBookRule(_patronType, bookToHold.BookCategory));
-        CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(_patronType, activeHolds));
+        CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(_patronType, weeklyHolds));
         CheckRule(new PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule(overdueCheckouts));
 
-        var period = GetPeriod();
+        var period = GetHoldPeriodForPatron();
         AddDomainEvent(new BookPlacedOnHoldDomainEvent(bookToHold.BookId, Id, bookToHold.LibraryBranchId, period));
+        IncreaseVersion();
     }
 
-    public void CancelHold(BookOnHold bookOnHold, List<ActiveHold> activeHolds)
+    public void CancelHold(Hold hold)
     {
-        CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, bookOnHold));
-        CheckRule(new PatronCannotCancelNonExistingHoldRule(bookOnHold, activeHolds));
+        CheckRule(new PatronCannotCancelNonExistingHoldRule(hold));
+        CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, hold));
+        CheckRule(new PatronCanOnlyCancelGrantedHold(hold));
 
-        AddDomainEvent(new BookHoldCanceledDomainEvent(bookOnHold.BookId, bookOnHold.PatronId, bookOnHold.LibraryBranchId));
+        AddDomainEvent(new BookHoldCanceledDomainEvent(hold.BookId, hold.PatronId, hold.LibraryBranchId));
+        IncreaseVersion();
     }
 
-    private HoldPeriod GetPeriod()
+    private DateTime? GetHoldPeriodForPatron()
     {
         switch (_patronType)
         {
             case PatronType.Regular:
-                return HoldPeriod.Weekly;
+                return DateTime.UtcNow.Date.AddDays(7);
             case PatronType.Researcher:
-                return HoldPeriod.Unlimited;
+                return null;
             default:
                 throw new ArgumentException($"Unrecognized {nameof(PatronType)}: {_patronType}");
         }

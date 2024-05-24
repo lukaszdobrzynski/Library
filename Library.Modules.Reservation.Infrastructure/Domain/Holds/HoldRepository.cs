@@ -16,16 +16,27 @@ public class HoldRepository : IHoldRepository
     
     public Task<Hold> GetByIdAsync(HoldId holdId)
     {
-        return Task.FromResult(Hold.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid()), new PatronId(Guid.NewGuid()), HoldPeriod.Weekly));
+        return Task.FromResult(Hold.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid()), new PatronId(Guid.NewGuid()), DateTime.Today));
     }
 
-    public Task<List<Hold>> GetWeeklyHoldsByPatronIdAsync(PatronId patronId)
+    public async Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId)
     {
-        var weekAgo = DateTime.UtcNow.AddDays(-7).Date;
-        return _reservationContext.Holds
-            .Include(x => x.LibraryHoldDecision)
-            .Include(x => x.PatronHoldDecision)
-            .Where(x => x.PatronId == patronId && x.CreatedAt.Date >= weekAgo)
+        var hold = await _reservationContext.Holds
+            .Where(x => x.BookId == bookId && x.IsActive == true)
+            .SingleOrDefaultAsync();
+
+        return hold?.IsActive ?? false;
+    }
+
+    public Task<List<Hold>> GetWeeklyActiveHoldsByPatronIdAsync(PatronId patronId)
+    {
+        var today = DateTime.UtcNow.Date;
+        var weekAgo = today.AddDays(-7);
+
+        return  _reservationContext.Holds
+            .Where(x => x.PatronId == patronId && 
+                        x.IsActive == true && 
+                        x.CreatedAt >= weekAgo)
             .ToListAsync();
     }
 

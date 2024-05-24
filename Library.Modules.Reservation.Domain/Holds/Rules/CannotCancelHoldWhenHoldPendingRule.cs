@@ -6,11 +6,11 @@ public class CannotCancelHoldWhenHoldPendingRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
     
-    public CannotCancelHoldWhenHoldPendingRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
+    public CannotCancelHoldWhenHoldPendingRule(HoldStatus holdStatus)
     {
-        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
+        _holdStatus = holdStatus;
     }
 
-    public bool IsBroken() => _holdStatus == HoldStatus.Pending;
+    public bool IsBroken() => _holdStatus == HoldStatus.PendingConfirmation;
     public string Message => "Cannot cancel hold when hold is pending.";
 }

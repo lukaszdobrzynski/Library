@@ -6,11 +6,11 @@ public class CannotLoanHoldWhenHoldPendingRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
     
-    public CannotLoanHoldWhenHoldPendingRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
+    public CannotLoanHoldWhenHoldPendingRule(HoldStatus holdStatus)
     {
-        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
+        _holdStatus = holdStatus;
     }
 
-    public bool IsBroken() => _holdStatus == HoldStatus.Pending;
+    public bool IsBroken() => _holdStatus == HoldStatus.PendingConfirmation;
     public string Message => "Cannot loan a pending hold.";
 }

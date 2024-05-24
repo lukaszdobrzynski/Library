@@ -6,9 +6,9 @@ public class CannotTagHoldReadyToPickWhenHoldRejectedRule : IBusinessRule
 {
     private readonly HoldStatus _holdStatus;
 
-    public CannotTagHoldReadyToPickWhenHoldRejectedRule(PatronHoldDecision patronHoldDecision, LibraryHoldDecision libraryHoldDecision)
+    public CannotTagHoldReadyToPickWhenHoldRejectedRule(HoldStatus holdStatus)
     {
-        _holdStatus = HoldStatus.From(patronHoldDecision.DecisionStatus, libraryHoldDecision.DecisionStatus);
+        _holdStatus = holdStatus;
     }
     
     public bool IsBroken() => _holdStatus == HoldStatus.Rejected;

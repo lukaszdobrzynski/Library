@@ -17,16 +17,18 @@ public class PlaceBookOnHoldCommandHandler(
     {
         var patron = await patronRepository.GetByIdAsync(new PatronId(command.PatronId));
         var book = await bookRepository.GetByIdAsync(new BookId(command.BookId));
-        var holds = await holdRepository.GetWeeklyHoldsByPatronIdAsync(new PatronId(command.PatronId));
+        var isBookOnActiveHold = await holdRepository.ActiveHoldExistsByBookIdAsync(book.Id);
         var checkouts =
             await checkoutRepository.GetOverdueCheckoutsByPatronIdAsync(new PatronId(command.PatronId));
-        
-        var bookToHold = BookToHold.Create(book.Id, book.LibraryBranchId, patron.Id, book.BookCategory);
-        var activeHolds = holds.Select(x => ActiveHold.Create(x.BookId)).ToList();
+        var weeklyActiveHolds = await holdRepository.GetWeeklyActiveHoldsByPatronIdAsync(new PatronId(command.PatronId));
+            
+        var bookToHold = BookToHold.Create(book.Id, book.LibraryBranchId, book.BookCategory, isBookOnActiveHold);
         var overdueCheckouts = checkouts.Select(x => 
                 OverdueCheckout.Create(x.BookId, x.LibraryBranchId))
             .ToList();
+        var weeklyHolds =
+            WeeklyHolds.Create(new PatronId(command.PatronId), weeklyActiveHolds.Select(x => x.Id).ToList());
         
-        patron.PlaceOnHold(bookToHold, activeHolds, overdueCheckouts);
+        patron.PlaceOnHold(bookToHold, overdueCheckouts, weeklyHolds);
     }
 }

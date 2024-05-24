@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Domain.Books;
 
-public class Book : Entity, IAggregateRoot
+public class Book : AggregateRootBase
 {
     public BookId Id { get; private set; }
     public LibraryBranchId LibraryBranchId { get; private set; }

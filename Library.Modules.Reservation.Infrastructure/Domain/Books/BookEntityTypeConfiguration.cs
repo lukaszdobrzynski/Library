@@ -13,6 +13,7 @@ public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).HasColumnName("id");
         builder.Property(x => x.LibraryBranchId).HasColumnName("library_branch_id");
+        builder.Property(x => x.VersionId).HasColumnName("version_id").IsConcurrencyToken();
         
         builder.OwnsOne<BookCategory>("BookCategory", b =>
         {

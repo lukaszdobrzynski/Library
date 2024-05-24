@@ -10,6 +10,6 @@ public class ApplyLibraryHoldReadyToPickDecisionCommandHandler(IHoldRepository h
     {
         var hold = await holdRepository.GetByIdAsync(new HoldId(command.HoldId));
         
-        hold.ApplyLibraryReadyToPickDecision();
+        hold.ApplyReadyToPickDecision();
     }
 }

@@ -27,8 +27,6 @@ public class ReservationContext : DbContext
         modelBuilder.ApplyConfiguration(new PatronEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new BookEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new HoldEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new LibraryHoldDecisionEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new PatronHoldDecisionEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CheckoutEntityTypeConfiguration());
     }
 }

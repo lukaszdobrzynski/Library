@@ -1,5 +1,5 @@
 ﻿using Library.BuildingBlocks.Domain;
-using Library.Modules.Reservation.Domain.Books;
+using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Domain.Patrons.Rules
 {
@@ -7,17 +7,17 @@ namespace Library.Modules.Reservation.Domain.Patrons.Rules
     {
         private PatronId _patronId;
 
-        private BookOnHold _bookOnHold;
+        private Hold _hold;
     
-        public PatronCannotCancelHoldOwnedByAnotherPatronRule(PatronId patronId, BookOnHold bookOnHold)
+        public PatronCannotCancelHoldOwnedByAnotherPatronRule(PatronId patronId, Hold hold)
         {
             _patronId = patronId;
-            _bookOnHold = bookOnHold;
+            _hold = hold;
         }
     
         public bool IsBroken()
         {
-            return _patronId != _bookOnHold.PatronId;
+            return _patronId != _hold.PatronId;
         }
 
         public string Message => "Patron cannot cancel a hold owned by another patron.";

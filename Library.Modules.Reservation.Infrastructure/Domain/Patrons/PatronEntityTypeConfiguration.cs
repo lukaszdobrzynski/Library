@@ -11,8 +11,10 @@ public class PatronEntityTypeConfiguration : IEntityTypeConfiguration<Patron>
         builder.ToTable("patrons", "reservations");
 
         builder.HasKey(x => x.Id);
-        builder.Property(p => p.Id).HasColumnName("id");
-
+        builder.Property(x => x.Id).HasColumnName("id");
+        builder.Property(x => x.VersionId).HasColumnName("version_id").IsConcurrencyToken();
+        builder.Ignore(x => x.DomainEvents);
+        
         builder.OwnsOne<PatronType>("_patronType", b =>
         {
             b.Property(p => p.Type).HasColumnName("patron_type");

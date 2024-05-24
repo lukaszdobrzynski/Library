@@ -20,7 +20,14 @@ public class ProcessingModule : Autofac.Module
             .As<IUnitOfWork>()
             .InstancePerLifetimeScope();
 
+        builder.RegisterType<RetryPolicyFactory>()
+            .As<IRetryPolicyFactory>()
+            .InstancePerLifetimeScope();
+        
         builder.RegisterGenericDecorator(typeof(UnitOfWorkCommandHandlerDecorator<>), 
+            typeof(IRequestHandler<>));
+        
+        builder.RegisterGenericDecorator(typeof(OptimisticConcurrencyCommandHandlerDecorator<>),
             typeof(IRequestHandler<>));
     }
 }

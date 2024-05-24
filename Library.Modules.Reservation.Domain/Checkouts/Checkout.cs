@@ -4,7 +4,7 @@ using Library.Modules.Reservation.Domain.Patrons;
 
 namespace Library.Modules.Reservation.Domain.Checkouts;
 
-public class Checkout : Entity, IAggregateRoot
+public class Checkout : AggregateRootBase
 {
     public CheckoutId Id { get; private set; }
     public PatronId PatronId { get; private set; }
