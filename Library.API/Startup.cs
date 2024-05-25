@@ -7,14 +7,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace Library.API;
 
 public class Startup
 {
+    private static ILogger _logger;
+    
     public Startup(IWebHostEnvironment env)
     {
-        
+        ConfigureLogger();
     }
     
     public void ConfigureServices(IServiceCollection services)
@@ -39,8 +42,15 @@ public class Startup
         app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
     }
 
+    private void ConfigureLogger()
+    {
+        _logger = new LoggerConfiguration()
+            .WriteTo.Console()
+            .CreateLogger();
+    }
+
     private void InitializeModules()
     {
-        ReservationStartup.Init("Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin");
+        ReservationStartup.Init("Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", _logger);
     }
 }
