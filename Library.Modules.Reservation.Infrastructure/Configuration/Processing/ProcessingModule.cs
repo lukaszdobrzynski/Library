@@ -29,5 +29,8 @@ public class ProcessingModule : Autofac.Module
         
         builder.RegisterGenericDecorator(typeof(OptimisticConcurrencyCommandHandlerDecorator<>),
             typeof(IRequestHandler<>));
+        
+        builder.RegisterGenericDecorator(typeof(ValidationCommandHandlerDecorator<>),
+        typeof(IRequestHandler<>));
     }
 }

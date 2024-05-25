@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Library.Modules.Reservation.Application.Contracts;
 using Library.Modules.Reservation.Application.Patrons;
+using Library.Modules.Reservation.Application.Patrons.PlaceBookOnHold;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Modules.Reservation;

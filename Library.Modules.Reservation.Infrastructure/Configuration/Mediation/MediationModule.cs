@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FluentValidation;
 using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Reservation.Application.Contracts;
 using MediatR;
@@ -24,6 +25,7 @@ public class MediationModule : Autofac.Module
             typeof(IRequestHandler<,>),
             typeof(IRequestHandler<>),
             typeof(INotificationHandler<>),
+            typeof(IValidator<>)
         };
 
         foreach (var openHandlerType in openHandlerTypes)
