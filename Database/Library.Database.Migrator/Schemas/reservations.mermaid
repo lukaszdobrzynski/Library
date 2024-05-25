@@ -17,18 +17,9 @@
         book_id uuid FK
         library_branch_id uuid
         status string
-    }
-    
-    PatronHoldDecision {
-        id uuid PK
-        hold_id uuid FK
-        decision_status string
-    }
-    
-    LibraryHoldDecision {
-        id uuid PK
-        hold_id uuid FK
-        decision_status string
+        created_at date
+        till date
+        is_active bool
     }
     
     Checkout {
@@ -39,8 +30,6 @@
         due_date date
     }
     
-    Hold || -- || LibraryHoldDecision : has
-    Hold || -- || PatronHoldDecision: has
     Hold || -- || Patron: is_placed_by
     Hold || -- || Book: is_placed_on
     Patron || -- o{ Checkout: has
