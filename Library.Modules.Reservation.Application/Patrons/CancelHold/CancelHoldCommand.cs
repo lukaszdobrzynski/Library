@@ -1,6 +1,6 @@
 ﻿using Library.Modules.Reservation.Application.Contracts;
 
-namespace Library.Modules.Reservation.Application.Patrons;
+namespace Library.Modules.Reservation.Application.Patrons.CancelHold;
 
 public class CancelHoldCommand(Guid patronId,  Guid holdId) : CommandBase
 {

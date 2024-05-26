@@ -2,7 +2,7 @@
 using Library.Modules.Reservation.Domain.Holds;
 using Library.Modules.Reservation.Domain.Patrons;
 
-namespace Library.Modules.Reservation.Application.Patrons;
+namespace Library.Modules.Reservation.Application.Patrons.CancelHold;
 
 public class CancelHoldCommandHandler(IPatronRepository patronRepository, IHoldRepository holdRepository)
     : ICommandHandler<CancelHoldCommand>

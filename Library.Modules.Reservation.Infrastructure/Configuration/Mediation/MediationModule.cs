@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using FluentValidation;
+using Library.BuildingBlocks.Application.Events;
 using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Reservation.Application.Contracts;
 using MediatR;
@@ -34,5 +35,9 @@ public class MediationModule : Autofac.Module
                 .AsClosedTypesOf(openHandlerType)
                 .InstancePerLifetimeScope();
         }
+
+        builder.RegisterAssemblyTypes(typeof(IReservationModule).Assembly)
+            .AsClosedTypesOf(typeof(IDomainEventNotification<>))
+            .InstancePerDependency();
     }
 }
