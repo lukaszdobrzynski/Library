@@ -1,6 +1,6 @@
 ﻿using Library.Modules.Reservation.Application.Contracts;
 
-namespace Library.Modules.Reservation.Application.Holds;
+namespace Library.Modules.Reservation.Application.Holds.CancelHold;
 
 public class ApplyLibraryCancelHoldDecisionCommand(Guid holdId) : CommandBase
 {

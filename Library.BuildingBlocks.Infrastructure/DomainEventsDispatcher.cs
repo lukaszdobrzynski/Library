@@ -53,7 +53,7 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
 
         foreach (var domainNotification in domainNotifications)
         {
-            var type = domainNotification.GetType().Name;
+            var type = domainNotification.GetType().Name;  //TODO USE MAP
             var data = JsonConvert.SerializeObject(domainNotification);
 
             var outboxMessage = new OutboxMessage(domainNotification.Id,

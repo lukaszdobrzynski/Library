@@ -1,7 +1,7 @@
 ﻿using Library.Modules.Reservation.Application.Contracts;
 using Library.Modules.Reservation.Domain.Holds;
 
-namespace Library.Modules.Reservation.Application.Holds;
+namespace Library.Modules.Reservation.Application.Holds.CancelHold;
 
 public class ApplyPatronCancelHoldDecisionCommandHandler(IHoldRepository holdRepository)
     : ICommandHandler<ApplyPatronCancelHoldDecisionCommand>

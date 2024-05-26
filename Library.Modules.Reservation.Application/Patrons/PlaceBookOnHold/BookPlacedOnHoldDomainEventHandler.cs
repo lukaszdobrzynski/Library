@@ -2,7 +2,7 @@
 using Library.Modules.Reservation.Domain.Patrons.Events;
 using MediatR;
 
-namespace Library.Modules.Reservation.Application.Holds;
+namespace Library.Modules.Reservation.Application.Patrons.PlaceBookOnHold;
 
 public class BookPlacedOnHoldDomainEventHandler(IHoldRepository holdRepository) : INotificationHandler<BookPlacedOnHoldDomainEvent>
 {
