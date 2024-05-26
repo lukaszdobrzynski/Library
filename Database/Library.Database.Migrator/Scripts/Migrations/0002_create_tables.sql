@@ -1,3 +1,12 @@
+CREATE TABLE IF NOT EXISTS reservations.outbox_messages (
+    id uuid NOT NULL,
+    occurred_on date NOT NULL,
+    processed_at date,
+    type VARCHAR NOT NULL,
+    data VARCHAR NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS reservations.patrons (
     id uuid NOT NULL,
     patron_type VARCHAR NOT NULL,
