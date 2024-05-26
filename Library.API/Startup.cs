@@ -1,13 +1,17 @@
 ﻿using System;
+using System.IO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Library.API.ExecutionContext;
 using Library.API.Modules.Reservation;
+using Library.BuildingBlocks.Application;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Formatting.Compact;
 
 namespace Library.API;
 
@@ -24,8 +28,7 @@ public class Startup
     {
         services.AddControllers();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        
-        InitializeModules();
+        services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
     }
     
     public void ConfigureContainer(ContainerBuilder containerBuilder)
@@ -36,6 +39,10 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
     {
         var container = app.ApplicationServices.GetAutofacRoot();
+        
+        InitializeModules(container);
+
+        app.UseMiddleware<CorrelationMiddleware>();
 
         app.UseRouting();
 
@@ -45,12 +52,16 @@ public class Startup
     private void ConfigureLogger()
     {
         _logger = new LoggerConfiguration()
-            .WriteTo.Console()
+            .Enrich.FromLogContext()
+            .WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] [{Module}] [{Context}] {Message:lj} {NewLine} {Exception}")
+            .WriteTo.RollingFile(new CompactJsonFormatter(), Path.Combine(AppContext.BaseDirectory, "logs/logs"))
             .CreateLogger();
     }
 
-    private void InitializeModules()
+    private void InitializeModules(ILifetimeScope container)
     {
-        ReservationStartup.Init("Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", _logger);
+        var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
+        
+        ReservationStartup.Init("Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", executionContextAccessor, _logger);
     }
 }
