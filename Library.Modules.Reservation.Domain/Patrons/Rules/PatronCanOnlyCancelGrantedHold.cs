@@ -5,14 +5,14 @@ namespace Library.Modules.Reservation.Domain.Patrons.Rules;
 
 public class PatronCanOnlyCancelGrantedHold : IBusinessRule
 {
-    private readonly Hold _hold;
+    private readonly HoldToCancel _holdToCancel;
     
-    public PatronCanOnlyCancelGrantedHold(Hold hold)
+    public PatronCanOnlyCancelGrantedHold(HoldToCancel holdToCancel)
     {
-        _hold = hold;
+        _holdToCancel = holdToCancel;
     }
 
-    public bool IsBroken() => _hold.Status == HoldStatus.Granted;
+    public bool IsBroken() => _holdToCancel.Status == HoldStatus.Granted;
 
     public string Message => "Patron can only cancel granted hold.";
 }

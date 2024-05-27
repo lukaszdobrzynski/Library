@@ -4,6 +4,7 @@ using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration.Logging;
 using Library.Modules.Reservation.Infrastructure.Configuration.Mediation;
 using Library.Modules.Reservation.Infrastructure.Configuration.Processing;
+using Library.Modules.Reservation.Infrastructure.Outbox;
 using ILogger = Serilog.ILogger;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration;
@@ -26,6 +27,7 @@ public static class ReservationStartup
         containerBuilder.RegisterModule(new DataAccessModule(databaseConnectionString));
         containerBuilder.RegisterModule(new ProcessingModule());
         containerBuilder.RegisterModule(new MediationModule());
+        containerBuilder.RegisterModule(new OutboxModule());
         
         containerBuilder.RegisterInstance(executionContextAccessor);
 

@@ -6,7 +6,7 @@ public class HoldStatus : ValueObject
 {
     public string Value { get; }
 
-    public const string PendingConfirmation = nameof(PendingConfirmation);
+    public const string Pending = nameof(Pending);
     public const string Cancelled = nameof(Cancelled);
     public const string Granted = nameof(Granted);
     public const string Rejected = nameof(Rejected);

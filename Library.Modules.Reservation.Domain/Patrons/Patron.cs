@@ -36,11 +36,11 @@ public class Patron : AggregateRootBase
         return new Patron(new PatronId(id), PatronType.Researcher);
     }
 
-    public void PlaceOnHold(BookToHold bookToHold, List<OverdueCheckout> overdueCheckouts, WeeklyHolds weeklyHolds)
+    public void PlaceOnHold(BookToHold bookToHold, List<OverdueCheckout> overdueCheckouts, WeeklyActiveHolds weeklyActiveHolds)
     {
         CheckRule(new PatronCannotPlaceHoldOnExistingHoldRule(bookToHold));
         CheckRule(new RegularPatronCannotPlaceHoldOnRestrictedBookRule(_patronType, bookToHold.BookCategory));
-        CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(_patronType, weeklyHolds));
+        CheckRule(new RegularPatronCannotPlaceHoldWhenMaxHoldsLimitExceededRule(_patronType, weeklyActiveHolds));
         CheckRule(new PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule(overdueCheckouts));
 
         var period = GetHoldPeriodForPatron();
@@ -48,13 +48,15 @@ public class Patron : AggregateRootBase
         IncreaseVersion();
     }
 
-    public void CancelHold(Hold hold)
+    public void CancelHold(HoldToCancel holdToCancel)
     {
-        CheckRule(new PatronCannotCancelNonExistingHoldRule(hold));
-        CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, hold));
-        CheckRule(new PatronCanOnlyCancelGrantedHold(hold));
+        CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, holdToCancel));
+        CheckRule(new PatronCanOnlyCancelGrantedHold(holdToCancel));
 
-        AddDomainEvent(new BookHoldCanceledDomainEvent(hold.BookId, hold.PatronId, hold.LibraryBranchId));
+        AddDomainEvent(new BookHoldCanceledDomainEvent(holdToCancel.BookId, 
+            holdToCancel.OwningPatronId, 
+            holdToCancel.LibraryBranchId, 
+            holdToCancel.HoldId));
         IncreaseVersion();
     }
 

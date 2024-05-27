@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Application.Holds.LoanHold;
 
-public class LoanHoldCommand(Guid holdId) : CommandBase
+public class ApplyLoanHoldDecisionCommand(Guid holdId) : CommandBase
 {
     public Guid HoldId { get; private set; } = holdId;
 }

@@ -3,10 +3,10 @@ using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Application.Holds.GrantHold;
 
-public class GrantHoldCommandHandler(IHoldRepository holdRepository)
-    : ICommandHandler<GrantHoldCommand>
+public class ApplyGrantHoldDecisionCommandHandler(IHoldRepository holdRepository)
+    : ICommandHandler<ApplyGrantHoldDecisionCommand>
 {
-    public async Task Handle(GrantHoldCommand command, CancellationToken cancellationToken)
+    public async Task Handle(ApplyGrantHoldDecisionCommand command, CancellationToken cancellationToken)
     {
         var hold = await holdRepository.GetByIdAsync(new HoldId(command.HoldId));
         

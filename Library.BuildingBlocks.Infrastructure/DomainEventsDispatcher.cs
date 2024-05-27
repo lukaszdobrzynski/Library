@@ -13,16 +13,21 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
     private readonly IDomainEventsAccessor _domainEventsAccessor;
     private readonly IMediator _mediator;
     private readonly ILifetimeScope _scope;
+    private readonly IOutboxAccessor _outboxAccessor;
     
-    public DomainEventsDispatcher(IDomainEventsAccessor domainEventsAccessor, IMediator mediator, ILifetimeScope scope)
+    public DomainEventsDispatcher(
+        IDomainEventsAccessor domainEventsAccessor, 
+        IMediator mediator, 
+        ILifetimeScope scope, 
+        IOutboxAccessor outboxAccessor)
     {
         _domainEventsAccessor = domainEventsAccessor;
         _mediator = mediator;
         _scope = scope;
-
+        _outboxAccessor = outboxAccessor;
     }
     
-    public Task DispatchEventsAsync()
+    public async Task DispatchEventsAsync()
     {
         var domainEvents = _domainEventsAccessor.GetAllDomainEvents();
 
@@ -48,7 +53,7 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
 
         foreach (var domainEvent in domainEvents)
         {
-            _mediator.Publish(domainEvent);
+            await _mediator.Publish(domainEvent);
         }
 
         foreach (var domainNotification in domainNotifications)
@@ -61,8 +66,7 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
                 type,
                 data);
 
-            //TODO dispatch notifications
+            _outboxAccessor.Add(outboxMessage);
         }
-        return Task.CompletedTask;
     }
 }

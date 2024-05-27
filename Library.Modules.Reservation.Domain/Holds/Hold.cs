@@ -30,7 +30,7 @@ public class Hold : AggregateRootBase
         PatronId = patronId;
         Till = till;
         CreatedAt = DateTime.UtcNow;
-        Status = HoldStatus.PendingConfirmation;
+        Status = HoldStatus.Pending;
         IsActive = IsHoldActive();
         
         AddDomainEvent(new HoldCreatedDomainEvent(Id));
@@ -119,7 +119,7 @@ public class Hold : AggregateRootBase
     
     private bool IsHoldActive()
     {
-        return Status == HoldStatus.PendingConfirmation || 
+        return Status == HoldStatus.Pending || 
                Status == HoldStatus.Granted || 
                Status == HoldStatus.ReadyToPick;
     }

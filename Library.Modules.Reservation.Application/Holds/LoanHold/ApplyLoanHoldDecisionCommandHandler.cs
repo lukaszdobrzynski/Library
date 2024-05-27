@@ -3,10 +3,10 @@ using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Application.Holds.LoanHold;
 
-public class LoanHoldCommandHandler(IHoldRepository holdRepository)
-    : ICommandHandler<LoanHoldCommand>
+public class ApplyLoanHoldDecisionCommandHandler(IHoldRepository holdRepository)
+    : ICommandHandler<ApplyLoanHoldDecisionCommand>
 {
-    public async Task Handle(LoanHoldCommand command, CancellationToken cancellationToken)
+    public async Task Handle(ApplyLoanHoldDecisionCommand command, CancellationToken cancellationToken)
     {
         var hold = await holdRepository.GetByIdAsync(new HoldId(command.HoldId));
         

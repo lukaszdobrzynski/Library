@@ -11,7 +11,9 @@ public class CancelHoldCommandHandler(IPatronRepository patronRepository, IHoldR
     {
         var patron = await patronRepository.GetByIdAsync(new PatronId(command.PatronId));
         var hold = await holdRepository.GetByIdAsync(new HoldId(command.HoldId));
+
+        var holdToCancel = HoldToCancel.Create(patron.Id, hold.Id, hold.BookId, hold.LibraryBranchId, hold.Status);
         
-        patron.CancelHold(hold);
+        patron.CancelHold(holdToCancel);
     }
 }

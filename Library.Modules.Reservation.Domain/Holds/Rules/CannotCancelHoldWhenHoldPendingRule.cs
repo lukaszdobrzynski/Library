@@ -11,6 +11,6 @@ public class CannotCancelHoldWhenHoldPendingRule : IBusinessRule
         _holdStatus = holdStatus;
     }
 
-    public bool IsBroken() => _holdStatus == HoldStatus.PendingConfirmation;
+    public bool IsBroken() => _holdStatus == HoldStatus.Pending;
     public string Message => "Cannot cancel hold when hold is pending.";
 }

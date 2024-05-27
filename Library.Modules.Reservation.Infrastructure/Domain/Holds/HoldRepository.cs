@@ -14,9 +14,9 @@ public class HoldRepository : IHoldRepository
         _reservationContext = reservationContext;
     }
     
-    public Task<Hold> GetByIdAsync(HoldId holdId)
+    public async Task<Hold> GetByIdAsync(HoldId holdId)
     {
-        return Task.FromResult(Hold.Create(new BookId(Guid.NewGuid()), new LibraryBranchId(Guid.NewGuid()), new PatronId(Guid.NewGuid()), DateTime.Today));
+        return await _reservationContext.Holds.SingleAsync(x => x.Id == holdId);
     }
 
     public async Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId)

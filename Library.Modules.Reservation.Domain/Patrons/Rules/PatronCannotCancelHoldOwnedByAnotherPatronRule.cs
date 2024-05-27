@@ -5,19 +5,18 @@ namespace Library.Modules.Reservation.Domain.Patrons.Rules
 {
     public class PatronCannotCancelHoldOwnedByAnotherPatronRule : IBusinessRule
     {
-        private PatronId _patronId;
+        private readonly PatronId _patronId;
+        private readonly HoldToCancel _holdToCancel;
 
-        private Hold _hold;
-    
-        public PatronCannotCancelHoldOwnedByAnotherPatronRule(PatronId patronId, Hold hold)
+        public PatronCannotCancelHoldOwnedByAnotherPatronRule(PatronId patronId, HoldToCancel holdToCancel)
         {
             _patronId = patronId;
-            _hold = hold;
+            _holdToCancel = holdToCancel;
         }
     
         public bool IsBroken()
         {
-            return _patronId != _hold.PatronId;
+            return _patronId != _holdToCancel.OwningPatronId;
         }
 
         public string Message => "Patron cannot cancel a hold owned by another patron.";
