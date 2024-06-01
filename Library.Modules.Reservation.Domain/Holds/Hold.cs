@@ -50,6 +50,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Rejected;
         IsActive = IsHoldActive();
         
+        AddDomainEvent(new HoldRejectedDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -63,6 +64,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Granted;
         IsActive = IsHoldActive();
         
+        AddDomainEvent(new HoldGrantedDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -75,7 +77,8 @@ public class Hold : AggregateRootBase
         
         Status = HoldStatus.Loaned;
         IsActive = IsHoldActive();
-        
+
+        AddDomainEvent(new HoldLoanedDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -88,6 +91,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Cancelled;
         IsActive = IsHoldActive();
         
+        AddDomainEvent(new HoldCanceledDomainEvent(Id));
         IncreaseVersion();
     } 
 
@@ -101,6 +105,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Cancelled;
         IsActive = IsHoldActive();
         
+        AddDomainEvent(new HoldCanceledDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -114,6 +119,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.ReadyToPick;
         IsActive = IsHoldActive();
         
+        AddDomainEvent(new HoldCanceledDomainEvent(Id));
         IncreaseVersion();
     }
     

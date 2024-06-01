@@ -1,6 +1,5 @@
 ﻿using Library.BuildingBlocks.Domain;
 using Library.Modules.Reservation.Domain.Books;
-using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Domain.Patrons.Events;
 

@@ -26,7 +26,7 @@ public class RegularPatronCancelHoldTests : TestBase
     }
     
     [Test]
-    public void Fails_WhenHoldOwnedByAnotherPatron()
+    public void Fails_WhenPatronDoesNotOwnHold()
     {
         var patron = Patron.CreateRegular(Guid.NewGuid());
 

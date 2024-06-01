@@ -26,7 +26,7 @@ public class ResearcherPatronCancelHoldTests : TestBase
     }
     
     [Test]
-    public void Fails_WhenHoldOwnedByAnotherPatron()
+    public void Fails_WhenPatronDoesNotOwnHold()
     {
         var patron = Patron.CreateResearcher(Guid.NewGuid());
 
