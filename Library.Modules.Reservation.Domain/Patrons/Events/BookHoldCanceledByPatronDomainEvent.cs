@@ -4,19 +4,21 @@ using Library.Modules.Reservation.Domain.Holds;
 
 namespace Library.Modules.Reservation.Domain.Patrons.Events;
 
-public class BookHoldCanceledDomainEvent : DomainEventBase
+public class BookHoldCanceledByPatronDomainEvent : DomainEventBase
 {
     public BookId BookId { get; private set; }
     public PatronId PatronId { get; private set; }
     public LibraryBranchId LibraryBranchId { get; private set; }
-
     public HoldId HoldId { get; set; }
 
-    public BookHoldCanceledDomainEvent(BookId bookId, PatronId patronId, LibraryBranchId libraryBranchId, HoldId holdId)
+    public HoldStatus HoldStatus { get; set; }
+
+    public BookHoldCanceledByPatronDomainEvent(BookId bookId, PatronId patronId, LibraryBranchId libraryBranchId, HoldId holdId, HoldStatus holdStatus)
     {
         BookId = bookId;
         PatronId = patronId;
         LibraryBranchId = libraryBranchId;
         HoldId = holdId;
+        HoldStatus = holdStatus;
     }
 }

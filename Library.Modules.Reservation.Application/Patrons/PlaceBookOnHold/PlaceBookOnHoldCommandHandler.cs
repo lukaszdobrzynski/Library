@@ -26,9 +26,9 @@ public class PlaceBookOnHoldCommandHandler(
         var overdueCheckouts = checkouts.Select(x => 
                 OverdueCheckout.Create(x.BookId, x.LibraryBranchId))
             .ToList();
-        var weeklyHolds =
-            WeeklyActiveHolds.Create(new PatronId(command.PatronId), holds.Count);
+        var activeHolds =
+            ActiveHolds.Create(holds.Count);
         
-        patron.PlaceOnHold(bookToHold, overdueCheckouts, weeklyHolds);
+        patron.PlaceOnHold(bookToHold, overdueCheckouts, activeHolds);
     }
 }

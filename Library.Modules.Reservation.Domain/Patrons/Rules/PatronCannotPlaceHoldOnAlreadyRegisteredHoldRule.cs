@@ -3,11 +3,11 @@ using Library.Modules.Reservation.Domain.Books;
 
 namespace Library.Modules.Reservation.Domain.Patrons.Rules;
 
-public class PatronCannotPlaceHoldOnExistingHoldRule : IBusinessRule
+public class PatronCannotPlaceHoldWhenBookOnActiveHoldRule : IBusinessRule
 {
     private readonly BookToHold _bookToHold;
     
-    public PatronCannotPlaceHoldOnExistingHoldRule(BookToHold bookToHold)
+    public PatronCannotPlaceHoldWhenBookOnActiveHoldRule(BookToHold bookToHold)
     {
         _bookToHold = bookToHold;
     }
