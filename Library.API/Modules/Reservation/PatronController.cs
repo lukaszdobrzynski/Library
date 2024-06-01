@@ -29,7 +29,7 @@ public class PatronController : ControllerBase
     [HttpPost("cancel-hold")]
     public async Task<IActionResult> CancelHold()
     {
-        await _reservationModule.ExecuteCommandAsync(new CancelHoldCommand(Guid.NewGuid(), Guid.NewGuid()));
+        await _reservationModule.ExecuteCommandAsync(new CancelHoldCommand(Guid.Parse("f0e4109e-4975-439a-aa11-d369f8d6a9ec"), Guid.Parse("563eff8c-ff16-4e4b-9cd2-1e9d7912f6d9")));
 
         return Ok();
     }

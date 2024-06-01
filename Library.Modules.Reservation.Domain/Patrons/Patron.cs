@@ -55,8 +55,7 @@ public class Patron : AggregateRootBase
         AddDomainEvent(new BookHoldCanceledByPatronDomainEvent(holdToCancel.BookId, 
             holdToCancel.OwningPatronId, 
             holdToCancel.LibraryBranchId, 
-            holdToCancel.HoldId,
-            holdToCancel.Status));
+            holdToCancel.HoldId));
         IncreaseVersion();
     }
 

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS reservations.outbox_messages (
     occurred_on date NOT NULL,
     processed_at date,
     type VARCHAR NOT NULL,
-    data VARCHAR NOT NULL,
+    data JSON NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -50,4 +50,4 @@ CREATE TABLE IF NOT EXISTS reservations.checkouts (
     due_date DATE NOT NULL, 
     version_id INTEGER NOT NULL,
     PRIMARY KEY (id)                                             
-)
+);

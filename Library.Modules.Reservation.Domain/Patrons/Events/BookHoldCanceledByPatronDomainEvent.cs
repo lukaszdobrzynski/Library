@@ -11,14 +11,11 @@ public class BookHoldCanceledByPatronDomainEvent : DomainEventBase
     public LibraryBranchId LibraryBranchId { get; private set; }
     public HoldId HoldId { get; set; }
 
-    public HoldStatus HoldStatus { get; set; }
-
-    public BookHoldCanceledByPatronDomainEvent(BookId bookId, PatronId patronId, LibraryBranchId libraryBranchId, HoldId holdId, HoldStatus holdStatus)
+    public BookHoldCanceledByPatronDomainEvent(BookId bookId, PatronId patronId, LibraryBranchId libraryBranchId, HoldId holdId)
     {
         BookId = bookId;
         PatronId = patronId;
         LibraryBranchId = libraryBranchId;
         HoldId = holdId;
-        HoldStatus = holdStatus;
     }
 }

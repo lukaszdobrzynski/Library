@@ -1,5 +1,6 @@
 ﻿INSERT INTO reservations.holds (id, patron_id, book_id, library_branch_id, till, created_at, status, is_active, version_id) VALUES
 ('6da47a28-04d2-4579-9f10-2a44b5d54e4a', 'f0e4109e-4975-439a-aa11-d369f8d6a9ec', '01ff5291-1051-4e5d-99ad-1a97874cc8cd','f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', '2024-05-17', '2024-05-10', 'loaned', false, 2),
+('563eff8c-ff16-4e4b-9cd2-1e9d7912f6d9', 'f0e4109e-4975-439a-aa11-d369f8d6a9ec', '01ff5291-1051-4e5d-99ad-1a97874cc8cd','f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', '2024-06-07', '2024-06-01', 'granted', true, 2),
 ('3bfde3a9-4d8a-4c5e-8b5f-9f57262231f1', 'f0e4109e-4975-439a-aa11-d369f8d6a9ec', '9a65ee64-f3d5-4b7e-b3f4-59aa57c76b1e','f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', '2024-05-18', '2024-05-11', 'cancelled', false, 2),
 ('1e6bb6f9-70be-42e2-a9c3-273c859ed979', 'f0e4109e-4975-439a-aa11-d369f8d6a9ec', '77d4ff79-717e-4f68-ba7e-69de6117ef10','f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', '2024-05-19', '2024-05-12', 'cancelled', false, 2),
 ('7d3a042c-41dc-4b39-bb8e-53b87dc5df79', 'f0e4109e-4975-439a-aa11-d369f8d6a9ec', 'aeb1de54-8675-45c2-8f55-4c6f94c1645f','f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', '2024-05-20', '2024-05-13', 'cancelled', false, 2),
