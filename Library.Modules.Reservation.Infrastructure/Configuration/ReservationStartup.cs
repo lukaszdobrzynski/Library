@@ -4,6 +4,7 @@ using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration.Logging;
 using Library.Modules.Reservation.Infrastructure.Configuration.Mediation;
 using Library.Modules.Reservation.Infrastructure.Configuration.Processing;
+using Library.Modules.Reservation.Infrastructure.Jobs;
 using Library.Modules.Reservation.Infrastructure.Outbox;
 using ILogger = Serilog.ILogger;
 
@@ -16,7 +17,10 @@ public static class ReservationStartup
     public static void Init(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger)
     {
         var reservationModuleLogger =  logger.ForContext("Module", "Reservation");
+        
         ConfigureContainer(databaseConnectionString, executionContextAccessor, reservationModuleLogger);
+        
+        JobsStartup.Initialize(_container,reservationModuleLogger);
     }
 
     private static void ConfigureContainer(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger)

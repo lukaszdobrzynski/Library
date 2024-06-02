@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Infrastructure;
+using Library.Modules.Reservation.Infrastructure.Jobs;
 using MediatR;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
@@ -35,5 +36,9 @@ public class ProcessingModule : Autofac.Module
 
         builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>),
             typeof(IRequestHandler<>));
+
+        builder.RegisterType<ProcessOutboxJob>()
+            .AsSelf()
+            .SingleInstance();
     }
 }
