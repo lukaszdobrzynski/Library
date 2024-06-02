@@ -33,7 +33,7 @@ public class HoldTestBase : TestBase
     protected Hold CreateCancelledHold(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId)
     {
         var hold = CreateGrantedHold(bookId, libraryBranchId, patronId);
-        hold.ApplyPatronCancelDecision();
+        hold.ApplyCancelDecision();
         hold.ClearDomainEvents();
         return hold;
     }

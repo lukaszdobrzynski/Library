@@ -17,7 +17,7 @@ public class ResearcherPatronCancelHoldTests : TestBase
         
         patron.CancelHold(holdToCancel);
 
-        var domainEvent = AssertDomainEventPublished<BookHoldCanceledByPatronDomainEvent>(patron);
+        var domainEvent = AssertDomainEventPublished<HoldCanceledDomainEvent>(patron);
         Assert.That(domainEvent, Is.Not.Null);
         Assert.That(domainEvent.PatronId, Is.EqualTo(holdToCancel.OwningPatronId));
         Assert.That(domainEvent.BookId, Is.EqualTo(holdToCancel.BookId));

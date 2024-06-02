@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Application.Holds.CancelHold;
 
-public class ApplyLibraryCancelHoldDecisionCommand(Guid holdId) : CommandBase
+public class ApplyCancelHoldDecisionCommand(Guid holdId) : CommandBase
 {
     public Guid HoldId { get; private set; } = holdId;
 }

@@ -52,7 +52,7 @@ public class Patron : AggregateRootBase
     {
         CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, holdToCancel));
 
-        AddDomainEvent(new BookHoldCanceledByPatronDomainEvent(holdToCancel.BookId, 
+        AddDomainEvent(new HoldCanceledDomainEvent(holdToCancel.BookId, 
             holdToCancel.OwningPatronId, 
             holdToCancel.LibraryBranchId, 
             holdToCancel.HoldId));

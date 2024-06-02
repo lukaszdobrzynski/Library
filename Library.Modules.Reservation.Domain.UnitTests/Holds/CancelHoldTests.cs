@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace Library.Modules.Reservation.Domain.UnitTests.Holds;
 
-public class CancelHoldByPatronTests : HoldTestBase
+public class CancelHoldTests : HoldTestBase
 {
     [Test]
     public void Succeeds_WhenHold_IsGranted()
@@ -14,7 +14,7 @@ public class CancelHoldByPatronTests : HoldTestBase
         
         Act(hold);
 
-        AssertDomainEventPublished<HoldCanceledDomainEvent>(hold);
+        AssertDomainEventPublished<CancelHoldDecisionAppliedDomainEvent>(hold);
         
         AssertHoldInActive(hold);
     }
@@ -62,6 +62,6 @@ public class CancelHoldByPatronTests : HoldTestBase
 
     private void Act(Hold hold)
     {
-        hold.ApplyPatronCancelDecision();
+        hold.ApplyCancelDecision();
     }
 }

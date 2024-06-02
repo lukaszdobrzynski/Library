@@ -14,7 +14,7 @@ public class GrantHoldTests : HoldTestBase
         
         Act(hold);
 
-        AssertDomainEventPublished<HoldGrantedDomainEvent>(hold);
+        AssertDomainEventPublished<GrantHoldDecisionAppliedDomainEvent>(hold);
         
         AssertHoldActive(hold);
     }

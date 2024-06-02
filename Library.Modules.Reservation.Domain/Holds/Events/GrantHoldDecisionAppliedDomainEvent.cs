@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Domain.Holds.Events;
 
-public class HoldRejectedDomainEvent(HoldId holdId) : DomainEventBase
+public class GrantHoldDecisionAppliedDomainEvent(HoldId holdId) : DomainEventBase
 {
     public HoldId HoldId { get; } = holdId;
 }

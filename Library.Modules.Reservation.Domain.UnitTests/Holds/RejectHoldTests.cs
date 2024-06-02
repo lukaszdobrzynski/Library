@@ -14,7 +14,7 @@ public class RejectHoldTests : HoldTestBase
         
         Act(hold);
 
-        AssertDomainEventPublished<HoldRejectedDomainEvent>(hold);
+        AssertDomainEventPublished<RejectHoldDecisionAppliedDomainEvent>(hold);
     }
     
     [Test]

@@ -50,7 +50,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Rejected;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new HoldRejectedDomainEvent(Id));
+        AddDomainEvent(new RejectHoldDecisionAppliedDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -64,7 +64,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Granted;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new HoldGrantedDomainEvent(Id));
+        AddDomainEvent(new GrantHoldDecisionAppliedDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -78,24 +78,11 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Loaned;
         IsActive = IsHoldActive();
 
-        AddDomainEvent(new HoldLoanedDomainEvent(Id));
+        AddDomainEvent(new LoanHoldDecisionAppliedDomainEvent(Id));
         IncreaseVersion();
     }
 
-    public void ApplyLibraryCancelDecision()
-    {
-        CheckRule(new CannotCancelHoldWhenHoldPendingRule(Status));
-        CheckRule(new CannotCancelHoldWhenHoldRejectedRule(Status));
-        CheckRule(new CannotCancelHoldWhenHoldLoanedRule(Status));
-
-        Status = HoldStatus.Cancelled;
-        IsActive = IsHoldActive();
-        
-        AddDomainEvent(new HoldCanceledDomainEvent(Id));
-        IncreaseVersion();
-    } 
-
-    public void ApplyPatronCancelDecision()
+    public void ApplyCancelDecision()
     {
         CheckRule(new CannotCancelHoldWhenHoldPendingRule(Status));
         CheckRule(new CannotCancelHoldWhenHoldRejectedRule(Status));
@@ -105,7 +92,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Cancelled;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new HoldCanceledDomainEvent(Id));
+        AddDomainEvent(new CancelHoldDecisionAppliedDomainEvent(Id));
         IncreaseVersion();
     }
 
@@ -119,7 +106,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.ReadyToPick;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new HoldCanceledDomainEvent(Id));
+        AddDomainEvent(new CancelHoldDecisionAppliedDomainEvent(Id));
         IncreaseVersion();
     }
     

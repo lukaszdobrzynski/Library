@@ -14,7 +14,7 @@ public class LoanHoldTests : HoldTestBase
         
         Act(hold);
 
-        AssertDomainEventPublished<HoldLoanedDomainEvent>(hold);
+        AssertDomainEventPublished<LoanHoldDecisionAppliedDomainEvent>(hold);
         
         AssertHoldInActive(hold);
     }

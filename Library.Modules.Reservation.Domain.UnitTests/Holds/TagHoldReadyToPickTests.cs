@@ -14,7 +14,7 @@ public class TagHoldReadyToPickTests : HoldTestBase
         
         Act(hold);
 
-        AssertDomainEventPublished<HoldCanceledDomainEvent>(hold);
+        AssertDomainEventPublished<CancelHoldDecisionAppliedDomainEvent>(hold);
     }
     
     [Test]
