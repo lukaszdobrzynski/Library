@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Library.BuildingBlocks.Application.Data;
 using Library.BuildingBlocks.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -16,6 +17,11 @@ public class DataAccessModule : Autofac.Module
     
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<PsqlConnectionFactory>()
+            .As<IPsqlConnectionFactory>()
+            .WithParameter("connectionString", _databaseConnectionString)
+            .InstancePerLifetimeScope();
+        
         builder
             .Register(c =>
             {

@@ -9,6 +9,10 @@ public class ProcessingModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<ProcessOutboxJob>()
+            .AsSelf()
+            .SingleInstance();
+        
         builder.RegisterType<DomainEventsDispatcher>()
             .As<IDomainEventsDispatcher>()
             .InstancePerLifetimeScope();
@@ -36,9 +40,5 @@ public class ProcessingModule : Autofac.Module
 
         builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>),
             typeof(IRequestHandler<>));
-
-        builder.RegisterType<ProcessOutboxJob>()
-            .AsSelf()
-            .SingleInstance();
     }
 }
