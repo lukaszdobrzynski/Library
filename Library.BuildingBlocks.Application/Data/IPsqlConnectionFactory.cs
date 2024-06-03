@@ -5,4 +5,5 @@ namespace Library.BuildingBlocks.Application.Data;
 public interface IPsqlConnectionFactory
 {
     IDbConnection GetOpenConnection();
+    IDbConnection CreateNewConnection();
 }

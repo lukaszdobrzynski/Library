@@ -8,7 +8,7 @@ public static class JobsStartup
 {
     public static void Initialize(ILifetimeScope lifetimeScope, ILogger logger)
     {
-        RunJobInIntervals<ProcessOutboxJob>(lifetimeScope, logger, TimeSpan.FromMinutes(1));
+        RunJobInIntervals<ProcessOutboxJob>(lifetimeScope, logger, TimeSpan.FromSeconds(30));
     }
     
     private static void RunJobInIntervals<TBackgroundJob>(

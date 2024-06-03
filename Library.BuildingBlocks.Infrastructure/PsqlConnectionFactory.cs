@@ -26,6 +26,14 @@ public class PsqlConnectionFactory : IPsqlConnectionFactory, IDisposable
         return _connection;
     }
     
+    public IDbConnection CreateNewConnection()
+    {
+        var connection = new NpgsqlConnection(_connectionString);
+        connection.Open();
+
+        return connection;
+    }
+    
     public void Dispose()
     {
         if (_connection is { State: ConnectionState.Open })
