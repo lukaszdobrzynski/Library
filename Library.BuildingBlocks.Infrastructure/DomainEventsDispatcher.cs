@@ -1,6 +1,4 @@
-﻿using Autofac;
-using Autofac.Core;
-using Library.BuildingBlocks.Application.Events;
+﻿using Library.BuildingBlocks.Application.Events;
 using Library.BuildingBlocks.Application.Outbox;
 using Library.BuildingBlocks.Domain;
 using MediatR;

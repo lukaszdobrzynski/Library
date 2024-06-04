@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS reservations.outbox_messages (
     id uuid NOT NULL,
-    occurred_on date NOT NULL,
+    occurred_on timestamp NOT NULL,
     processed_at timestamp,
     type VARCHAR NOT NULL,
     data JSON NOT NULL,
