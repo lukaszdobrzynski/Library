@@ -3,6 +3,7 @@ using FluentValidation;
 using Library.BuildingBlocks.Application.Events;
 using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Reservation.Application.Contracts;
+using Library.Modules.Reservation.Application.Patrons.CancelHold;
 using MediatR;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Mediation;
@@ -39,5 +40,16 @@ public class MediationModule : Autofac.Module
         builder.RegisterAssemblyTypes(typeof(IReservationModule).Assembly)
             .AsClosedTypesOf(typeof(IDomainEventNotification<>))
             .InstancePerDependency();
+
+
+        var registeredNotifications = new Dictionary<string, Type>
+        {
+            { "HoldCanceledNotification", typeof(HoldCanceledNotification) }
+        };
+        var notificationsRegistry = new DomainNotificationsRegistry(registeredNotifications);
+
+        builder.RegisterInstance(notificationsRegistry)
+            .As<IDomainNotificationsRegistry>()
+            .SingleInstance();
     }
 }

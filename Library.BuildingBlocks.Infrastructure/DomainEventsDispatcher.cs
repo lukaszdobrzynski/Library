@@ -12,19 +12,22 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
 {
     private readonly IDomainEventsAccessor _domainEventsAccessor;
     private readonly IMediator _mediator;
-    private readonly ILifetimeScope _scope;
+    private readonly IDomainEventToDomainEventNotificationResolver _domainEventToDomainEventNotificationResolver;
     private readonly IOutboxAccessor _outboxAccessor;
+    private readonly IDomainNotificationsRegistry _notificationsRegistry;
     
     public DomainEventsDispatcher(
         IDomainEventsAccessor domainEventsAccessor, 
-        IMediator mediator, 
-        ILifetimeScope scope, 
-        IOutboxAccessor outboxAccessor)
+        IMediator mediator,
+        IDomainEventToDomainEventNotificationResolver domainEventNotificationResolver,
+        IOutboxAccessor outboxAccessor,
+        IDomainNotificationsRegistry notificationsRegistry)
     {
         _domainEventsAccessor = domainEventsAccessor;
         _mediator = mediator;
-        _scope = scope;
+        _domainEventToDomainEventNotificationResolver = domainEventNotificationResolver;
         _outboxAccessor = outboxAccessor;
+        _notificationsRegistry = notificationsRegistry;
     }
     
     public async Task DispatchEventsAsync()
@@ -35,17 +38,11 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
         
         foreach (var domainEvent in domainEvents)
         {
-            var domainEventNotificationType = typeof(IDomainEventNotification<>);
-            var domainEventNotificationGenericType = domainEventNotificationType.MakeGenericType(domainEvent.GetType());
-            var domainNotification = _scope.ResolveOptional(domainEventNotificationGenericType, new List<Parameter>
-            {
-                new NamedParameter("domainEvent", domainEvent),
-                new NamedParameter("id", domainEvent.Id)
-            });
+            var domainNotification = _domainEventToDomainEventNotificationResolver.ResolveOptional(domainEvent);
 
             if (domainNotification is not null)
             {
-                domainNotifications.Add(domainNotification as IDomainEventNotification<IDomainEvent>);                
+                domainNotifications.Add(domainNotification);                
             }
         }
         
@@ -58,7 +55,7 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
 
         foreach (var domainNotification in domainNotifications)
         {
-            var type = domainNotification.GetType().Name;  //TODO USE MAP
+            var type = _notificationsRegistry.GetName(domainNotification.GetType());
             var data = JsonConvert.SerializeObject(domainNotification);
 
             var outboxMessage = new OutboxMessage(domainNotification.Id,

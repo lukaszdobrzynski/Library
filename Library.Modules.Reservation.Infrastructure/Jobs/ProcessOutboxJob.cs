@@ -1,7 +1,10 @@
 ﻿using Dapper;
 using Library.BuildingBlocks.Application.Data;
+using Library.BuildingBlocks.Application.Events;
+using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Reservation.Infrastructure.Outbox;
 using MediatR;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
@@ -11,17 +14,20 @@ public class ProcessOutboxJob : IBackgroundJob
     private readonly IMediator _mediator;
     private readonly IPsqlConnectionFactory _connectionFactory;
     private readonly ILogger _logger;
+    private readonly IDomainNotificationsRegistry _notificationsRegistry;
 
-    private const int BatchSize = 10;
+    private const int BatchSize = 5;
     
     public ProcessOutboxJob(
         IMediator mediator,
         IPsqlConnectionFactory connectionFactory, 
-        ILogger logger)
+        ILogger logger,
+        IDomainNotificationsRegistry notificationsRegistry)
     {
         _mediator = mediator;
         _connectionFactory = connectionFactory;
         _logger = logger;
+        _notificationsRegistry = notificationsRegistry;
     }
     
     public async Task Run()
@@ -53,6 +59,11 @@ public class ProcessOutboxJob : IBackgroundJob
 
             foreach (var message in messageList)
             {
+                var type = _notificationsRegistry.GetType(message.Type);
+                var notification = JsonConvert.DeserializeObject(message.Data, type) as IDomainEventNotification;
+                
+                await _mediator.Publish(notification);
+                
                 await connection.ExecuteAsync(updateProcessedAtSql, new
                     {
                         Date = DateTime.UtcNow,
