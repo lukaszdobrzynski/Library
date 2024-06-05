@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Application;
+using Library.BuildingBlocks.Infrastructure.EventBus;
 using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
+using Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 using Library.Modules.Reservation.Infrastructure.Configuration.Logging;
 using Library.Modules.Reservation.Infrastructure.Configuration.Mediation;
 using Library.Modules.Reservation.Infrastructure.Configuration.Processing;
@@ -14,16 +16,16 @@ public static class ReservationStartup
 {
     private static IContainer _container;
     
-    public static void Init(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger)
+    public static void Init(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)
     {
         var reservationModuleLogger =  logger.ForContext("Module", "Reservation");
         
-        ConfigureContainer(databaseConnectionString, executionContextAccessor, reservationModuleLogger);
+        ConfigureContainer(databaseConnectionString, executionContextAccessor, reservationModuleLogger, eventBus);
         
         JobsStartup.Initialize(_container,reservationModuleLogger);
     }
 
-    private static void ConfigureContainer(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger)
+    private static void ConfigureContainer(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)
     {
         var containerBuilder = new ContainerBuilder();
 
@@ -31,6 +33,7 @@ public static class ReservationStartup
         containerBuilder.RegisterModule(new DataAccessModule(databaseConnectionString));
         containerBuilder.RegisterModule(new ProcessingModule());
         containerBuilder.RegisterModule(new MediationModule());
+        containerBuilder.RegisterModule(new EventBusModule(eventBus));
         containerBuilder.RegisterModule(new OutboxModule());
         
         containerBuilder.RegisterInstance(executionContextAccessor);

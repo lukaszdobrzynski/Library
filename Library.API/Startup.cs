@@ -5,6 +5,7 @@ using Autofac.Extensions.DependencyInjection;
 using Library.API.ExecutionContext;
 using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
+using Library.BuildingBlocks.Infrastructure.EventBus;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -60,8 +61,13 @@ public class Startup
 
     private void InitializeModules(ILifetimeScope container)
     {
+        var eventBus = new InMemoryEventBus();
         var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
         
-        ReservationStartup.Init("Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", executionContextAccessor, _logger);
+        ReservationStartup.Init(
+            "Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", 
+            executionContextAccessor, 
+            _logger, 
+            eventBus);
     }
 }
