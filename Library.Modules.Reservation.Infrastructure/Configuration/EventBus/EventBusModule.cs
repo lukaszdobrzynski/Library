@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Library.BuildingBlocks.Infrastructure.EventBus;
+using Library.BuildingBlocks.EventBus;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 

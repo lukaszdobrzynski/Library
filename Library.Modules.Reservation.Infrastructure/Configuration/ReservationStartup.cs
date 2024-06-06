@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Application;
-using Library.BuildingBlocks.Infrastructure.EventBus;
+using Library.BuildingBlocks.EventBus;
 using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 using Library.Modules.Reservation.Infrastructure.Configuration.Logging;

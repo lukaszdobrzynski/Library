@@ -9,6 +9,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Library.BuildingBlocks.Application\Library.BuildingBlocks.Application.csproj" />
       <ProjectReference Include="..\Library.Modules.Reservation.Domain\Library.Modules.Reservation.Domain.csproj" />
+      <ProjectReference Include="..\Library.Modules.Reservation.IntegrationEvents\Library.Modules.Reservation.IntegrationEvents.csproj" />
     </ItemGroup>
 
 </Project>

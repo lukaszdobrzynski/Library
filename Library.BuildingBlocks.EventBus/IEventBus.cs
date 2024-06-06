@@ -1,4 +1,4 @@
-﻿namespace Library.BuildingBlocks.Infrastructure.EventBus;
+﻿namespace Library.BuildingBlocks.EventBus;
 
 public interface IEventBus
 {
