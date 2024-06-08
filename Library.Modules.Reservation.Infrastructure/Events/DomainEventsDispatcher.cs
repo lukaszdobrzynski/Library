@@ -1,10 +1,11 @@
 ﻿using Library.BuildingBlocks.Application.Events;
 using Library.BuildingBlocks.Application.Outbox;
 using Library.BuildingBlocks.Domain;
+using Library.BuildingBlocks.Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
 
-namespace Library.BuildingBlocks.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure;
 
 public class DomainEventsDispatcher : IDomainEventsDispatcher
 {

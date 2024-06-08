@@ -2,7 +2,7 @@
 using Library.BuildingBlocks.Application.Data;
 using Npgsql;
 
-namespace Library.BuildingBlocks.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 
 public class PsqlConnectionFactory : IPsqlConnectionFactory, IDisposable
 {

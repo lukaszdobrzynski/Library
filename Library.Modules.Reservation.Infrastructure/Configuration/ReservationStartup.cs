@@ -22,7 +22,8 @@ public static class ReservationStartup
         
         ConfigureContainer(databaseConnectionString, executionContextAccessor, reservationModuleLogger, eventBus);
         
-        JobsStartup.Initialize(_container,reservationModuleLogger);
+        JobsStartup.Initialize(reservationModuleLogger);
+        EventBusStartup.Initialize();
     }
 
     private static void ConfigureContainer(string databaseConnectionString, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)

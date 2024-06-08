@@ -1,4 +1,4 @@
-﻿namespace Library.BuildingBlocks.Infrastructure;
+﻿namespace Library.Modules.Reservation.Infrastructure;
 
 public interface IDomainNotificationsRegistry
 {

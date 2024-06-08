@@ -1,7 +1,7 @@
 ﻿using Library.BuildingBlocks.Domain;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Library.BuildingBlocks.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure;
 
 public class TypedIdValueConverter<TTypedIdValue> : ValueConverter<TTypedIdValue, Guid>
     where TTypedIdValue : TypedIdBase

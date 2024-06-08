@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Polly;
+﻿using Polly;
 using Polly.Retry;
 
 namespace Library.BuildingBlocks.Infrastructure;
 
-public class RetryPolicyFactory : IRetryPolicyFactory
+public abstract class RetryPolicyFactory : IRetryPolicyFactory
 {
     public AsyncRetryPolicy RetryWithExponentialSleepDuration(int retryCount = 5)
     {
@@ -23,15 +22,8 @@ public class RetryPolicyFactory : IRetryPolicyFactory
 
         return policy;
     }
-    
-    public AsyncRetryPolicy RetryOnceOnDbUpdateConcurrencyException()
-    {
-        var policy = Policy
-            .Handle<Exception>(e => e is DbUpdateConcurrencyException)
-            .WaitAndRetryAsync(1, (_) => TimeSpan.FromMilliseconds(1500));
-            
-        return policy;
-    }
+
+    public abstract AsyncRetryPolicy RetryOnDbUpdateConcurrencyException(int retryCount);
 
     public AsyncRetryPolicy WaitAndRetryForever(TimeSpan sleepDuration, Action<Exception> exceptionHandler)
     {

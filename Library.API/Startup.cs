@@ -6,6 +6,7 @@ using Library.API.ExecutionContext;
 using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
 using Library.BuildingBlocks.Infrastructure.EventBus;
+using Library.Modules.Catalogue.Infrastructure.Configuration;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,5 +70,7 @@ public class Startup
             executionContextAccessor, 
             _logger, 
             eventBus);
+        
+        CatalogueStartup.Init(eventBus);
     }
 }

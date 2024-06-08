@@ -1,7 +1,7 @@
 ﻿using Library.BuildingBlocks.Application.Events;
 using Library.BuildingBlocks.Domain;
 
-namespace Library.BuildingBlocks.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure;
 
 public interface IDomainEventToDomainEventNotificationResolver
 {

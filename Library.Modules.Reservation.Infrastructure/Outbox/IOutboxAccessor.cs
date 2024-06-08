@@ -1,6 +1,6 @@
 ﻿using Library.BuildingBlocks.Application.Outbox;
 
-namespace Library.BuildingBlocks.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure;
 
 public interface IOutboxAccessor
 {

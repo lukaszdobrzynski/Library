@@ -10,11 +10,13 @@ public class OptimisticConcurrencyCommandHandlerDecorator<T> : IRequestHandler<T
 {
     private readonly IRequestHandler<T> _decorated;
     private readonly AsyncRetryPolicy _retryPolicy;
+
+    private const int RetryCount = 1;
     
     public OptimisticConcurrencyCommandHandlerDecorator(IRequestHandler<T> decorated, IRetryPolicyFactory retryPolicyFactory)
     {
         _decorated = decorated;
-        _retryPolicy = retryPolicyFactory.RetryOnceOnDbUpdateConcurrencyException();
+        _retryPolicy = retryPolicyFactory.RetryOnDbUpdateConcurrencyException(RetryCount);
     }
     
     public async Task Handle(T command, CancellationToken cancellationToken)

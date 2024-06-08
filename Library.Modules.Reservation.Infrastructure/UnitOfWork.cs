@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Library.BuildingBlocks.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
-namespace Library.BuildingBlocks.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure;
 
 public class UnitOfWork : IUnitOfWork
 {

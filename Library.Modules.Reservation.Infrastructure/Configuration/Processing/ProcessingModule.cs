@@ -29,7 +29,7 @@ public class ProcessingModule : Autofac.Module
             .As<IUnitOfWork>()
             .InstancePerLifetimeScope();
 
-        builder.RegisterType<RetryPolicyFactory>()
+        builder.RegisterType<ReservationRetryPolicyFactory>()
             .As<IRetryPolicyFactory>()
             .InstancePerLifetimeScope();
         
