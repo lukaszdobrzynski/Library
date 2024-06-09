@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Library.BuildingBlocks.Application.Data;
+namespace Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 
 public interface IPsqlConnectionFactory
 {

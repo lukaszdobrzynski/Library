@@ -1,7 +1,7 @@
 ﻿using Library.BuildingBlocks.Domain;
 using MediatR;
 
-namespace Library.BuildingBlocks.Application.Events;
+namespace Library.Modules.Reservation.Application.Contracts;
 
 public interface IDomainEventNotification<out TEventType> : IDomainEventNotification
  where TEventType : IDomainEvent

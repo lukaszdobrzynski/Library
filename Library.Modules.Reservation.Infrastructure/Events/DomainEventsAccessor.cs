@@ -1,8 +1,7 @@
 ﻿using Library.BuildingBlocks.Domain;
-using Library.BuildingBlocks.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.Modules.Reservation.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure.Events;
 
 public class DomainEventsAccessor : IDomainEventsAccessor
 {

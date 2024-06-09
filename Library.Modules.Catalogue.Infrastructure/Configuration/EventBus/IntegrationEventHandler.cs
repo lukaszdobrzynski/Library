@@ -21,6 +21,7 @@ public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
 
             var inboxMessage = new InboxMessage
             {
+                OccurredOn = integrationEvent.OccurredOn,
                 Type = type,
                 Data = data
             };

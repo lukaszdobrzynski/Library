@@ -1,6 +1,6 @@
 ﻿using Library.BuildingBlocks.Domain;
 
-namespace Library.Modules.Reservation.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure.Events;
 
 public interface IDomainEventsAccessor
 {

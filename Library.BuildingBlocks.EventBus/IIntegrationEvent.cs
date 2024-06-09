@@ -1,6 +1,8 @@
-﻿namespace Library.BuildingBlocks.EventBus;
+﻿using MediatR;
 
-public interface IIntegrationEvent
+namespace Library.BuildingBlocks.EventBus;
+
+public interface IIntegrationEvent : INotification
 {
     Guid Id { get; set; }
     DateTime OccurredOn { get; set; }

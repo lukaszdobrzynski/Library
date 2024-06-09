@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
-using Raven.Client.ServerWide.Operations;
+using Raven.Client.Documents.Subscriptions;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 
@@ -76,6 +76,11 @@ public class DocumentStoreHolder : IDocumentStoreHolder
     public IAsyncDocumentSession OpenAsyncSession()
     {
         return _documentStore.OpenAsyncSession();
+    }
+
+    public SubscriptionWorker<T> GetSubscriptionWorker<T>(SubscriptionWorkerOptions options) where T : class
+    {
+        return _documentStore.Subscriptions.GetSubscriptionWorker<T>(options);
     }
 
     public void Dispose()

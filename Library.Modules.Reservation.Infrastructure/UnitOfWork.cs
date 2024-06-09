@@ -1,4 +1,4 @@
-﻿using Library.BuildingBlocks.Infrastructure;
+﻿using Library.Modules.Reservation.Infrastructure.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure;

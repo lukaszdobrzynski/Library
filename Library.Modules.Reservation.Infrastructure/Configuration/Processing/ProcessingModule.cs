@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Infrastructure;
+using Library.Modules.Reservation.Infrastructure.Events;
 using Library.Modules.Reservation.Infrastructure.Jobs;
 using MediatR;
 

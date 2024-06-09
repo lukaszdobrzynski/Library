@@ -1,10 +1,9 @@
 ﻿using Autofac;
 using Autofac.Core;
-using Library.BuildingBlocks.Application.Events;
 using Library.BuildingBlocks.Domain;
-using Library.BuildingBlocks.Infrastructure;
+using Library.Modules.Reservation.Application.Contracts;
 
-namespace Library.Modules.Reservation.Infrastructure;
+namespace Library.Modules.Reservation.Infrastructure.Events;
 
 public class DomainEventToDomainEventNotificationResolver : IDomainEventToDomainEventNotificationResolver
 {

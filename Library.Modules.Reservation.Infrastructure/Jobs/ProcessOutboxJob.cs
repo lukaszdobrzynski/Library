@@ -1,7 +1,6 @@
 ﻿using Dapper;
-using Library.BuildingBlocks.Application.Data;
-using Library.BuildingBlocks.Application.Events;
-using Library.BuildingBlocks.Infrastructure;
+using Library.Modules.Reservation.Application.Contracts;
+using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Outbox;
 using MediatR;
 using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿using Library.BuildingBlocks.Application.Events;
+﻿using Library.Modules.Reservation.Application.Contracts;
 using Library.Modules.Reservation.Domain.Patrons.Events;
 
 namespace Library.Modules.Reservation.Application.Patrons.CancelHold;

@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Library.BuildingBlocks.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using Polly;
 using Polly.Retry;
 
 namespace Library.Modules.Reservation.Infrastructure;
 
-internal class ReservationRetryPolicyFactory : BuildingBlocks.Infrastructure.RetryPolicyFactory
+internal class ReservationRetryPolicyFactory : RetryPolicyFactory
 {
     public override AsyncRetryPolicy RetryOnDbUpdateConcurrencyException(int retryCount)
     {
