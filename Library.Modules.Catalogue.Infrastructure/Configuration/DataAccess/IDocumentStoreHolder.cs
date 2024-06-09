@@ -1,6 +1,8 @@
-﻿namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
+﻿using Raven.Client.Documents.Session;
 
-public interface IDocumentStoreHolder
+namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
+
+public interface IDocumentStoreHolder : IDisposable
 {
-    
+    IAsyncDocumentSession OpenAsyncSession();
 }

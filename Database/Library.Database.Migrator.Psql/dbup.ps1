@@ -1,5 +1,5 @@
-$imageName = "library"
-$containerName = "library"
+$imageName = "library-reservation"
+$containerName = "library-reservation"
 $dbConnectionString = "Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin"
 $hostPort = 5432
 $containerPort = 5432
@@ -61,4 +61,6 @@ if ($LASTEXITCODE -eq 0) {
     
 } else {
     Write-Host "Failed to build Docker image '$imageName'." -ForegroundColor Red
+    exit -1
 }
+

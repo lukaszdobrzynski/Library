@@ -1,6 +1,4 @@
-﻿using Library.BuildingBlocks.EventBus;
-
-namespace Library.BuildingBlocks.Infrastructure.EventBus;
+﻿namespace Library.BuildingBlocks.EventBus;
 
 public class InMemoryEventBus : IEventBus
 {

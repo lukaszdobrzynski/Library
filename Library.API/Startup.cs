@@ -5,8 +5,9 @@ using Autofac.Extensions.DependencyInjection;
 using Library.API.ExecutionContext;
 using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
-using Library.BuildingBlocks.Infrastructure.EventBus;
+using Library.BuildingBlocks.EventBus;
 using Library.Modules.Catalogue.Infrastructure.Configuration;
+using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,13 +65,18 @@ public class Startup
     {
         var eventBus = new InMemoryEventBus();
         var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
+        var ravenSettings = new RavenDatabaseSettings
+        {
+            Urls = new[] { "http://localhost:8080" },
+            DatabaseName = "Library.Catalogue"
+        };
         
         ReservationStartup.Init(
             "Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", 
             executionContextAccessor, 
             _logger, 
             eventBus);
-        
-        CatalogueStartup.Init(eventBus);
+
+        CatalogueStartup.Init(ravenSettings, eventBus);
     }
 }
