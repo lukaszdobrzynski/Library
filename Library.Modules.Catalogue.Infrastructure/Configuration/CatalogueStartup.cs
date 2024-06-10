@@ -4,7 +4,6 @@ using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Catalogue.Infrastructure.Configuration.EventBus;
 using Library.Modules.Catalogue.Infrastructure.Configuration.Mediation;
 using Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
-using Library.Modules.Catalogue.Infrastructure.Subscriptions;
 using Serilog;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration;

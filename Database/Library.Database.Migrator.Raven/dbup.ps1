@@ -1,7 +1,10 @@
 $imageName = "library-catalogue"
 $containerName = "library-catalogue"
-$hostPort = 8080
-$containerPort = 8080
+$hostPort1 = 8080
+$containerPort1 = 8080
+$hostPort2 = 38888
+$containerPort2 = 38888
+
 
 docker build -t $imageName .
 
@@ -9,7 +12,7 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "Docker image '$imageName' built successfully."
     Write-Host "Running $containerName container..."
 
-    docker run -d --rm -p "${hostPort}:${containerPort}" --name $containerName $imageName
+    docker run -d --rm -p "${hostPort1}:${containerPort1}" -p "${hostPort2}:${containerPort2}" --name $containerName $imageName
 
     if ($LASTEXITCODE -eq 0) 
     {

@@ -1,10 +1,9 @@
 ﻿using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
-using Library.Modules.Catalogue.Infrastructure.Subscriptions;
 using Raven.Client.Documents.Subscriptions;
 
 namespace Library.Modules.Catalogue.Infrastructure.Inbox;
 
-public class InboxSubscriptionProcessor : ISubscriptionProcessor
+public class InboxMessagesSubscriptionProcessor : ISubscriptionProcessor
 {
     private const string SubscriptionName = InboxSubscription.SubscriptionName;
     private const int BatchSize = 5;
@@ -12,7 +11,7 @@ public class InboxSubscriptionProcessor : ISubscriptionProcessor
     private readonly IDocumentStoreHolder _documentStoreHolder;
     private readonly InboxMessageHandlingStrategy _inboxMessageHandlingStrategy;
     
-    public InboxSubscriptionProcessor(IDocumentStoreHolder documentStoreHolder, InboxMessageHandlingStrategy inboxMessageHandlingStrategy)
+    public InboxMessagesSubscriptionProcessor(IDocumentStoreHolder documentStoreHolder, InboxMessageHandlingStrategy inboxMessageHandlingStrategy)
     {
         _documentStoreHolder = documentStoreHolder;
         _inboxMessageHandlingStrategy = inboxMessageHandlingStrategy;

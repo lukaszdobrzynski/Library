@@ -1,5 +1,6 @@
 ﻿using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 using MediatR;
+using Newtonsoft.Json;
 using Raven.Client.Documents.Session;
 
 namespace Library.Modules.Catalogue.Infrastructure.Inbox;
@@ -31,8 +32,9 @@ public class InboxMessageHandlingStrategy
                     .Single(x => message.Type.Contains(x.GetName().Name));
 
                 var messageType = messageAssembly.GetType(message.Type);
+                var notification = JsonConvert.DeserializeObject(message.Data, messageType);
 
-                await _mediator.Publish((INotification)messageType);
+                await _mediator.Publish((INotification) notification);
 
                 await SetMessageProcessed(session, message);
             }

@@ -5,7 +5,7 @@ using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Polly.Retry;
 using Serilog;
 
-namespace Library.Modules.Catalogue.Infrastructure.Subscriptions;
+namespace Library.Modules.Catalogue.Infrastructure;
 
 public class SubscriptionsStartup
 {
@@ -14,7 +14,7 @@ public class SubscriptionsStartup
     
     public static void Initialize(ILogger logger)
     {
-        RunSubscription<InboxSubscriptionProcessor>(logger);
+        RunSubscription<InboxMessagesSubscriptionProcessor>(logger);
     }
     
     private static void RunSubscription<T>(ILogger logger) where T : ISubscriptionProcessor

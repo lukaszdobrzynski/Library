@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
+using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using Raven.Client.Documents.Subscriptions;
@@ -45,10 +46,19 @@ public class DocumentStoreHolder : IDocumentStoreHolder
 
         store.OnBeforeQuery += (sender, args) =>
             args.QueryCustomization.WaitForNonStaleResults(TimeSpan.FromSeconds(30));
-            
+        
         store.Initialize();
-
+        
+#if DEBUG
+        CreateSubscriptions(store);
+#endif        
+        
         return store;
+    }
+    
+    private static void CreateSubscriptions(IDocumentStore store)
+    {
+        InboxSubscription.Create(store);
     }
 
     private void ValidateSettings(RavenDatabaseSettings settings)
