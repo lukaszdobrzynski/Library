@@ -1,6 +1,5 @@
 ﻿using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Catalogue.Infrastructure.Subscriptions;
-using MediatR;
 using Raven.Client.Documents.Subscriptions;
 
 namespace Library.Modules.Catalogue.Infrastructure.Inbox;
@@ -11,12 +10,12 @@ public class InboxSubscriptionProcessor : ISubscriptionProcessor
     private const int BatchSize = 5;
     
     private readonly IDocumentStoreHolder _documentStoreHolder;
-    private readonly IMediator _mediator;
+    private readonly InboxMessageHandlingStrategy _inboxMessageHandlingStrategy;
     
-    public InboxSubscriptionProcessor(IDocumentStoreHolder documentStoreHolder, IMediator mediator)
+    public InboxSubscriptionProcessor(IDocumentStoreHolder documentStoreHolder, InboxMessageHandlingStrategy inboxMessageHandlingStrategy)
     {
         _documentStoreHolder = documentStoreHolder;
-        _mediator = mediator;
+        _inboxMessageHandlingStrategy = inboxMessageHandlingStrategy;
     }
     
     public async Task Run()
@@ -38,12 +37,7 @@ public class InboxSubscriptionProcessor : ISubscriptionProcessor
     {
         foreach (var item in batch.Items)
         {
-            var messageAssembly = AppDomain.CurrentDomain.GetAssemblies()
-                .Single(x => item.Result.Type.Contains(x.GetName().Name));
-
-            var messageType = messageAssembly.GetType(item.Result.Type);
-
-            await _mediator.Publish((INotification)messageType); //TODO arch unit test to make sure all integration events inherit from INotification
+           await _inboxMessageHandlingStrategy.Handle(item.Result);
         }
     }
 }

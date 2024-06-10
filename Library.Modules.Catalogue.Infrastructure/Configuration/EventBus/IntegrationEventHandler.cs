@@ -19,13 +19,8 @@ public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
             var type = integrationEvent.GetType().FullName;
             var data = JsonConvert.SerializeObject(integrationEvent);
 
-            var inboxMessage = new InboxMessage
-            {
-                OccurredOn = integrationEvent.OccurredOn,
-                Type = type,
-                Data = data
-            };
-
+            var inboxMessage = InboxMessage.CreateSubmitted(integrationEvent.OccurredOn, type, data);
+            
             await session.StoreAsync(inboxMessage);
             await session.SaveChangesAsync();
         }
