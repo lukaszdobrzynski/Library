@@ -37,11 +37,33 @@ if ($LASTEXITCODE -eq 0) {
     if ($statusCode -eq 201)
     {
         Write-Host "Database created successfully with server response status code ${statusCode}."
-        exit 0
         
     } else
     {
         Write-Host "Failed to create database with response status code ${statusCode}." -ForegroundColor Red
+        exit -1
+    }
+
+    dotnet build
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Library migrator app built successfully."
+    } else
+    {
+        Write-Host "Failed to build Library migrator app." -ForegroundColor Red
+        exit -1
+    }
+
+    Write-Host "Seeding database..."
+
+    dotnet run
+
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Database seeded successfuly."
+        exit 0
+    }
+    else {
+        Write-Host "Failed to seed database." -ForegroundColor Red
         exit -1
     }
 

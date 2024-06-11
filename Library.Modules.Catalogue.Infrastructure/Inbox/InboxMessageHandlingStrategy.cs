@@ -7,8 +7,8 @@ namespace Library.Modules.Catalogue.Infrastructure.Inbox;
 
 public class InboxMessageHandlingStrategy
 {
-    private IDocumentStoreHolder _documentStoreHolder;
-    private IMediator _mediator;
+    private readonly IDocumentStoreHolder _documentStoreHolder;
+    private readonly IMediator _mediator;
 
     public InboxMessageHandlingStrategy(IDocumentStoreHolder documentStoreHolder, IMediator mediator)
     {
