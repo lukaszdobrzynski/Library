@@ -11,8 +11,4 @@
       <ProjectReference Include="..\Library.Modules.Catalogue.Application\Library.Modules.Catalogue.Application.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="RavenDB.Client" Version="6.0.4" />
-    </ItemGroup>
-
 </Project>

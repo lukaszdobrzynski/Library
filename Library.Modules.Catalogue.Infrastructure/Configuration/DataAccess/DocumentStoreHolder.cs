@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
+using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -47,6 +48,8 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         store.OnBeforeQuery += (sender, args) =>
             args.QueryCustomization.WaitForNonStaleResults(TimeSpan.FromSeconds(30));
         
+        DatabaseConventions.SetUp(store.Conventions);
+        
         store.Initialize();
         
 #if DEBUG
@@ -55,7 +58,7 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         
         return store;
     }
-    
+
     private static void CreateSubscriptions(IDocumentStore store)
     {
         InboxSubscription.Create(store);

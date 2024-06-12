@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using FluentValidation;
 using Library.BuildingBlocks.Infrastructure;
-using Library.Modules.Catalogue.Application;
+using Library.Modules.Catalogue.Application.Contracts;
 using MediatR;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Mediation;
@@ -30,7 +30,7 @@ public class MediationModule : Autofac.Module
 
         foreach (var openHandlerType in openHandlerTypes)
         {
-            builder.RegisterAssemblyTypes(typeof(CommandBase).Assembly)
+            builder.RegisterAssemblyTypes(typeof(InternalCommandBase).Assembly)
                 .AsClosedTypesOf(openHandlerType)
                 .InstancePerLifetimeScope();
         }

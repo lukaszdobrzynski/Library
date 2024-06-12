@@ -15,6 +15,7 @@ public class HoldCancelledNotificationHandler(IEventBus eventBus) : INotificatio
             HoldId = notification.DomainEvent.HoldId.Value,
             LibraryBranchId = notification.DomainEvent.LibraryBranchId.Value,
             PatronId = notification.DomainEvent.PatronId.Value,
+            BookId = notification.DomainEvent.BookId.Value
         });
     }
 }

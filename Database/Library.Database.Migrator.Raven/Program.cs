@@ -19,14 +19,13 @@ class Program
             Urls = new[] { "http://localhost:8080" }
         };
         store.Initialize();
-
-        foreach (var book in books)
+        
+        using (var bulkInsert = store.BulkInsert())
         {
-            using (var session = store.OpenSession())
-            { 
-                session.Store(book);
-                session.SaveChanges();
-            }    
+            foreach (var book in books)
+            {
+                bulkInsert.Store(book);
+            }
         }
         
         return 0;

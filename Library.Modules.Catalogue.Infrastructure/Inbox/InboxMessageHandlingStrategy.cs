@@ -1,4 +1,4 @@
-﻿using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
+﻿using Library.Modules.Catalogue.Application.Contracts;
 using MediatR;
 using Newtonsoft.Json;
 using Raven.Client.Documents.Session;

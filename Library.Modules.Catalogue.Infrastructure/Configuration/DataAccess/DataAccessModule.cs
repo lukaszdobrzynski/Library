@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Library.Modules.Catalogue.Application.Contracts;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 

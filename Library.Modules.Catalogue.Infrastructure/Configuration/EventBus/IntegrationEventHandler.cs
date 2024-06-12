@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.EventBus;
-using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
+using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Newtonsoft.Json;
 using Raven.Client.Documents;
