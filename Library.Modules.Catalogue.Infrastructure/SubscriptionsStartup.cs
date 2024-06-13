@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Catalogue.Infrastructure.Configuration;
+using Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Polly.Retry;
 using Serilog;
@@ -15,6 +16,7 @@ public class SubscriptionsStartup
     public static void Initialize(ILogger logger)
     {
         RunSubscription<InboxMessagesSubscriptionProcessor>(logger);
+        RunSubscription<InternalCommandsSubscriptionProcessor>(logger);
     }
     
     private static void RunSubscription<T>(ILogger logger) where T : ISubscriptionProcessor

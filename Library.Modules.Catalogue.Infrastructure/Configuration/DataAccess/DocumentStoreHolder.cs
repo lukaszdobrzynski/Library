@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using Library.Modules.Catalogue.Application.Contracts;
+using Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -62,6 +63,7 @@ public class DocumentStoreHolder : IDocumentStoreHolder
     private static void CreateSubscriptions(IDocumentStore store)
     {
         InboxSubscription.Create(store);
+        InternalCommandsSubscription.Create(store);
     }
 
     private void ValidateSettings(RavenDatabaseSettings settings)

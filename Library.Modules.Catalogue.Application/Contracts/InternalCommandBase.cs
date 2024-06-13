@@ -6,9 +6,9 @@ public abstract class InternalCommandBase
     protected abstract string Name  { get; }
     
     public DateTime CreatedAt { get; set; }
-    public DateTime LastFailedAt { get; set; }
+    public DateTime? LastFailedAt { get; set; }
     public string ProcessingError { get; set; }
-    public DateTime ProcessedAt { get; set; }
+    public DateTime? ProcessedAt { get; set; }
     public InternalCommandStatus Status { get; set; }
 
     private readonly List<string> _validationErrors = new();
