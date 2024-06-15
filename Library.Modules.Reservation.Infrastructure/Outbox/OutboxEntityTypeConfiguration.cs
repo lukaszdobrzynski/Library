@@ -1,7 +1,6 @@
-﻿using Library.BuildingBlocks.Application.Outbox;
+﻿using Library.Modules.Reservation.Application.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json.Linq;
 
 namespace Library.Modules.Reservation.Infrastructure.Outbox;
 

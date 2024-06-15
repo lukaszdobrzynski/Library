@@ -1,4 +1,4 @@
-﻿namespace Library.Modules.Reservation.Infrastructure;
+﻿namespace Library.Modules.Catalogue.Application;
 
 public interface IDomainNotificationsRegistry
 {

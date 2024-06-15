@@ -40,5 +40,8 @@ public class ProcessingModule : Autofac.Module
                 .AsClosedTypesOf(openHandlerType)
                 .InstancePerLifetimeScope();
         }
+
+        builder.RegisterGenericDecorator(typeof(OptimisticConcurrencyCommandHandlerDecorator<>),
+            typeof(InternalCommandHandler<>));
     }
 }

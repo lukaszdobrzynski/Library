@@ -1,4 +1,4 @@
-﻿using Library.BuildingBlocks.Application.Outbox;
+﻿using Library.Modules.Reservation.Application.Outbox;
 using Library.Modules.Reservation.Domain.Books;
 using Library.Modules.Reservation.Domain.Checkouts;
 using Library.Modules.Reservation.Domain.Holds;

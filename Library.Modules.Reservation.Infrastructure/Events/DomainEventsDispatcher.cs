@@ -1,6 +1,8 @@
-﻿using Library.BuildingBlocks.Application.Outbox;
-using Library.BuildingBlocks.Domain;
+﻿using Library.BuildingBlocks.Domain;
 using Library.Modules.Reservation.Application.Contracts;
+using Library.Modules.Reservation.Application.Outbox;
+using Library.Modules.Reservation.Infrastructure.Configuration;
+using Library.Modules.Reservation.Infrastructure.Outbox;
 using MediatR;
 using Newtonsoft.Json;
 

@@ -1,16 +1,18 @@
-﻿using Library.BuildingBlocks.Infrastructure;
-using Library.Modules.Reservation.Application.Patrons.CancelHold;
+﻿using Library.Modules.Reservation.Application.Patrons.CancelHold;
+using Library.Modules.Reservation.Application.Patrons.PlaceBookOnHold;
 
-namespace Library.Modules.Reservation.Infrastructure.Configuration;
-
-public class DomainNotificationsRegistry : IDomainNotificationsRegistry
+namespace Library.Modules.Reservation.Infrastructure.Configuration
 {
-    private readonly Dictionary<string, Type> _entries = new ()
+    public class DomainNotificationsRegistry : IDomainNotificationsRegistry
     {
-        { $"{nameof(HoldCanceledNotification)}", typeof(HoldCanceledNotification) }
-    };
+        private readonly Dictionary<string, Type> _entries = new ()
+        {
+            { $"{nameof(HoldCanceledNotification)}", typeof(HoldCanceledNotification) },
+            { $"{nameof(BookPlacedOnHoldNotification)}", typeof(BookPlacedOnHoldNotification) }
+        };
 
-    public string GetName(Type type) => _entries.Single(x => x.Value == type).Key;
+        public string GetName(Type type) => _entries.Single(x => x.Value == type).Key;
 
-    public Type GetType(string name) => _entries[name];
+        public Type GetType(string name) => _entries[name];
+    }
 }

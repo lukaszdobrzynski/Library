@@ -1,5 +1,4 @@
-﻿using Library.BuildingBlocks.Application.Outbox;
-using Library.BuildingBlocks.Infrastructure;
+﻿using Library.Modules.Reservation.Application.Outbox;
 
 namespace Library.Modules.Reservation.Infrastructure.Outbox;
 

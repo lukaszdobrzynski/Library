@@ -1,4 +1,4 @@
-﻿namespace Library.BuildingBlocks.Application.Outbox;
+﻿namespace Library.Modules.Reservation.Application.Outbox;
 
 public class OutboxMessage
 {
