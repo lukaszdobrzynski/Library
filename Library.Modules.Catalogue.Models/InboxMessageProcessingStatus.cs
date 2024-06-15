@@ -1,4 +1,4 @@
-﻿namespace Library.Modules.Catalogue.Infrastructure.Inbox;
+﻿namespace Library.Modules.Catalogue.Models;
 
 public enum InboxMessageProcessingStatus
 {

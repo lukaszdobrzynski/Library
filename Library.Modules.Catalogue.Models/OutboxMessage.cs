@@ -1,4 +1,4 @@
-﻿namespace Library.Modules.Catalogue.Application.Outbox;
+﻿namespace Library.Modules.Catalogue.Models;
 
 public class OutboxMessage
 {

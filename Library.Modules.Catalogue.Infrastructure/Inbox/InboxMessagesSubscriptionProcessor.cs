@@ -1,4 +1,5 @@
 ﻿using Library.Modules.Catalogue.Application.Contracts;
+using Library.Modules.Catalogue.Models;
 using Raven.Client.Documents.Subscriptions;
 
 namespace Library.Modules.Catalogue.Infrastructure.Inbox;

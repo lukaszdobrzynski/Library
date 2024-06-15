@@ -1,5 +1,4 @@
 ﻿using Library.Modules.Catalogue.Application.Contracts;
-using Library.Modules.Catalogue.Application.Outbox;
 using Library.Modules.Catalogue.Models;
 using Newtonsoft.Json;
 using Raven.Client.Documents.Session;

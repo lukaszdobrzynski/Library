@@ -2,6 +2,7 @@
 using Library.BuildingBlocks.EventBus;
 using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
+using Library.Modules.Catalogue.Models;
 using Newtonsoft.Json;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
