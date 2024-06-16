@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Catalogue.IntegrationEvents;
 
-public class BookHoldRejectedIntegrationEvent : IntegrationEvent
+public class BookHoldGrantedIntegrationEvent : IntegrationEvent
 {
     
 }
