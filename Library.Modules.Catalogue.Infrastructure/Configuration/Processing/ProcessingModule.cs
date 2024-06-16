@@ -2,6 +2,7 @@
 using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
+using Library.Modules.Catalogue.Infrastructure.Outbox;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
@@ -26,6 +27,14 @@ public class ProcessingModule : Autofac.Module
             .SingleInstance();
 
         builder.RegisterType<InternalCommandHandlingStrategy>()
+            .AsSelf()
+            .SingleInstance();
+
+        builder.RegisterType<OutboxMessageSubscriptionProcessor>()
+            .AsSelf()
+            .SingleInstance();
+
+        builder.RegisterType<OutboxMessageHandlingStrategy>()
             .AsSelf()
             .SingleInstance();
         

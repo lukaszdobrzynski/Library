@@ -29,16 +29,16 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
                 {
                     BookId = Guid.Parse(book.Id),
                     LibraryBranchId = book.LibraryBranchId,
-                    PatronId = command.PatronId
+                    PatronId = command.PatronId,
+                    OccurredOn = DateTime.UtcNow
                 };
                 
                 var bookHoldRejectedNotificationType = _domainNotificationsRegistry.GetName(bookHoldRejectedNotification.GetType());
                 var bookHoldRejectedNotificationData = JsonConvert.SerializeObject(bookHoldRejectedNotification);
-                var bookHoldRejectedOutboxMessage = new OutboxMessage(
-                    Guid.NewGuid(), 
+                var bookHoldRejectedOutboxMessage = OutboxMessage.CreateSubmitted(Guid.NewGuid().ToString(), 
                     DateTime.UtcNow, 
                     bookHoldRejectedNotificationType, 
-                    bookHoldRejectedNotificationData);
+                    bookHoldRejectedNotificationData);;
 
                 await StoreAndSaveChanges(session, bookHoldRejectedOutboxMessage);
                 return;
@@ -50,17 +50,16 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
             {
                 BookId = Guid.Parse(book.Id),
                 LibraryBranchId = book.LibraryBranchId,
-                PatronId = command.PatronId
+                PatronId = command.PatronId,
+                OccurredOn = DateTime.UtcNow
             };
 
             var bookHoldGrantedNotificationType = _domainNotificationsRegistry.GetName(bookHoldGrantedNotification.GetType());
             var bookHoldGrantedNotificationData = JsonConvert.SerializeObject(bookHoldGrantedNotification);
-            var bookHoldGrantedOutboxMessage = new OutboxMessage(
-                Guid.NewGuid(), 
+            var bookHoldGrantedOutboxMessage = OutboxMessage.CreateSubmitted(Guid.NewGuid().ToString(), 
                 DateTime.UtcNow, 
                 bookHoldGrantedNotificationType, 
                 bookHoldGrantedNotificationData);
-
             await StoreAndSaveChanges(session, bookHoldGrantedOutboxMessage);
         }
     }

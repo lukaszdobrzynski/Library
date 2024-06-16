@@ -8,7 +8,7 @@ public class InboxSubscription
 {
     public const string SubscriptionName = $"{nameof(InboxSubscription)}";
     
-    private const string SubscriptionQuery = $"from InboxMessages where Status == 'Submitted'";
+    private const string SubscriptionQuery = "from InboxMessages where Status == 'Submitted'";
     
     public static void Create(IDocumentStore store)
     {

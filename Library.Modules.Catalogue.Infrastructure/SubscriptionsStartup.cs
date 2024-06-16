@@ -3,6 +3,7 @@ using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Catalogue.Infrastructure.Configuration;
 using Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
+using Library.Modules.Catalogue.Infrastructure.Outbox;
 using Polly.Retry;
 using Serilog;
 
@@ -17,6 +18,7 @@ public class SubscriptionsStartup
     {
         RunSubscription<InboxMessagesSubscriptionProcessor>(logger);
         RunSubscription<InternalCommandsSubscriptionProcessor>(logger);
+        RunSubscription<OutboxMessageSubscriptionProcessor>(logger);
     }
     
     private static void RunSubscription<T>(ILogger logger) where T : ISubscriptionProcessor

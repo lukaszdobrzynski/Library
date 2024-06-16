@@ -2,6 +2,7 @@
 using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
+using Library.Modules.Catalogue.Infrastructure.Outbox;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using Raven.Client.Documents.Subscriptions;
@@ -64,6 +65,7 @@ public class DocumentStoreHolder : IDocumentStoreHolder
     {
         InboxSubscription.Create(store);
         InternalCommandsSubscription.Create(store);
+        OutboxSubscription.Create(store);
     }
 
     private void ValidateSettings(RavenDatabaseSettings settings)
