@@ -29,11 +29,11 @@ public class InternalCommandsSubscriptionProcessor : ISubscriptionProcessor
         var subscription = _documentStoreHolder.GetSubscriptionWorker<InternalCommandBase>(
             subscriptionWorkerOptions);
         
-        var subscriptionTask = subscription.Run(ProcessInboxMessageBatch);
+        var subscriptionTask = subscription.Run(ProcessInternalCommandBatch);
         await subscriptionTask;
     }
     
-    private async Task ProcessInboxMessageBatch(SubscriptionBatch<InternalCommandBase> batch)
+    private async Task ProcessInternalCommandBatch(SubscriptionBatch<InternalCommandBase> batch)
     {
         foreach (var item in batch.Items)
         {

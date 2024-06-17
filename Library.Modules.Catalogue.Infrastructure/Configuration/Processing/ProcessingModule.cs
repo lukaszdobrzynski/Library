@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Infrastructure;
+using Library.Modules.Catalogue.Application;
 using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Library.Modules.Catalogue.Infrastructure.Outbox;
@@ -10,6 +11,10 @@ public class ProcessingModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {
+        builder.RegisterType<DomainNotificationsRegistry>()
+            .As<IDomainNotificationsRegistry>()
+            .SingleInstance();
+        
         builder.RegisterType<CatalogueRetryPolicyFactory>()
             .As<IRetryPolicyFactory>()
             .InstancePerLifetimeScope();

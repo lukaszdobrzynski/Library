@@ -7,4 +7,5 @@
 ('75ab83f8-bc26-4f80-99dc-4fded6c18bb5', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Restricted', 1),
 ('49a94f9e-d80e-49a5-9f89-975db54268ae', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1),
 ('1f2f8fb5-3a80-4b07-b537-07a28d4b6d29', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Restricted', 1),
-('0eaf7c86-c22a-4fe1-9508-08d3d52a8c78', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1);
+('0eaf7c86-c22a-4fe1-9508-08d3d52a8c78', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1),
+('f0a18c61-8e49-49d5-a2d8-4c3b6d0a1e3b', 'f0574cd4-1d05-4a4c-a5fc-ef7f7e4a223f', 'Circulating', 1);

@@ -27,6 +27,7 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
             {
                 var bookHoldRejectedNotification = new BookHoldRejectedNotification
                 {
+                    Id = Guid.NewGuid(),
                     BookId = Guid.Parse(book.Id),
                     LibraryBranchId = book.LibraryBranchId,
                     PatronId = command.PatronId,
@@ -48,6 +49,7 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
 
             var bookHoldGrantedNotification = new BookHoldGrantedNotification
             {
+                Id = Guid.NewGuid(),
                 BookId = Guid.Parse(book.Id),
                 LibraryBranchId = book.LibraryBranchId,
                 PatronId = command.PatronId,

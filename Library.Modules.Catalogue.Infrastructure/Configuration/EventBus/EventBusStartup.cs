@@ -12,5 +12,6 @@ public class EventBusStartup
         var eventBus = scope.Resolve<IEventBus>();
         
         eventBus.Subscribe(new IntegrationEventHandler<HoldCancelledIntegrationEvent>());
+        eventBus.Subscribe(new IntegrationEventHandler<BookPlacedOnHoldIntegrationEvent>());
     }
 }

@@ -7,6 +7,14 @@ CREATE TABLE IF NOT EXISTS reservations.outbox_messages (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS reservations.inbox_messages (
+    id uuid NOT NULL,
+    occurred_on timestamp NOT NULL,
+    type VARCHAR NOT NULL,
+    data JSON NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS reservations.patrons (
     id uuid NOT NULL,
     patron_type VARCHAR NOT NULL,

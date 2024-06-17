@@ -8,7 +8,6 @@ public static class DatabaseConventions
     public static void SetUp(DocumentConventions conventions)
     {
         ConfigureCollections(conventions);
-        ConfigureOptimisticConcurrency(conventions);
     }
 
     private static void ConfigureCollections(DocumentConventions conventions)
@@ -22,10 +21,5 @@ public static class DatabaseConventions
 
             return defaultFindCollectionName(type);
         };
-    }
-
-    private static void ConfigureOptimisticConcurrency(DocumentConventions conventions)
-    {
-        conventions.UseOptimisticConcurrency = true;
     }
 }
