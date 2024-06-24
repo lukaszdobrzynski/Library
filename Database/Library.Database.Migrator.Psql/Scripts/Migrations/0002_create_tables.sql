@@ -16,6 +16,15 @@ CREATE TABLE IF NOT EXISTS reservations.inbox_messages (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS reservations.internal_commands (
+    id uuid NOT NULL,
+    created_at timestamp NOT NULL,
+    processed_at timestamp,
+    type VARCHAR NOT NULL,
+    data JSON NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS reservations.patrons (
     id uuid NOT NULL,
     patron_type VARCHAR NOT NULL,

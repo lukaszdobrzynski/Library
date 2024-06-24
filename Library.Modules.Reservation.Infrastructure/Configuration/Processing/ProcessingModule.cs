@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.Infrastructure;
+using Library.Modules.Reservation.Application.Contracts;
 using Library.Modules.Reservation.Infrastructure.Events;
 using Library.Modules.Reservation.Infrastructure.Jobs;
 using MediatR;
@@ -16,6 +17,10 @@ public class ProcessingModule : Autofac.Module
 
         builder.RegisterType<ProcessInboxJob>()
             .AsSelf()
+            .SingleInstance();
+
+        builder.RegisterType<InternalCommandsScheduler>()
+            .As<IInternalCommandsScheduler>()
             .SingleInstance();
 
         builder.RegisterType<DomainEventToDomainEventNotificationResolver>()
