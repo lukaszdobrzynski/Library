@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS reservations.outbox_messages (
 CREATE TABLE IF NOT EXISTS reservations.inbox_messages (
     id uuid NOT NULL,
     occurred_on timestamp NOT NULL,
+    processed_at timestamp,
     type VARCHAR NOT NULL,
     data JSON NOT NULL,
     PRIMARY KEY (id)

@@ -42,7 +42,7 @@ public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
     private static async Task<bool> IsMessageAlreadyStored(IDbConnection connection, IDbTransaction transaction, Guid notificationId)
     {
         const string sql = "SELECT id FROM reservations.inbox_messages WHERE id = @Id;";
-        var messages = await connection.QueryAsync<InboxMessage>(sql, new { Id = notificationId, transaction });
+        var messages = await connection.QueryAsync<InboxMessageDto>(sql, new { Id = notificationId, transaction });
         var messagesList = messages.ToList();
 
         return messagesList.Any();

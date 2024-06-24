@@ -9,7 +9,8 @@ public static class JobsStartup
 {
     public static void Initialize(ILogger logger)
     {
-        RunJobInIntervals<ProcessOutboxJob>(logger, TimeSpan.FromSeconds(30));
+        RunJobInIntervals<ProcessOutboxJob>(logger, TimeSpan.FromSeconds(10));
+        RunJobInIntervals<ProcessInboxJob>(logger, TimeSpan.FromSeconds(10));
     }
     
     private static void RunJobInIntervals<TBackgroundJob>(

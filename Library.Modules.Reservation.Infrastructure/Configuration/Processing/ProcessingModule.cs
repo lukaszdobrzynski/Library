@@ -14,6 +14,10 @@ public class ProcessingModule : Autofac.Module
             .AsSelf()
             .SingleInstance();
 
+        builder.RegisterType<ProcessInboxJob>()
+            .AsSelf()
+            .SingleInstance();
+
         builder.RegisterType<DomainEventToDomainEventNotificationResolver>()
             .As<IDomainEventToDomainEventNotificationResolver>()
             .SingleInstance();
