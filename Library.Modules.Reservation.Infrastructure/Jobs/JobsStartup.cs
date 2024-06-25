@@ -11,6 +11,7 @@ public static class JobsStartup
     {
         RunJobInIntervals<ProcessOutboxJob>(logger, TimeSpan.FromSeconds(10));
         RunJobInIntervals<ProcessInboxJob>(logger, TimeSpan.FromSeconds(10));
+        RunJobInIntervals<ProcessInternalCommandJob>(logger, TimeSpan.FromSeconds(10));
     }
     
     private static void RunJobInIntervals<TBackgroundJob>(

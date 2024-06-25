@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS reservations.internal_commands (
     id uuid NOT NULL,
     created_at timestamp NOT NULL,
     processed_at timestamp,
+    processing_error VARCHAR,
     type VARCHAR NOT NULL,
     data JSON NOT NULL,
     PRIMARY KEY (id)

@@ -19,8 +19,16 @@ public class ProcessingModule : Autofac.Module
             .AsSelf()
             .SingleInstance();
 
+        builder.RegisterType<ProcessInternalCommandJob>()
+            .AsSelf()
+            .SingleInstance();
+
         builder.RegisterType<InternalCommandsScheduler>()
             .As<IInternalCommandsScheduler>()
+            .SingleInstance();
+
+        builder.RegisterType<InternalCommandsRegistry>()
+            .As<IInternalCommandsRegistry>()
             .SingleInstance();
 
         builder.RegisterType<DomainEventToDomainEventNotificationResolver>()

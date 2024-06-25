@@ -8,10 +8,12 @@ namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 public class InternalCommandsScheduler : IInternalCommandsScheduler
 {
     private readonly IPsqlConnectionFactory _connectionFactory;
+    private readonly IInternalCommandsRegistry _internalCommandsRegistry;
     
-    public InternalCommandsScheduler(IPsqlConnectionFactory connectionFactory)
+    public InternalCommandsScheduler(IPsqlConnectionFactory connectionFactory, IInternalCommandsRegistry internalCommandsRegistry)
     {
         _connectionFactory = connectionFactory;
+        _internalCommandsRegistry = internalCommandsRegistry;
     }
     
     public async Task Submit(ICommand command)
@@ -28,7 +30,7 @@ public class InternalCommandsScheduler : IInternalCommandsScheduler
             {
                 command.Id,
                 CreatedAt = DateTime.UtcNow,
-                Type = command.GetType().FullName,
+                Type = _internalCommandsRegistry.GetName(command.GetType()),
                 Data = data
             });
             
