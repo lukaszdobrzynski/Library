@@ -4,6 +4,7 @@ using Library.BuildingBlocks.Infrastructure;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration.Processing;
+using Library.Modules.Reservation.Infrastructure.InternalCommands;
 using Newtonsoft.Json;
 using Polly;
 using Polly.Retry;
@@ -65,29 +66,10 @@ public class ProcessInternalCommandJob : IBackgroundJob
                 if (result.Outcome == OutcomeType.Failure)
                 {
                     await SetCommandError(connection, internalCommand.Id, result.FinalException.ToString());
+                    transaction.Commit();
                 }
-
-                await SetCommandProcessed(connection, internalCommand.Id);
-                
-                transaction.Commit();
             }
         }    
-    }
-
-    private async Task SetCommandProcessed(IDbConnection connection, Guid commandId)
-    {
-        const string updateProcessedAtSql =
-            "UPDATE reservations.internal_commands " +
-            "SET processed_at = @ProcessedAt " +
-            "WHERE id = @Id;";
-        
-        await connection.ExecuteScalarAsync(
-            updateProcessedAtSql,
-            new
-            {
-                Id = commandId,
-                ProcessAt = DateTime.UtcNow
-            });
     }
 
     private async Task SetCommandError(IDbConnection connection, Guid commandId, string error)

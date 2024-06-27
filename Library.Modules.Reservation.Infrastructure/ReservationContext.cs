@@ -7,6 +7,7 @@ using Library.Modules.Reservation.Infrastructure.Domain.Books;
 using Library.Modules.Reservation.Infrastructure.Domain.Checkouts;
 using Library.Modules.Reservation.Infrastructure.Domain.Holds;
 using Library.Modules.Reservation.Infrastructure.Domain.Patrons;
+using Library.Modules.Reservation.Infrastructure.InternalCommands;
 using Library.Modules.Reservation.Infrastructure.Outbox;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,10 +18,9 @@ public class ReservationContext : DbContext
     internal DbSet<Patron> Patrons { get; set; }
     internal DbSet<Book> Books { get; set; }
     internal DbSet<Hold> Holds { get; set; }
-
     internal DbSet<OutboxMessage> OutboxMessages { get; set; }
-
     internal DbSet<Checkout> Checkouts { get; set; }
+    internal DbSet<InternalCommand> InternalCommands { get; set; }
 
     public ReservationContext(DbContextOptions options) : base(options)
     {
@@ -33,5 +33,6 @@ public class ReservationContext : DbContext
         modelBuilder.ApplyConfiguration(new HoldEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new CheckoutEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OutboxEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new InternalCommandTypeConfiguration());
     }
 }

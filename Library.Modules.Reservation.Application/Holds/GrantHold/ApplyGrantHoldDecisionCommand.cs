@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Application.Holds.GrantHold;
 
-public class ApplyGrantHoldDecisionCommand(Guid holdId) : CommandBase
+public class ApplyGrantHoldDecisionCommand(Guid holdId) : InternalCommandBase
 {
     public Guid HoldId { get; set; } = holdId;
 }
