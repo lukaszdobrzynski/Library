@@ -36,7 +36,6 @@ public class ProcessInternalCommandJob : IBackgroundJob
     public async Task Run()
     {
         using (var connection = _connectionFactory.CreateNewConnection())
-        using (var transaction = connection.BeginTransaction())
         {
             const string sql = "SELECT id, type, data " +
                                "FROM reservations.internal_commands " +
@@ -46,7 +45,7 @@ public class ProcessInternalCommandJob : IBackgroundJob
                                "FOR UPDATE SKIP LOCKED;";
             
             var commands = await connection.QueryAsync<InternalCommandDto>(
-                sql, new { BatchSize }, transaction: transaction);
+                sql, new { BatchSize });
             var commandList = commands.ToList();
 
             if (commandList.Any() == false)
@@ -66,7 +65,6 @@ public class ProcessInternalCommandJob : IBackgroundJob
                 if (result.Outcome == OutcomeType.Failure)
                 {
                     await SetCommandError(connection, internalCommand.Id, result.FinalException.ToString());
-                    transaction.Commit();
                 }
             }
         }    

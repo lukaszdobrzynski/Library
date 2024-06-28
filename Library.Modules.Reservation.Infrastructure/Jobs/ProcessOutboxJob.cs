@@ -2,7 +2,6 @@
 using Library.Modules.Reservation.Application.Contracts;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
-using Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 using Library.Modules.Reservation.Infrastructure.Outbox;
 using MediatR;
 using Newtonsoft.Json;
@@ -34,7 +33,6 @@ public class ProcessOutboxJob : IBackgroundJob
     public async Task Run()
     {
         using (var connection = _connectionFactory.CreateNewConnection())
-        using (var transaction = connection.BeginTransaction())
         {
             const string sql = "SELECT id, type, data " +
                                "FROM reservations.outbox_messages " +
@@ -44,7 +42,7 @@ public class ProcessOutboxJob : IBackgroundJob
                                "FOR UPDATE SKIP LOCKED;";
     
             var messages = await connection.QueryAsync<OutboxMessageDto>(
-                sql, new { BatchSize }, transaction: transaction);
+                sql, new { BatchSize });
             var messageList = messages.ToList();
 
             if (messageList.Any() == false)
@@ -69,12 +67,9 @@ public class ProcessOutboxJob : IBackgroundJob
                     {
                         Date = DateTime.UtcNow,
                         message.Id,
-                        transaction
                     }
                 );
             }
-            
-            transaction.Commit();
         }
     }
 }
