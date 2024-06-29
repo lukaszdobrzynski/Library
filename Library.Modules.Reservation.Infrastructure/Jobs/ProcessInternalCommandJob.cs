@@ -41,8 +41,7 @@ public class ProcessInternalCommandJob : IBackgroundJob
                                "FROM reservations.internal_commands " +
                                "WHERE processed_at IS NULL AND processing_error IS NULL " +
                                "ORDER BY created_at " +
-                               "LIMIT @BatchSize " +
-                               "FOR UPDATE SKIP LOCKED;";
+                               "LIMIT @BatchSize;";
             
             var commands = await connection.QueryAsync<InternalCommandDto>(
                 sql, new { BatchSize });
@@ -58,6 +57,8 @@ public class ProcessInternalCommandJob : IBackgroundJob
             {
                 var type = _internalCommandsRegistry.GetType(internalCommand.Type);
                 dynamic commandToProcess = JsonConvert.DeserializeObject(internalCommand.Data, type);
+                
+                _logger.Information($"Processing INTERNAL command with ID: [{internalCommand.Id}]");
 
                 var result =
                     await _retryPolicy.ExecuteAndCaptureAsync(() => CommandsExecutor.Execute(commandToProcess));

@@ -38,8 +38,7 @@ public class ProcessOutboxJob : IBackgroundJob
                                "FROM reservations.outbox_messages " +
                                "WHERE processed_at IS NULL " +
                                "ORDER BY occurred_on " +
-                               "LIMIT @BatchSize " +
-                               "FOR UPDATE SKIP LOCKED;";
+                               "LIMIT @BatchSize;";
     
             var messages = await connection.QueryAsync<OutboxMessageDto>(
                 sql, new { BatchSize });
