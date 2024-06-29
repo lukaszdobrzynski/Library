@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS reservations.holds (
     till date,
     status VARCHAR NOT NULL,
     is_active BOOLEAN NOT NULL,
+    request_hold_id uuid NOT NULL,
     version_id INTEGER NOT NULL,
     PRIMARY KEY (id)
 );

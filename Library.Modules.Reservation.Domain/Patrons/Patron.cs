@@ -44,7 +44,7 @@ public class Patron : AggregateRootBase
         CheckRule(new PatronCannotPlaceHoldWhenOverdueCheckoutsLimitExceededRule(overdueCheckouts));
 
         var period = GetHoldPeriodForPatron();
-        AddDomainEvent(new BookPlacedOnHoldDomainEvent(bookToHold.BookId, Id, bookToHold.LibraryBranchId, period));
+        AddDomainEvent(new BookPlacedOnHoldDomainEvent(bookToHold.BookId, Id, bookToHold.LibraryBranchId, period, new HoldRequestId(Guid.NewGuid())));
         IncreaseVersion();
     }
 

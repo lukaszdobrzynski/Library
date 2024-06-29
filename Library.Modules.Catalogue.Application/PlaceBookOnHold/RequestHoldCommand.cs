@@ -10,8 +10,9 @@ public class RequestHoldCommand : InternalCommandBase
     public Guid LibraryBranchId { get; set; }
     public Guid PatronId { get; set; }
     public DateTime? Till { get; set; }
+    public Guid ExternalHoldRequestId { get; set; }
 
-    public static RequestHoldCommand CreateSubmitted(Guid bookId, Guid libraryBranchId, Guid patronId, DateTime? till)
+    public static RequestHoldCommand CreateSubmitted(Guid bookId, Guid libraryBranchId, Guid patronId, DateTime? till, Guid externalHoldRequestId)
     {
         return new RequestHoldCommand
         {
@@ -21,6 +22,7 @@ public class RequestHoldCommand : InternalCommandBase
             PatronId = patronId,
             Till = till,
             CreatedAt = DateTime.UtcNow,
+            ExternalHoldRequestId = externalHoldRequestId,
             Status = InternalCommandStatus.Submitted
         };
     }

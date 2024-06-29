@@ -19,6 +19,7 @@ public class HoldEntityTypeConfiguration : IEntityTypeConfiguration<Hold>
         builder.Property(x => x.Till).HasColumnName("till");
         builder.Property(x => x.IsActive).HasColumnName("is_active");
         builder.Property(x => x.VersionId).HasColumnName("version_id").IsConcurrencyToken();
+        builder.Property(x => x.HoldRequestId).HasColumnName("request_hold_id");
         builder.Ignore(x => x.DomainEvents);
         
         builder.OwnsOne<HoldStatus>("Status", b =>

@@ -16,13 +16,14 @@ public class Hold : AggregateRootBase
     public DateTime? Till { get; private set; }
     public HoldStatus Status { get; private set; }
     public bool IsActive { get; set; }
+    public HoldRequestId HoldRequestId { get; set; }
 
     private Hold()
     {
         // EF only
     }
 
-    private Hold(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId, DateTime? till)
+    private Hold(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId, DateTime? till, HoldRequestId holdRequestId)
     {
         Id = new HoldId(Guid.NewGuid());
         BookId = bookId;
@@ -32,13 +33,14 @@ public class Hold : AggregateRootBase
         CreatedAt = DateTime.UtcNow;
         Status = HoldStatus.Pending;
         IsActive = IsHoldActive();
+        HoldRequestId = holdRequestId;
         
         AddDomainEvent(new HoldCreatedDomainEvent(Id));
         IncreaseVersion();
     }
 
-    public static Hold Create(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId, DateTime? till) =>
-        new (bookId, libraryBranchId, patronId, till);
+    public static Hold Create(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId, DateTime? till, HoldRequestId holdRequestId) =>
+        new (bookId, libraryBranchId, patronId, till, holdRequestId);
 
     public void ApplyRejectDecision()
     {

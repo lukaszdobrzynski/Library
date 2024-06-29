@@ -6,6 +6,6 @@ public class ApplyGrantHoldDecisionCommandValidator : AbstractValidator<ApplyGra
 {
     public ApplyGrantHoldDecisionCommandValidator()
     {
-        RuleFor(x => x.HoldId).NotEmpty().WithMessage($"{nameof(ApplyGrantHoldDecisionCommand.HoldId)} cannot be empty.");
+        RuleFor(x => x.RequestHoldId).NotEmpty().WithMessage($"{nameof(ApplyGrantHoldDecisionCommand.RequestHoldId)} cannot be empty.");
     }
 }

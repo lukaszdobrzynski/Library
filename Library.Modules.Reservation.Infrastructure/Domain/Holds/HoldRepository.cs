@@ -19,6 +19,11 @@ public class HoldRepository : IHoldRepository
         return await _reservationContext.Holds.SingleAsync(x => x.Id == holdId);
     }
 
+    public async Task<Hold> GetByRequestHoldId(HoldRequestId holdRequestId)
+    {
+        return await _reservationContext.Holds.SingleAsync(x => x.HoldRequestId == holdRequestId);
+    }
+
     public async Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId)
     {
         var hold = await _reservationContext.Holds

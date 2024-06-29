@@ -21,7 +21,8 @@ public class BookPlacedOnHoldIntegrationEventHandler : INotificationHandler<Book
                 notification.BookId,
                 notification.LibraryBranchId,
                 notification.PatronId,
-                notification.Till);
+                notification.Till,
+                notification.HoldRequestId);
 
             await session.StoreAsync(command, cancellationToken);
             await session.SaveChangesAsync(cancellationToken);

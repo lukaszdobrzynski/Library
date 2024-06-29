@@ -31,7 +31,8 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
                     BookId = Guid.Parse(book.Id),
                     LibraryBranchId = book.LibraryBranchId,
                     PatronId = command.PatronId,
-                    OccurredOn = DateTime.UtcNow
+                    OccurredOn = DateTime.UtcNow,
+                    ExternalHoldRequestId = command.ExternalHoldRequestId
                 };
                 
                 var bookHoldRejectedNotificationType = _domainNotificationsRegistry.GetName(bookHoldRejectedNotification.GetType());
@@ -53,7 +54,8 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
                 BookId = Guid.Parse(book.Id),
                 LibraryBranchId = book.LibraryBranchId,
                 PatronId = command.PatronId,
-                OccurredOn = DateTime.UtcNow
+                OccurredOn = DateTime.UtcNow,
+                ExternalHoldRequestId = command.ExternalHoldRequestId
             };
 
             var bookHoldGrantedNotificationType = _domainNotificationsRegistry.GetName(bookHoldGrantedNotification.GetType());

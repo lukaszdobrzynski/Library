@@ -8,7 +8,7 @@ public class BookPlacedOnHoldDomainEventHandler(IHoldRepository holdRepository) 
 {
     public async Task Handle(BookPlacedOnHoldDomainEvent @event, CancellationToken cancellationToken)
     {
-        var hold = Hold.Create(@event.BookId, @event.LibraryBranchId, @event.PatronId, @event.Till);
+        var hold = Hold.Create(@event.BookId, @event.LibraryBranchId, @event.PatronId, @event.Till, new HoldRequestId(@event.HoldRequestId.Value));
         await holdRepository.AddAsync(hold);
     }
 }

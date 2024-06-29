@@ -8,8 +8,7 @@ public class ApplyGrantHoldDecisionCommandHandler(IHoldRepository holdRepository
 {
     public async Task Handle(ApplyGrantHoldDecisionCommand command, CancellationToken cancellationToken)
     {
-        var hold = await holdRepository.GetByIdAsync(new HoldId(command.HoldId));
-        
+        var hold = await holdRepository.GetByRequestHoldId(new HoldRequestId(command.RequestHoldId));
         hold.ApplyGrantDecision();
     }
 }

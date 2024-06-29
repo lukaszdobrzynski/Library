@@ -18,7 +18,8 @@ public class BookHoldGrantedNotificationHandler : INotificationHandler<BookHoldG
         await _eventBus.Publish(new BookHoldGrantedIntegrationEvent
         {
             Id = notification.Id,
-            OccurredOn = notification.OccurredOn
+            OccurredOn = notification.OccurredOn,
+            RequestHoldId = notification.ExternalHoldRequestId
         });
     }
 }

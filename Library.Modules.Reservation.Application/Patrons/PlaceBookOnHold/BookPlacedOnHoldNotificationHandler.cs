@@ -16,7 +16,8 @@ public class BookPlacedOnHoldNotificationHandler(IEventBus eventBus)
             LibraryBranchId = notification.DomainEvent.LibraryBranchId.Value,
             PatronId = notification.DomainEvent.PatronId.Value,
             Till = notification.DomainEvent.Till,
-            OccurredOn = notification.DomainEvent.OccurredOn
+            OccurredOn = notification.DomainEvent.OccurredOn,
+            HoldRequestId = notification.DomainEvent.HoldRequestId.Value
         });
     }
 }

@@ -15,6 +15,10 @@ public class BookHoldGrantedIntegrationEventHandler : INotificationHandler<BookH
     
     public async Task Handle(BookHoldGrantedIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        await _internalCommandsScheduler.Submit(new ApplyGrantHoldDecisionCommand(Guid.NewGuid()));
+        await _internalCommandsScheduler.Submit(new ApplyGrantHoldDecisionCommand
+        {
+            Id = Guid.NewGuid(),
+            RequestHoldId = notification.RequestHoldId,
+        });
     }
 }

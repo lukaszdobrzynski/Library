@@ -9,4 +9,6 @@ public class BookHoldGrantedNotification : IDomainNotification
     public Guid LibraryBranchId { get; set; }
     public Guid PatronId { get; set; }
     public DateTime OccurredOn { get; set; }
+
+    public Guid ExternalHoldRequestId { get; set; }
 }

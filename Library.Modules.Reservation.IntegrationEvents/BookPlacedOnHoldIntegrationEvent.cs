@@ -8,4 +8,5 @@ public class BookPlacedOnHoldIntegrationEvent : IntegrationEvent
     public Guid PatronId { get; set; }
     public Guid LibraryBranchId { get; set; }
     public DateTime? Till { get; set; }
+    public Guid HoldRequestId { get; set; }
 }

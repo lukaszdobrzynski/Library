@@ -17,7 +17,7 @@ public class HoldTestBase : TestBase
 
     protected Hold CreatePendingHold(BookId bookId, LibraryBranchId libraryBranchId, PatronId patronId)
     {
-        var hold = Hold.Create(bookId, libraryBranchId, patronId, null);
+        var hold = Hold.Create(bookId, libraryBranchId, patronId, null, new HoldRequestId(Guid.NewGuid()));
         hold.ClearDomainEvents();
         return hold;
     }

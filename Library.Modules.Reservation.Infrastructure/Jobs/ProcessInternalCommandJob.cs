@@ -39,7 +39,7 @@ public class ProcessInternalCommandJob : IBackgroundJob
         {
             const string sql = "SELECT id, type, data " +
                                "FROM reservations.internal_commands " +
-                               "WHERE processed_at IS NULL " +
+                               "WHERE processed_at IS NULL AND processing_error IS NULL " +
                                "ORDER BY created_at " +
                                "LIMIT @BatchSize " +
                                "FOR UPDATE SKIP LOCKED;";
