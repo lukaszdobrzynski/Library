@@ -1,4 +1,5 @@
 ﻿using Library.Modules.Catalogue.Application.Contracts;
+using Library.Modules.Catalogue.Application.RestoreBookAvailability;
 using Library.Modules.Reservation.IntegrationEvents;
 using MediatR;
 
@@ -17,7 +18,7 @@ public class HoldCancelledIntegrationEventHandler : INotificationHandler<HoldCan
     {
         using (var session = _documentStoreHolder.OpenAsyncSession())
         {
-            var command = CancelHoldCommand.CreateSubmitted(
+            var command = MarkBookAvailableForReservationCommand.CreateSubmitted(
                 notificationEvent.BookId, notificationEvent.LibraryBranchId, notificationEvent.PatronId);
 
             await session.StoreAsync(command, cancellationToken);

@@ -77,6 +77,6 @@ public class Startup
             _logger, 
             eventBus);
 
-        CatalogueStartup.Init(ravenSettings, _logger, eventBus);
+        CatalogueStartup.Init(ravenSettings, executionContextAccessor, _logger, eventBus);
     }
 }

@@ -57,5 +57,8 @@ public class ProcessingModule : Autofac.Module
 
         builder.RegisterGenericDecorator(typeof(OptimisticConcurrencyCommandHandlerDecorator<>),
             typeof(InternalCommandHandler<>));
+
+        builder.RegisterGenericDecorator(typeof(LoggingCommandHandlerDecorator<>), 
+            typeof(InternalCommandHandler<>));
     }
 }

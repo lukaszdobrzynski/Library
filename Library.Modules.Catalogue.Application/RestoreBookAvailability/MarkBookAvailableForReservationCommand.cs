@@ -1,17 +1,17 @@
 ﻿using Library.Modules.Catalogue.Application.Contracts;
 
-namespace Library.Modules.Catalogue.Application.CancelHold;
+namespace Library.Modules.Catalogue.Application.RestoreBookAvailability;
 
-public class CancelHoldCommand : InternalCommandBase
+public class MarkBookAvailableForReservationCommand : InternalCommandBase
 {
-    protected override string Name => nameof(CancelHoldCommand);
+    protected override string Name => nameof(MarkBookAvailableForReservationCommand);
     public Guid BookId { get; set; }
     public Guid LibraryBranchId { get; set; }
     public Guid PatronId { get; set; }
     
-    public static CancelHoldCommand CreateSubmitted(Guid bookId, Guid libraryBranchId, Guid patronId)
+    public static MarkBookAvailableForReservationCommand CreateSubmitted(Guid bookId, Guid libraryBranchId, Guid patronId)
     {
-        return new CancelHoldCommand
+        return new MarkBookAvailableForReservationCommand
         {
             Id = Guid.NewGuid().ToString(),
             BookId = bookId,

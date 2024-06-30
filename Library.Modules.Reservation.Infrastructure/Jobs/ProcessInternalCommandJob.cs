@@ -58,8 +58,6 @@ public class ProcessInternalCommandJob : IBackgroundJob
                 var type = _internalCommandsRegistry.GetType(internalCommand.Type);
                 dynamic commandToProcess = JsonConvert.DeserializeObject(internalCommand.Data, type);
                 
-                _logger.Information($"Processing INTERNAL command with ID: [{internalCommand.Id}]");
-
                 var result =
                     await _retryPolicy.ExecuteAndCaptureAsync(() => CommandsExecutor.Execute(commandToProcess));
 
