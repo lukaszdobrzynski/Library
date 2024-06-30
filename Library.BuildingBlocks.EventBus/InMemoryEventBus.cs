@@ -10,7 +10,10 @@ public class InMemoryEventBus : IEventBus
 
         if (eventName is not null)
         {
-            var handlers = _registry[eventName];
+            var subscribersExist = _registry.TryGetValue(eventName, out var handlers);
+
+            if (subscribersExist == false)
+                return;
 
             foreach (var handler in handlers)
             {

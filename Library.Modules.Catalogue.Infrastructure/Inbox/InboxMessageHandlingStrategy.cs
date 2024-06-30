@@ -55,6 +55,7 @@ public class InboxMessageHandlingStrategy
     private static async Task SetMessageProcessed(IAsyncDocumentSession session, InboxMessage message)
     {
         message.Status = InboxMessageProcessingStatus.Processed;
+        message.ProcessedAt = DateTime.UtcNow;
         await session.SaveChangesAsync();
     }
 

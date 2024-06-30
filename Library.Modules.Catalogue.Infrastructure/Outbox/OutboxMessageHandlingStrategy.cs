@@ -54,6 +54,7 @@ public class OutboxMessageHandlingStrategy
     private static async Task SetMessageProcessed(IAsyncDocumentSession session, OutboxMessage message)
     {
         message.Status = OutboxMessageProcessingStatus.Processed;
+        message.ProcessedAt = DateTime.UtcNow;
         await session.SaveChangesAsync();
     }
 

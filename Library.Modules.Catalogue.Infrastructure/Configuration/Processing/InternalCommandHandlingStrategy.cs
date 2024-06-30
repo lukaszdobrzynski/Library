@@ -50,6 +50,7 @@ public class InternalCommandHandlingStrategy
     private static async Task SetCommandProcessed(IAsyncDocumentSession session, InternalCommandBase message)
     {
         message.Status = InternalCommandStatus.Processed;
+        message.ProcessedAt = DateTime.UtcNow;
         await session.SaveChangesAsync();
     }
 

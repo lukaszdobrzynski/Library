@@ -11,6 +11,8 @@ public class InboxMessage
     public DateTime? LastFailedAt { get; set; }
     public InboxMessageProcessingStatus Status { get; set; }
 
+    public DateTime? ProcessedAt { get; set; }
+
     public static InboxMessage CreateSubmitted(Guid integrationEventId, DateTime occurredOn, string type, string data)
     {
         return new InboxMessage
