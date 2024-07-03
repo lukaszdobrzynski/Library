@@ -1,16 +1,7 @@
 {
   "DatabaseName": "Library.Catalogue",
-  "Encrypted": false,
-  "Sharding": {
-    "Shards": {
-      "0": {},
-      "1": {},
-      "2": {}
-    },
-    "Orchestrator": {
-      "Topology": {
-        "Members":["A"]
-      }
-    }
+  "ReplicationFactor": 3,
+  "Topology": {
+    "Members": ["A", "B", "C"]
   }
 }

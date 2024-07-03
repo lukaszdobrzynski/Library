@@ -1,73 +1,106 @@
-$imageName = "library-catalogue"
-$containerName = "library-catalogue"
-$hostPort1 = 8080
-$containerPort1 = 8080
-$hostPort2 = 38888
-$containerPort2 = 38888
+$currentDir = Get-Location
+$licenseDir = "developer-license"
 
+$fullLicensePath = Join-Path -Path $currentDir -ChildPath $licenseDir
+$env:LICENSE_PATH = $fullLicensePath
 
-docker build -t $imageName .
+Write-Host "Running compose command..."
+
+docker compose up -d
+
+if ($LASTEXITCODE -eq 0) 
+{
+    Write-Host "Docker compose services started successfully."
+} else
+{
+    Write-Host "Failed to start Docker compose services." -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Adding nodes to cluster..."
+
+Start-Sleep -Seconds 5
+
+$response = curl -s -S -w "%{response_code}" -X PUT http://127.0.0.1:8080/admin/cluster/node?url=http://library-catalogue-two:8080
+$addNode2StatusCode = $response.Substring($response.Length - 3)
+$responseBody = $response.Substring(0, $response.Length - 3)
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Curl command to add node 2 failed." -ForegroundColor Red
+    Write-Host "Error details: $responseBody" -ForegroundColor Red
+    exit -1
+}
+
+if ($addNode2StatusCode -eq 204) {
+    Write-Host "Node 2 added successfully with server response status code ${addNode2StatusCode}."
+} else {
+    Write-Host "Failed to add node 2 with server response status code ${addNode2StatusCode}." -ForegroundColor Red
+    Write-Host "Server returned error details: $responseBody" -ForegroundColor Red
+    exit -1
+}
+
+$response = curl -s -S -w "%{response_code}" -X PUT http://127.0.0.1:8080/admin/cluster/node?url=http://library-catalogue-three:8080
+$addNode3StatusCode = $response.Substring($response.Length - 3)
+$responseBody = $response.Substring(0, $response.Length - 3)
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Curl command to add node 3 failed." -ForegroundColor Red
+    Write-Host "Error details: $responseBody" -ForegroundColor Red
+    exit -1
+}
+
+if ($addNode3StatusCode -eq 204) {
+    Write-Host "Node 3 added successfully with server response status code ${addNode3StatusCode}."
+} else {
+    Write-Host "Failed to add node 3 with server response status code ${addNode3StatusCode}." -ForegroundColor Red
+    Write-Host "Server returned error details: $responseBody" -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Creating database..."
+
+Start-Sleep -Seconds 5
+
+$statusCode = curl -o NUL -w "%{response_code}" -X PUT -d @init-db.json -H 'Content-Type:application/json' http://127.0.0.1:8080/admin/databases
+
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "Curl command to create a database failed." -ForegroundColor Red
+    exit -1
+}
+
+if ($statusCode -eq 201)
+{
+    Write-Host "Database created successfully with server response status code ${statusCode}."
+    
+} else
+{
+    Write-Host "Failed to create database with response status code ${statusCode}." -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Building database migrator...."
+
+dotnet build
 
 if ($LASTEXITCODE -eq 0) {
-    Write-Host "Docker image '$imageName' built successfully."
-    Write-Host "Running $containerName container..."
+    Write-Host "Library migrator app built successfully."
+} else
+{
+    Write-Host "Failed to build Library migrator app." -ForegroundColor Red
+    exit -1
+}
 
-    docker run -d --rm -p "${hostPort1}:${containerPort1}" -p "${hostPort2}:${containerPort2}" --name $containerName $imageName
+Write-Host "Seeding database..."
 
-    if ($LASTEXITCODE -eq 0) 
-    {
-        Write-Host "Docker container $containerName started successfully."
-    } else
-    {
-        Write-Host "Failed to start Docker container $containerName." -ForegroundColor Red
-        exit -1
-    }
+Start-Sleep -Seconds 5
 
-    Write-Host "Creating database..."
+dotnet run
 
-    Start-Sleep -Seconds 5
-
-    $statusCode = curl -o NUL -w "%{response_code}" -X PUT -d @init-db.json -H 'Content-Type:application/json' http://127.0.0.1:8080/admin/databases
-
-    if ($LASTEXITCODE -ne 0) {
-        Write-Host "Curl command failed." -ForegroundColor Red
-        exit -1
-    }
-
-    if ($statusCode -eq 201)
-    {
-        Write-Host "Database created successfully with server response status code ${statusCode}."
-        
-    } else
-    {
-        Write-Host "Failed to create database with response status code ${statusCode}." -ForegroundColor Red
-        exit -1
-    }
-
-    dotnet build
-
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Library migrator app built successfully."
-    } else
-    {
-        Write-Host "Failed to build Library migrator app." -ForegroundColor Red
-        exit -1
-    }
-
-    Write-Host "Seeding database..."
-
-    dotnet run
-
-    if ($LASTEXITCODE -eq 0) {
-        Write-Host "Database seeded successfuly."
-        exit 0
-    }
-    else {
-        Write-Host "Failed to seed database." -ForegroundColor Red
-        exit -1
-    }
-
-} else {
-    Write-Host "Failed to build Docker image '$imageName'." -ForegroundColor Red
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Database seeded successfuly."
+    exit 0
+}
+else {
+    Write-Host "Failed to seed database." -ForegroundColor Red
     exit -1
 }

@@ -1,0 +1,57 @@
+﻿version: '3'
+services:
+  raven-one:
+    container_name: library-catalogue-one
+    image: ravendb/ravendb:latest
+    ports:
+      - "8080:8080"
+      - "38888:38888"
+    environment:
+      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
+      - RAVEN_Setup_Mode=None
+      - RAVEN_License_Eula_Accepted=true
+      - RAVEN_License_Path=/ravendb/license/developer-license.json
+      - RAVEN_ServerUrls=http://0.0.0.0:8080
+      - RAVEN_TcpServerUrls=tcp://0.0.0.0:38888
+      - RAVEN_PublicServerUrl=http://library-catalogue-one:8080
+      - RAVEN_PublicServerUrl_Tcp=tcp://library-catalogue-one:38888
+    volumes:
+      - ${LICENSE_PATH}:/ravendb/license
+    networks:
+      - library
+  raven_two:
+    container_name: library-catalogue-two
+    image: ravendb/ravendb:latest
+    ports:
+      - "8081:8080"
+      - "38889:38888"
+    environment:
+      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
+      - RAVEN_Setup_Mode=None
+      - RAVEN_License_Eula_Accepted=true
+      - RAVEN_ServerUrls=http://0.0.0.0:8080
+      - RAVEN_TcpServerUrls=tcp://0.0.0.0:38888
+      - RAVEN_PublicServerUrl=http://library-catalogue-two:8080
+      - RAVEN_PublicServerUrl_Tcp=tcp://library-catalogue-two:38888
+    networks:
+      - library
+  raven-three:
+    container_name: library-catalogue-three
+    image: ravendb/ravendb:latest
+    ports:
+      - "8082:8080"
+      - "38890:38888"
+    environment:
+      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
+      - RAVEN_Setup_Mode=None
+      - RAVEN_License_Eula_Accepted=true
+      - RAVEN_ServerUrls=http://0.0.0.0:8080
+      - RAVEN_TcpServerUrls=tcp://0.0.0.0:38888
+      - RAVEN_PublicServerUrl=http://library-catalogue-three:8080
+      - RAVEN_PublicServerUrl_Tcp=tcp://library-catalogue-three:38888
+    networks:
+      - library
+networks:
+  library:
+    driver: bridge
+   
