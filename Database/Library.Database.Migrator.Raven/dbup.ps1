@@ -21,7 +21,7 @@ Write-Host "Adding nodes to cluster..."
 
 Start-Sleep -Seconds 5
 
-$response = curl -s -S -w "%{response_code}" -X PUT http://127.0.0.1:8080/admin/cluster/node?url=http://library-catalogue-two:8080
+$response = curl -s -S -w "%{response_code}" -X PUT http://127.0.0.1:8080/admin/cluster/node?url=http://library-catalogue-two:8081
 $addNode2StatusCode = $response.Substring($response.Length - 3)
 $responseBody = $response.Substring(0, $response.Length - 3)
 
@@ -39,7 +39,7 @@ if ($addNode2StatusCode -eq 204) {
     exit -1
 }
 
-$response = curl -s -S -w "%{response_code}" -X PUT http://127.0.0.1:8080/admin/cluster/node?url=http://library-catalogue-three:8080
+$response = curl -s -S -w "%{response_code}" -X PUT http://127.0.0.1:8080/admin/cluster/node?url=http://library-catalogue-three:8082
 $addNode3StatusCode = $response.Substring($response.Length - 3)
 $responseBody = $response.Substring(0, $response.Length - 3)
 

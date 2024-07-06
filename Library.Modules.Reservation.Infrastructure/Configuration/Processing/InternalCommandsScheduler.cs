@@ -19,7 +19,6 @@ public class InternalCommandsScheduler : IInternalCommandsScheduler
     public async Task Submit(ICommand command)
     {
         using (var connection  = _connectionFactory.CreateNewConnection())
-        using (var transaction = connection.BeginTransaction())
         {
             const string sqlInsert = "INSERT INTO reservations.internal_commands (id, created_at, type, data) VALUES " +
                                      "(@Id, @CreatedAt, @Type, @Data::json)";
@@ -33,8 +32,6 @@ public class InternalCommandsScheduler : IInternalCommandsScheduler
                 Type = _internalCommandsRegistry.GetName(command.GetType()),
                 Data = data
             });
-            
-            transaction.Commit();
         }    
     }
 }

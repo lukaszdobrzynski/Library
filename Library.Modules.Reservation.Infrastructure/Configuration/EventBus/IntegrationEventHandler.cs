@@ -17,9 +17,8 @@ public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
         var connectionFactory = scope.Resolve<IPsqlConnectionFactory>();
 
         using (var connection = connectionFactory.CreateNewConnection())
-        using (var transaction = connection.BeginTransaction())
         {
-            if (await IsMessageAlreadyStored(connection, transaction, integrationEvent.Id))
+            if (await IsMessageAlreadyStored(connection, integrationEvent.Id))
                 return;
             
             var type = integrationEvent.GetType().FullName;
@@ -34,15 +33,13 @@ public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
                     OccurredOn = DateTime.UtcNow,
                     data,
                     type });
-            
-            transaction.Commit();
         }
     }
     
-    private static async Task<bool> IsMessageAlreadyStored(IDbConnection connection, IDbTransaction transaction, Guid notificationId)
+    private static async Task<bool> IsMessageAlreadyStored(IDbConnection connection, Guid notificationId)
     {
         const string sql = "SELECT id FROM reservations.inbox_messages WHERE id = @Id;";
-        var messages = await connection.QueryAsync<InboxMessageDto>(sql, new { Id = notificationId, transaction });
+        var messages = await connection.QueryAsync<InboxMessageDto>(sql, new { Id = notificationId });
         var messagesList = messages.ToList();
 
         return messagesList.Any();

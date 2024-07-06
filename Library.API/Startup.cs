@@ -67,7 +67,7 @@ public class Startup
         var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
         var ravenSettings = new RavenDatabaseSettings
         {
-            Urls = new[] { "http://localhost:8080" },
+            Urls = new[] { "http://localhost:8080", "http://localhost:8081", "http://localhost:8082" },
             DatabaseName = "Library.Catalogue"
         };
         

@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Application.Holds.RejectHold;
 
-public class ApplyRejectHoldDecisionCommand(Guid holdId) : CommandBase
+public class ApplyRejectHoldDecisionCommand : InternalCommandBase
 {
-    public Guid HoldId { get; private set; } = holdId;
+    public Guid RequestHoldId { get; set; }
 }

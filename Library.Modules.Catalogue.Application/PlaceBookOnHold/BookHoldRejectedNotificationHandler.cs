@@ -18,7 +18,8 @@ public class BookHoldRejectedNotificationHandler : INotificationHandler<BookHold
         await _eventBus.Publish(new BookHoldRejectedIntegrationEvent
         {
             Id = notification.Id,
-            OccurredOn = notification.OccurredOn
+            OccurredOn = notification.OccurredOn,
+            RequestHoldId = notification.ExternalHoldRequestId
         });
     }
 }
