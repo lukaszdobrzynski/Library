@@ -1,9 +1,11 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Library.Modules.Catalogue.Infrastructure.Outbox;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 using Raven.Client.Documents.Session;
 using Raven.Client.Documents.Subscriptions;
 
@@ -56,6 +58,7 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         
 #if DEBUG
         CreateSubscriptions(store);
+        DeployIndexes(store, settings);
 #endif        
         
         return store;
@@ -66,6 +69,13 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         InboxSubscription.Create(store);
         InternalCommandsSubscription.Create(store);
         OutboxSubscription.Create(store);
+    }
+
+    private static void DeployIndexes(IDocumentStore store, RavenDatabaseSettings settings)
+    {
+        var database = settings.DatabaseName;
+        var assembly = Assembly.GetExecutingAssembly();
+        IndexCreation.CreateIndexes(assembly, store, database: database);
     }
 
     private void ValidateSettings(RavenDatabaseSettings settings)

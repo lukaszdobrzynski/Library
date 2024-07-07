@@ -3,6 +3,7 @@ using System.IO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Library.API.ExecutionContext;
+using Library.API.Modules.CatalogueRootModule;
 using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
 using Library.BuildingBlocks.EventBus;
@@ -37,6 +38,7 @@ public class Startup
     public void ConfigureContainer(ContainerBuilder containerBuilder)
     {
         containerBuilder.RegisterModule(new ReservationRootModule());
+        containerBuilder.RegisterModule(new CatalogueRootModule());
     }
     
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
