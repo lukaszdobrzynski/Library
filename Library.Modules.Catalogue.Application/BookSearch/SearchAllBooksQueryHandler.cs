@@ -12,10 +12,16 @@ public class SearchAllBooksQueryHandler : IRequestHandler<SearchAllBooksQuery, S
         _bookQueries = bookQueries;
     }
 
-    public async Task<SearchAllBooksResultDto> Handle(SearchAllBooksQuery request, CancellationToken cancellationToken)
+    public async Task<SearchAllBooksResultDto> Handle(SearchAllBooksQuery query, CancellationToken cancellationToken)
     {
-        var skip = (request.PageNumber * request.PageSize) - request.PageSize;
-        var queryResult = await _bookQueries.GetMultiSearchResults(request.Term, skip, request.PageSize);
+        var queryResult = await _bookQueries.GetSearchResults(new BookSearchQueryParameters
+        {
+            Term = query.Term,
+            SearchType = query.SearchType,
+            PageSize = query.PageSize,
+            PageNumber = query.PageNumber
+        });
+        
         var books = queryResult.Books.Select(BookDto.From).ToList();
 
         return new SearchAllBooksResultDto

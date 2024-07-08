@@ -9,4 +9,6 @@ public class SearchAllBooksQuery : IQuery<SearchAllBooksResultDto>
     public int PageNumber { get; set; }
 
     public int PageSize { get; set; }
+
+    public BookSearchType SearchType { get; set; }
 }
