@@ -2,6 +2,7 @@
 using Library.Modules.Catalogue.Application.Contracts;
 using Library.Modules.Catalogue.Infrastructure.Indexes;
 using Library.Modules.Catalogue.Models;
+using Raven.Client.Documents.Session;
 
 namespace Library.Modules.Catalogue.Infrastructure.Queries;
 
@@ -14,33 +15,14 @@ public class BookQueries : IBookQueries
         _documentStoreHolder = documentStoreHolder;
     }
 
-    public async Task<BookSearchQueryResult> GetSearchResults(BookSearchQueryParameters queryParameters)
+    public async Task<BookSearchQueryResult> GetMultiSearchResults(SearchBooksQueryParameters queryParameters)
     {
-        var skip = (queryParameters.PageNumber * queryParameters.PageSize) - queryParameters.PageSize;
-        
         using (var session = _documentStoreHolder.OpenAsyncSession())
         {
-            var query = session.Advanced.AsyncDocumentQuery<BookMultiSearch.Result, BookMultiSearch>();
+            var query = GetQueryFromParameters(session, queryParameters);
 
-            if (queryParameters.SearchType == BookSearchType.ExactPhrase)
-            {
-                query.WhereLucene(nameof(BookMultiSearch.Result.QueryExactPhrase), $"\"{queryParameters.Term.ToLower()}\"");
-            }
-
-            if (queryParameters.SearchType == BookSearchType.AnyTerm)
-            {
-                query.Search(x => x.Query, queryParameters.Term);
-            }
-
-            if (queryParameters.SearchType == BookSearchType.BeginsWith)
-            {
-                query.WhereStartsWith(x => x.Query, queryParameters.Term);
-            }
-            
             var result = await query.Statistics(out var stats)
                 .OfType<Book>()
-                .Skip(skip)
-                .Take(queryParameters.PageSize)
                 .ToListAsync();
 
             return new BookSearchQueryResult
@@ -49,5 +31,25 @@ public class BookQueries : IBookQueries
                 TotalResults = (int)stats.TotalResults
             };
         }
+    }
+
+    private IAsyncDocumentQuery<BookMultiSearch.Result> GetQueryFromParameters(IAsyncDocumentSession session, SearchBooksQueryParameters parameters)
+    {
+        var query = session.Advanced.AsyncDocumentQuery<BookMultiSearch.Result, BookMultiSearch>();
+        var queryBuilder = BookSearchQueryBuilder.Init(query, parameters.Term);
+        
+        var q = parameters.SearchSource switch
+        {
+            BookSearchSource.Anywhere => queryBuilder.BuildSearchAnywhereQuery(parameters.SearchType),
+            BookSearchSource.Author => queryBuilder.BuildSearchAuthorQuery(parameters.SearchType),
+            BookSearchSource.Title => queryBuilder.BuildSearchTitleQuery(parameters.SearchType),
+            BookSearchSource.Isbn => queryBuilder.BuildSearchIsbnQuery(parameters.SearchType),
+            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchSource)}: {parameters.SearchSource}.")
+        };
+        
+        var skip = (parameters.PageNumber * parameters.PageSize) - parameters.PageSize;
+
+        return q.Skip(skip)
+            .Take(parameters.PageSize);
     }
 }

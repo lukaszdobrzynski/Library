@@ -5,5 +5,5 @@ namespace Library.Modules.Catalogue.Application.Contracts;
 
 public interface IBookQueries
 {
-    Task<BookSearchQueryResult> GetSearchResults(BookSearchQueryParameters queryParameters);
+    Task<BookSearchQueryResult> GetMultiSearchResults(SearchBooksQueryParameters queryParameters);
 }

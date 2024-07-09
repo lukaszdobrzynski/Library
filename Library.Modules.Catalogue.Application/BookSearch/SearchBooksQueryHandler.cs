@@ -3,28 +3,29 @@ using MediatR;
 
 namespace Library.Modules.Catalogue.Application.BookSearch;
 
-public class SearchAllBooksQueryHandler : IRequestHandler<SearchAllBooksQuery, SearchAllBooksResultDto>
+public class SearchBooksQueryHandler : IRequestHandler<SearchBooksQuery, SearchBooksResultDto>
 {
     private readonly IBookQueries _bookQueries;
     
-    public SearchAllBooksQueryHandler(IBookQueries bookQueries)
+    public SearchBooksQueryHandler(IBookQueries bookQueries)
     {
         _bookQueries = bookQueries;
     }
 
-    public async Task<SearchAllBooksResultDto> Handle(SearchAllBooksQuery query, CancellationToken cancellationToken)
+    public async Task<SearchBooksResultDto> Handle(SearchBooksQuery query, CancellationToken cancellationToken)
     {
-        var queryResult = await _bookQueries.GetSearchResults(new BookSearchQueryParameters
+        var queryResult = await _bookQueries.GetMultiSearchResults(new SearchBooksQueryParameters
         {
             Term = query.Term,
             SearchType = query.SearchType,
+            SearchSource = query.SearchSource,
             PageSize = query.PageSize,
             PageNumber = query.PageNumber
         });
         
         var books = queryResult.Books.Select(BookDto.From).ToList();
 
-        return new SearchAllBooksResultDto
+        return new SearchBooksResultDto
         {
             Books = books,
             TotalResults = queryResult.TotalResults
