@@ -27,7 +27,7 @@ public class BookSearchQueryBuilder
                 _query.WhereEquals(nameof(BookMultiSearch.Result.ExactQuery), _term);
                 return _query;
             case BookSearchType.AnyTerm:
-                _query.Search(x => x.Query, _term);
+                _query.Search(x => x.AnywhereQuery, _term);
                 return _query;
             case BookSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.ExactQuery), _term);
@@ -45,7 +45,7 @@ public class BookSearchQueryBuilder
                 _query.WhereEquals(nameof(BookMultiSearch.Result.Author), _term);
                 return _query;
             case BookSearchType.AnyTerm:
-                _query.ContainsAny(x => x.Author, _term);
+                _query.Search(x => x.AuthorQuery, _term);
                 return _query;
             case BookSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.Author), _term);
@@ -63,7 +63,7 @@ public class BookSearchQueryBuilder
                 _query.WhereEquals(nameof(BookMultiSearch.Result.Title), _term);
                 return _query;
             case BookSearchType.AnyTerm:
-                _query.ContainsAny(x => x.Title, _term);
+                _query.Search(x => x.TitleQuery, _term);
                 return _query;
             case BookSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.Title), _term);
@@ -81,7 +81,7 @@ public class BookSearchQueryBuilder
                 _query.WhereEquals(nameof(BookMultiSearch.Result.Isbn), _term);
                 return _query;
             case BookSearchType.AnyTerm:
-                _query.ContainsAny(x => x.Isbn, _term);
+                _query.WhereRegex(x => x.Isbn, $".*{_term}.*");
                 return _query;
             case BookSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.Isbn), _term);
