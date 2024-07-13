@@ -1,5 +1,5 @@
-﻿FROM postgres:latest
+﻿FROM postgres:15
 
-ENV POSTGRES_PASSWORD=admin
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_DB=library
+RUN apt-get update && \
+    apt-get install -y \
+    postgresql-15-repmgr

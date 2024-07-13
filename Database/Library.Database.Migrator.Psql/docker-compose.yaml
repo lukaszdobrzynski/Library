@@ -1,0 +1,72 @@
+﻿version: '3.8'
+
+services:
+  postgres-node-one:
+    user: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres-node-one
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: library
+      POSTGRES_PASSWORD: admin
+    command: |
+      postgres 
+      -c wal_level=replica 
+      -c hot_standby=on 
+      -c max_wal_senders=10 
+      -c max_replication_slots=10 
+      -c hot_standby_feedback=on
+    volumes:
+      - ./node_one_repmgr.conf:/etc/repmgr.conf
+    networks:
+      - postgres-cluster-network
+  
+  postgres-node-two:
+    user: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres-node-two
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: library
+      POSTGRES_PASSWORD: admin
+      PGPASSWORD: admin
+    volumes:
+      - ./node_two_repmgr.conf:/etc/repmgr.conf
+    command: ["sleep", "infinity"]
+    depends_on:
+      - postgres-node-one
+    networks:
+      - postgres-cluster-network
+  
+  postgres-node-three:
+    user: postgres
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: postgres-node-three
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: library
+      POSTGRES_PASSWORD: admin
+      PGPASSWORD: admin
+    volumes:
+      - ./node_three_repmgr.conf:/etc/repmgr.conf
+    command: [ "sleep", "infinity" ]
+    depends_on:
+      - postgres-node-one
+    networks:
+      - postgres-cluster-network
+  
+networks:
+  postgres-cluster-network:
+    driver: bridge

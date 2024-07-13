@@ -1,60 +1,60 @@
 ﻿version: '3'
 services:
   raven-one:
-    container_name: library-catalogue-one
+    container_name: library-one
     image: ravendb/ravendb:latest
     ports:
       - "8080:8080"
       - "38888:38888"
     environment:
-      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
-      - RAVEN_Setup_Mode=None
-      - RAVEN_License_Eula_Accepted=true
-      - RAVEN_License_Path=/ravendb/license/developer-license.json
-      - RAVEN_ServerUrl=http://0.0.0.0:8080
-      - RAVEN_ServerUrl_Tcp=tcp://0.0.0.0:38888
-      - RAVEN_PublicServerUrl=http://library-catalogue-one:8080
-      - RAVEN_PublicServerUrl_Tcp=tcp://library-catalogue-one:38888
-      - RAVEN_Indexing_Auto_SearchEngineType=Lucene
-      - RAVEN_Indexing_Static_SearchEngineType=Lucene
+      RAVEN_Security_UnsecuredAccessAllowed: PublicNetwork
+      RAVEN_Setup_Mode: None
+      RAVEN_License_Eula_Accepted: true
+      RAVEN_License_Path: /ravendb/license/developer-license.json
+      RAVEN_ServerUrl: http://0.0.0.0:8080
+      RAVEN_ServerUrl_Tcp: tcp://0.0.0.0:38888
+      RAVEN_PublicServerUrl: http://library-one:8080
+      RAVEN_PublicServerUrl_Tcp: tcp://library-one:38888
+      RAVEN_Indexing_Auto_SearchEngineType: Lucene
+      RAVEN_Indexing_Static_SearchEngineType: Lucene
     volumes:
       - ${LICENSE_PATH}:/ravendb/license
     networks:
       - library
-  raven_two:
-    container_name: library-catalogue-two
+  raven-two:
+    container_name: library-two
     image: ravendb/ravendb:latest
     ports:
       - "8081:8081"
       - "38889:38889"
     environment:
-      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
-      - RAVEN_Setup_Mode=None
-      - RAVEN_License_Eula_Accepted=true
-      - RAVEN_ServerUrl=http://0.0.0.0:8081
-      - RAVEN_ServerUrl_Tcp=tcp://0.0.0.0:38889
-      - RAVEN_PublicServerUrl=http://library-catalogue-two:8081
-      - RAVEN_PublicServerUrl_Tcp=tcp://library-catalogue-two:38889
-      - RAVEN_Indexing_Auto_SearchEngineType=Lucene
-      - RAVEN_Indexing_Static_SearchEngineType=Lucene
+      RAVEN_Security_UnsecuredAccessAllowed: PublicNetwork
+      RAVEN_Setup_Mode: None
+      RAVEN_License_Eula_Accepted: true
+      RAVEN_ServerUrl: http://0.0.0.0:8081
+      RAVEN_ServerUrl_Tcp: tcp://0.0.0.0:38889
+      RAVEN_PublicServerUrl: http://library-two:8081
+      RAVEN_PublicServerUrl_Tcp: tcp://library-two:38889
+      RAVEN_Indexing_Auto_SearchEngineType: Lucene
+      RAVEN_Indexing_Static_SearchEngineType: Lucene
     networks:
       - library
   raven-three:
-    container_name: library-catalogue-three
+    container_name: library-three
     image: ravendb/ravendb:latest
     ports:
       - "8082:8082"
       - "38890:38890"
     environment:
-      - RAVEN_Security_UnsecuredAccessAllowed=PublicNetwork
-      - RAVEN_Setup_Mode=None
-      - RAVEN_License_Eula_Accepted=true
-      - RAVEN_ServerUrl=http://0.0.0.0:8082
-      - RAVEN_ServerUrl_Tcp=tcp://0.0.0.0:38890
-      - RAVEN_PublicServerUrl=http://library-catalogue-three:8082
-      - RAVEN_PublicServerUrl_Tcp=tcp://library-catalogue-three:38890
-      - RAVEN_Indexing_Auto_SearchEngineType=Lucene
-      - RAVEN_Indexing_Static_SearchEngineType=Lucene
+      RAVEN_Security_UnsecuredAccessAllowed: PublicNetwork
+      RAVEN_Setup_Mode: None
+      RAVEN_License_Eula_Accepted: true
+      RAVEN_ServerUrl: http://0.0.0.0:8082
+      RAVEN_ServerUrl_Tcp: tcp://0.0.0.0:38890
+      RAVEN_PublicServerUrl: http://library-three:8082
+      RAVEN_PublicServerUrl_Tcp: tcp://library-three:38890
+      RAVEN_Indexing_Auto_SearchEngineType: Lucene
+      RAVEN_Indexing_Static_SearchEngineType: Lucene
     networks:
       - library
 networks:
