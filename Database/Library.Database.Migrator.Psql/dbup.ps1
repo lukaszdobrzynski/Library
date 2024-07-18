@@ -74,6 +74,8 @@ docker exec -it $CONTAINER_ONE sh -c "echo 'host replication postgres $CONTAINER
 $SET_PRIMARYDB_ACCESS_PERMISSION_FOR_CONTAINER_TWO_EXIT_CODE = $LASTEXITCODE
 docker exec -it $CONTAINER_ONE sh -c "echo 'host replication postgres $CONTAINER_THREE_IP/32 trust' >> /var/lib/postgresql/data/pg_hba.conf"
 $SET_PRIMARYDB_ACCESS_PERMISSION_FOR_CONTAINER_THREE_EXIT_CODE = $LASTEXITCODE
+docker exec -it $CONTAINER_ONE sh -c "echo 'shared_preload_libraries = repmgr' >> /var/lib/postgresql/data/postgresql.conf"
+$SET_PRIMARYDB_REPMGR_CONFIGURATION_EXIT_CODE = $LASTEXITCODE
 
 if ($SET_PRIMARYDB_ACCESS_PERMISSION_FOR_CONTAINER_TWO_EXIT_CODE -eq 0) {
     Write-Host "Access permission for $CONTAINER_TWO set on primary database server."
@@ -91,15 +93,22 @@ else {
     exit -1
 }
 
-Write-Host "Reloading primary db instance..."
-
-docker exec -it $CONTAINER_ONE pg_ctl reload -D /var/lib/postgresql/data
-
-if ($LASTEXITCODE -eq 0) {
-    Write-Host "Primary database instance reloaded."
+if ($SET_PRIMARYDB_REPMGR_CONFIGURATION_EXIT_CODE -eq 0) {
+    Write-Host "Repmgr configuration set on primary database instance."
 }
 else {
-    Write-Host "Failed to reload primary database instance." -ForegroundColor Red
+    Write-Host "Failed to set Repmgr configuration on the primary database instance." -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Restarting $CONTAINER_ONE..."
+docker restart $CONTAINER_ONE
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Primary database instance restarted."
+}
+else {
+    Write-Host "Failed to restart primary database instance." -ForegroundColor Red
     exit -1
 }
 
@@ -111,6 +120,8 @@ docker exec -it $CONTAINER_TWO pg_ctl -D /var/lib/postgresql/data start
 $RESTART_STANDBY_ONE_EXIT_CODE = $LASTEXITCODE
 docker exec -it $CONTAINER_TWO repmgr -f /etc/repmgr.conf standby register
 $REGISTER_STANDBY_ONE_EXIT_CODE = $LASTEXITCODE
+docker exec -it $CONTAINER_TWO sh -c "echo 'shared_preload_libraries = repmgr' >> /var/lib/postgresql/data/postgresql.conf"
+$SET_STANDBY_ONE_REPMGR_CONFIGURATION_EXIT_CODE = $LASTEXITCODE
 
 if ($CLONE_PRIMARY_TO_STANDBY_ONE_EXIT_CODE -eq 0) {
     Write-Host "Cloned primary instance to standby one instance."
@@ -136,6 +147,25 @@ else {
     exit -1
 }
 
+if ($SET_STANDBY_ONE_REPMGR_CONFIGURATION_EXIT_CODE -eq 0) {
+    Write-Host "Repmgr configuration set on standby one database instance."
+}
+else {
+    Write-Host "Failed to set Repmgr configuration on the standby one database instance." -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Reloading standby one db instance..."
+
+docker exec -it $CONTAINER_ONE pg_ctl reload -D /var/lib/postgresql/data
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Standby one database instance reloaded."
+}
+else {
+    Write-Host "Failed to reload standby one database instance." -ForegroundColor Red
+    exit -1
+}
 
 Write-Host "Registering $CONTAINER_THREE database instance as a standby..."
 
@@ -145,6 +175,8 @@ docker exec -it $CONTAINER_THREE pg_ctl -D /var/lib/postgresql/data start
 $RESTART_STANDBY_TWO_EXIT_CODE = $LASTEXITCODE
 docker exec -it $CONTAINER_THREE repmgr -f /etc/repmgr.conf standby register
 $REGISTER_STANDBY_TWO_EXIT_CODE = $LASTEXITCODE
+docker exec -it $CONTAINER_THREE sh -c "echo 'shared_preload_libraries = repmgr' >> /var/lib/postgresql/data/postgresql.conf"
+$SET_STANDBY_TWO_REPMGR_CONFIGURATION_EXIT_CODE = $LASTEXITCODE
 
 if ($CLONE_PRIMARY_TO_STANDBY_TWO_EXIT_CODE -eq 0) {
     Write-Host "Cloned primary instance to standby two instance."
@@ -170,6 +202,58 @@ else {
     exit -1
 }
 
+if ($SET_STANDBY_TWO_REPMGR_CONFIGURATION_EXIT_CODE -eq 0) {
+    Write-Host "Repmgr configuration set on standby two database instance."
+}
+else {
+    Write-Host "Failed to set Repmgr configuration on the standby two database instance." -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Reloading standby two db instance..."
+
+docker exec -it $CONTAINER_TWO pg_ctl reload -D /var/lib/postgresql/data
+
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Standby two database instance reloaded."
+}
+else {
+    Write-Host "Failed to reload standby two database instance." -ForegroundColor Red
+    exit -1
+}
+
+Write-Host "Starting replication manager deamons..."
+
+docker exec -it $CONTAINER_ONE repmgrd -f /etc/repmgr.conf
+$START_REPMGRD_PRIMARYDB_EXIT_CODE = $LASTEXITCODE
+docker exec -it $CONTAINER_TWO repmgrd -f /etc/repmgr.conf
+$START_REPMGRD_STANDBYONE_EXIT_CODE = $LASTEXITCODE
+docker exec -it $CONTAINER_THREE repmgrd -f /etc/repmgr.conf
+$START_REPMGRD_STANDBYTWO_EXIT_CODE = $LASTEXITCODE
+
+if ($START_REPMGRD_PRIMARYDB_EXIT_CODE -eq 0) {
+    Write-Host "Repmgr deamon primary database started."
+}
+else {
+    Write-Host "Failed to start Repmgr primary database deamon." -ForegroundColor Red
+    exit -1
+}
+
+if ($START_REPMGRD_STANDBYONE_EXIT_CODE -eq 0) {
+    Write-Host "Repmgr deamon standby one database started."
+}
+else {
+    Write-Host "Failed to start Repmgr standby one database deamon." -ForegroundColor Red
+    exit -1
+}
+
+if ($START_REPMGRD_STANDBYTWO_EXIT_CODE -eq 0) {
+    Write-Host "Repmgr deamon standby two database started."
+}
+else {
+    Write-Host "Failed to start Repmgr standby two database deamon." -ForegroundColor Red
+    exit -1
+}
 
 Write-Host "Cluster created successfully."
 
