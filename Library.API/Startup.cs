@@ -79,7 +79,7 @@ public class Startup
         };
         
         ReservationStartup.Init(
-            "Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin", 
+            "Host=localhost;Port=9999;Database=library;Username=postgres;Password=admin;IncludeErrorDetail=True", 
             executionContextAccessor, 
             _logger, 
             eventBus);

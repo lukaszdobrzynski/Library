@@ -4,8 +4,7 @@ services:
   postgres-node-one:
     user: postgres
     build:
-      context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-Postgres
     container_name: postgres-node-one
     ports:
       - "5432:5432"
@@ -13,23 +12,23 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: library
       POSTGRES_PASSWORD: admin
-    command: |
-      postgres 
-      -c wal_level=replica 
-      -c hot_standby=on 
-      -c max_wal_senders=10 
-      -c max_replication_slots=10 
-      -c hot_standby_feedback=on
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-      - ./node_one_repmgr.conf:/etc/repmgr.conf
+      - ./node-one-repmgr.conf:/etc/repmgr.conf
+      - ./node-one-entrypoint.sh:/node-one-entrypoint.sh
     networks:
-      - postgres-cluster-network
+      postgres-cluster-network:
+        ipv4_address: 172.199.99.2
+    entrypoint: ["/bin/bash", "/node-one-entrypoint.sh"]
   
   postgres-node-two:
     user: postgres
     build:
-      context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-Postgres
     container_name: postgres-node-two
     ports:
       - "5433:5432"
@@ -38,19 +37,27 @@ services:
       POSTGRES_DB: library
       POSTGRES_PASSWORD: admin
       PGPASSWORD: admin
+      PROMOTE_TRIGGER_FILE: 'tmp/replica_db/down.trg'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-      - ./node_two_repmgr.conf:/etc/repmgr.conf
-    command: ["sleep", "infinity"]
+      - ./node-two-repmgr.conf:/etc/repmgr.conf
+      - ./node-two-entrypoint.sh:/node-two-entrypoint.sh
+    entrypoint: ["/bin/bash", "/node-two-entrypoint.sh"]
     depends_on:
-      - postgres-node-one
+      migrator:
+        condition: service_completed_successfully
     networks:
-      - postgres-cluster-network
+      postgres-cluster-network:
+        ipv4_address: 172.199.99.3
   
   postgres-node-three:
     user: postgres
     build:
-      context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-Postgres
     container_name: postgres-node-three
     ports:
       - "5434:5432"
@@ -59,14 +66,53 @@ services:
       POSTGRES_DB: library
       POSTGRES_PASSWORD: admin
       PGPASSWORD: admin
+      PROMOTE_TRIGGER_FILE: 'tmp/replica_db/down.trg'
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
-      - ./node_three_repmgr.conf:/etc/repmgr.conf
-    command: [ "sleep", "infinity" ]
+      - ./node-three-repmgr.conf:/etc/repmgr.conf
+      - ./node-three-entrypoint.sh:/node-three-entrypoint.sh
+    entrypoint: ["/bin/bash", "/node-three-entrypoint.sh"]
     depends_on:
-      - postgres-node-one
+      postgres-node-two:
+        condition: service_healthy
     networks:
-      - postgres-cluster-network
+      postgres-cluster-network:
+        ipv4_address: 172.199.99.4
+  
+  pgpool:
+    build:
+      dockerfile: Dockerfile-PgPool
+    container_name: pgpool
+    ports:
+      - "9999:9999"
+    networks:
+      postgres-cluster-network:
+        ipv4_address: 172.199.99.5
+    depends_on:
+      postgres-node-three:
+        condition: service_healthy
+  
+  migrator:
+    build:
+      dockerfile: Dockerfile-Migrator
+    container_name: migrator
+    volumes:
+      - ./migrator-entrypoint.sh:/migrator-entrypoint.sh
+    entrypoint: [ "/bin/bash", "/migrator-entrypoint.sh" ]
+    networks:
+      postgres-cluster-network:
+        ipv4_address: 172.199.99.6
+    depends_on:
+      postgres-node-one:
+        condition: service_healthy
   
 networks:
   postgres-cluster-network:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.199.99.0/24
