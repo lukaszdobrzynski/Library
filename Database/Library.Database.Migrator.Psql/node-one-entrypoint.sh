@@ -9,6 +9,7 @@ initdb -D /var/lib/postgresql/data
 echo "Modifying primary server access permissions..."
 echo "host all all 172.199.99.1/32 trust" >> /var/lib/postgresql/data/pg_hba.conf
 echo "host all all 172.199.99.6/32 trust" >> /var/lib/postgresql/data/pg_hba.conf
+echo "host all all 172.199.99.5/32 trust" >> /var/lib/postgresql/data/pg_hba.conf
 echo "host library postgres 172.199.99.2/32 trust" >> /var/lib/postgresql/data/pg_hba.conf
 echo "host library postgres 172.199.99.3/32 trust" >> /var/lib/postgresql/data/pg_hba.conf
 echo "host library postgres 172.199.99.4/32 trust" >> /var/lib/postgresql/data/pg_hba.conf

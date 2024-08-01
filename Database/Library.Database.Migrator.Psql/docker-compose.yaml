@@ -37,7 +37,6 @@ services:
       POSTGRES_DB: library
       POSTGRES_PASSWORD: admin
       PGPASSWORD: admin
-      PROMOTE_TRIGGER_FILE: 'tmp/replica_db/down.trg'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -66,7 +65,6 @@ services:
       POSTGRES_DB: library
       POSTGRES_PASSWORD: admin
       PGPASSWORD: admin
-      PROMOTE_TRIGGER_FILE: 'tmp/replica_db/down.trg'
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -77,8 +75,8 @@ services:
       - ./node-three-entrypoint.sh:/node-three-entrypoint.sh
     entrypoint: ["/bin/bash", "/node-three-entrypoint.sh"]
     depends_on:
-      postgres-node-two:
-        condition: service_healthy
+      migrator:
+        condition: service_completed_successfully
     networks:
       postgres-cluster-network:
         ipv4_address: 172.199.99.4
@@ -89,10 +87,14 @@ services:
     container_name: pgpool
     ports:
       - "9999:9999"
+    volumes:
+      - ./pgpool-failover.sh:/var/pgpool-failover.sh
     networks:
       postgres-cluster-network:
         ipv4_address: 172.199.99.5
     depends_on:
+      postgres-node-two:
+        condition: service_healthy
       postgres-node-three:
         condition: service_healthy
   
@@ -102,7 +104,7 @@ services:
     container_name: migrator
     volumes:
       - ./migrator-entrypoint.sh:/migrator-entrypoint.sh
-    entrypoint: [ "/bin/bash", "/migrator-entrypoint.sh" ]
+    entrypoint: ["/bin/bash", "/migrator-entrypoint.sh"]
     networks:
       postgres-cluster-network:
         ipv4_address: 172.199.99.6
