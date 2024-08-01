@@ -16,7 +16,8 @@ new_master_id=$5
 old_master_id=$6
 new_master_host_name=$7
 old_primary_node_id=$8
+
  
-if [ $failed_node_id = $old_primary_node_id ];then
-    touch /var/failover-log && echo "Failover occurred. Failed node: $failed_node. New primary: $new_primary." >> /var/failover-log
+if [ $failed_node_id = $old_master_id ];then
+    touch /var/failover-log && echo "Failover occurred. Failed node: $failed_host_name. New primary: $new_master_host_name." >> /var/failover-log
 fi
