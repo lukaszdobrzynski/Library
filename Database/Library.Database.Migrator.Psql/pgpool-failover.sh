@@ -20,4 +20,7 @@ old_primary_node_id=$8
  
 if [ $failed_node_id = $old_master_id ];then
     touch /var/failover-log && echo "Failover occurred. Failed node: $failed_host_name. New primary: $new_master_host_name." >> /var/failover-log
+    ssh root@$new_master_host_name 'su - postgres -c "repmgr -f /etc/repmgr.conf standby promote"'
 fi
+
+exit 0

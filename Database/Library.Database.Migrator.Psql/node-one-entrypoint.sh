@@ -1,5 +1,3 @@
-DB_CONNECTION_STRING="Host=localhost;Port=5432;Database=library;Username=postgres;Password=admin"
-
 CONTAINER_TWO_IP=172.199.99.3
 CONTAINER_THREE_IP=172.199.99.4
 CONTAINER_FOUR_IP=172.199.99.5

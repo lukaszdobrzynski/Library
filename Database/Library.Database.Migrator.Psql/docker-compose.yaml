@@ -89,6 +89,7 @@ services:
       - "9999:9999"
     volumes:
       - ./pgpool-failover.sh:/var/pgpool-failover.sh
+      - ./pgpool-follow-primary.sh:/var/pgpool-follow-primary.sh
     networks:
       postgres-cluster-network:
         ipv4_address: 172.199.99.5
