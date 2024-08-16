@@ -1,4 +1,4 @@
-DB_CONNECTION_STRING="Host=postgres-node-one;Port=5432;Database=library;Username=postgres;Password=admin"
+DB_CONNECTION_STRING="Host=haproxy;Port=5000;Database=library;Username=postgres;Password=postgres"
 
 echo "Migrating database schemas and tables..."
 

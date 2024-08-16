@@ -1,121 +1,116 @@
-﻿version: '3.8'
+﻿version: "3.8"
+
+networks:
+  psql-library-network:
 
 services:
-  postgres-node-one:
-    user: postgres
+  etcd1: &etcd
     build:
-      dockerfile: Dockerfile-Postgres
-    container_name: postgres-node-one
-    ports:
-      - "5432:5432"
+      context: ../../../patroni
+      dockerfile: Dockerfile
+    networks: [ psql-library-network ]
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: library
-      POSTGRES_PASSWORD: admin
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - ./node-one-repmgr.conf:/etc/repmgr.conf
-      - ./node-one-entrypoint.sh:/node-one-entrypoint.sh
-    networks:
-      postgres-cluster-network:
-        ipv4_address: 172.199.99.2
-    entrypoint: ["/bin/bash", "/node-one-entrypoint.sh"]
+      ETCD_LISTEN_PEER_URLS: http://0.0.0.0:2380
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_INITIAL_CLUSTER: etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380
+      ETCD_INITIAL_CLUSTER_STATE: new
+      ETCD_INITIAL_CLUSTER_TOKEN: token
+    container_name: etcd1
+    hostname: etcd1
+    command: etcd --name etcd1 --initial-advertise-peer-urls http://etcd1:2380
   
-  postgres-node-two:
-    user: postgres
-    build:
-      dockerfile: Dockerfile-Postgres
-    container_name: postgres-node-two
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: library
-      POSTGRES_PASSWORD: admin
-      PGPASSWORD: admin
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - ./node-two-repmgr.conf:/etc/repmgr.conf
-      - ./node-two-entrypoint.sh:/node-two-entrypoint.sh
-    entrypoint: ["/bin/bash", "/node-two-entrypoint.sh"]
-    depends_on:
-      migrator:
-        condition: service_completed_successfully
-    networks:
-      postgres-cluster-network:
-        ipv4_address: 172.199.99.3
+  etcd2:
+    <<: *etcd
+    container_name: etcd2
+    hostname: etcd2
+    command: etcd --name etcd2 --initial-advertise-peer-urls http://etcd2:2380
   
-  postgres-node-three:
-    user: postgres
+  etcd3:
+    <<: *etcd
+    container_name: etcd3
+    hostname: etcd3
+    command: etcd --name etcd3 --initial-advertise-peer-urls http://etcd3:2380
+  
+  haproxy:
     build:
-      dockerfile: Dockerfile-Postgres
-    container_name: postgres-node-three
+      context: ../../../patroni
+      dockerfile: Dockerfile
+    image: patroni
+    networks: [ psql-library-network ]
+    env_file: patroni.env
+    hostname: haproxy
+    container_name: haproxy
     ports:
-      - "5434:5432"
+      - "5000:5000"
+      - "5001:5001"
+    command: haproxy
+    environment: &haproxy_env
+      ETCDCTL_ENDPOINTS: http://etcd1:2379,http://etcd2:2379,http://etcd3:2379
+      PATRONI_ETCD3_HOSTS: "'etcd1:2379','etcd2:2379','etcd3:2379'"
+      PATRONI_SCOPE: demo
+  
+  patroni1:
+    build:
+      context: ../../../patroni
+      dockerfile: Dockerfile
+    image: patroni
+    networks: [ psql-library-network ]
+    env_file: patroni.env
+    hostname: patroni1
+    container_name: patroni1
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: library
-      POSTGRES_PASSWORD: admin
-      PGPASSWORD: admin
+      <<: *haproxy_env
+      PATRONI_NAME: patroni1
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
-    volumes:
-      - ./node-three-repmgr.conf:/etc/repmgr.conf
-      - ./node-three-entrypoint.sh:/node-three-entrypoint.sh
-    entrypoint: ["/bin/bash", "/node-three-entrypoint.sh"]
-    depends_on:
-      migrator:
-        condition: service_completed_successfully
-    networks:
-      postgres-cluster-network:
-        ipv4_address: 172.199.99.4
   
-  pgpool:
+  patroni2:
     build:
-      dockerfile: Dockerfile-PgPool
-    container_name: pgpool
-    ports:
-      - "9999:9999"
-    volumes:
-      - ./pgpool-failover.sh:/var/pgpool-failover.sh
-      - ./pgpool-follow-primary.sh:/var/pgpool-follow-primary.sh
-    networks:
-      postgres-cluster-network:
-        ipv4_address: 172.199.99.5
-    depends_on:
-      postgres-node-two:
-        condition: service_healthy
-      postgres-node-three:
-        condition: service_healthy
+      context: ../../../patroni
+      dockerfile: Dockerfile
+    networks: [ psql-library-network ]
+    env_file: patroni.env
+    hostname: patroni2
+    container_name: patroni2
+    environment:
+      <<: *haproxy_env
+      PATRONI_NAME: patroni2
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5 
+  
+  patroni3:
+    build:
+      context: ../../../patroni
+      dockerfile: Dockerfile
+    networks: [ psql-library-network ]
+    env_file: patroni.env
+    hostname: patroni3
+    container_name: patroni3
+    environment:
+      <<: *haproxy_env
+      PATRONI_NAME: patroni3
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   
   migrator:
     build:
-      dockerfile: Dockerfile-Migrator
-    container_name: migrator
-    volumes:
-      - ./migrator-entrypoint.sh:/migrator-entrypoint.sh
-    entrypoint: ["/bin/bash", "/migrator-entrypoint.sh"]
-    networks:
-      postgres-cluster-network:
-        ipv4_address: 172.199.99.6
+      context: ../../.
+      dockerfile: Dockerfile-Migrator-Psql
+    container_name: migrator-psql
+    networks: [ psql-library-network ]
     depends_on:
-      postgres-node-one:
+      patroni1:
         condition: service_healthy
-  
-networks:
-  postgres-cluster-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.199.99.0/24
+      patroni2:
+        condition: service_healthy
+      patroni3:
+        condition: service_healthy

@@ -37,6 +37,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Modules.Reservation.ArchTests", "Library.Modules.Reservation.ArchTests\Library.Modules.Reservation.ArchTests.csproj", "{D19D608B-E593-4572-A40C-FA4201D28DDA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{0A8F97C6-B9C1-47E0-AC1C-11A14B44FE05}"
+	ProjectSection(SolutionItems) = preProject
+		Database\dbup.ps1 = Database\dbup.ps1
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library.Database.Migrator.Psql", "Database\Library.Database.Migrator.Psql\Library.Database.Migrator.Psql.csproj", "{572D47EB-8AA7-4B55-B497-2F2DAB28DD73}"
 EndProject

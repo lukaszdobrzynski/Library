@@ -1,0 +1,22 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+
+WORKDIR /app
+
+COPY ./Database/Library.Database.Migrator.Raven ./Database/Library.Database.Migrator.Raven/
+COPY ./Library.Modules.Catalogue.Models ./Library.Modules.Catalogue.Models/
+
+RUN dotnet restore ./Database/Library.Database.Migrator.Raven/Library.Database.Migrator.Raven.csproj
+RUN dotnet publish ./Database/Library.Database.Migrator.Raven/Library.Database.Migrator.Raven.csproj -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+
+RUN apt-get update && apt-get install -y curl
+
+COPY --from=build /app/publish /migratorapp
+COPY Database/Library.Database.Migrator.Raven/migrator-entrypoint.sh /migrator-entrypoint.sh
+COPY Database/Library.Database.Migrator.Raven/init-db.json /init-db.json
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+    
+ENTRYPOINT [ "/bin/bash", "/migrator-entrypoint.sh" ]

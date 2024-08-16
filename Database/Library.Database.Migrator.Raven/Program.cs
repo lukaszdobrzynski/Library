@@ -16,7 +16,7 @@ class Program
         var store = new DocumentStore
         {
             Database = "Library.Catalogue",
-            Urls = new[] { "http://localhost:8080" }
+            Urls = new[] { "http://library-one:8080" }
         };
         store.Initialize();
         

@@ -1,0 +1,24 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+
+WORKDIR /app
+
+COPY ./Database/Library.Database.Migrator.Psql/Library.Database.Migrator.Psql.csproj ./
+RUN dotnet restore
+
+COPY ./Database/Library.Database.Migrator.Psql/Program.cs ./Program.cs
+COPY ./Database/Library.Database.Migrator.Psql/CustomTableJournal.cs ./CustomTableJournal.cs
+
+RUN dotnet build -c Release -o /app/build
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+
+COPY --from=build /app/publish /migratorapp
+COPY ./Database/Library.Database.Migrator.Psql/Scripts/Migrations /Scripts/Migrations
+COPY ./Database/Library.Database.Migrator.Psql/Scripts/Seeds /Scripts/Seeds
+COPY ./Database/Library.Database.Migrator.Psql/migrator-entrypoint.sh /migrator-entrypoint.sh 
+
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
+    
+ENTRYPOINT [ "/bin/bash", "/migrator-entrypoint.sh" ]
