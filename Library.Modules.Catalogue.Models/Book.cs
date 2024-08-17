@@ -13,6 +13,7 @@ public class Book
     public string Genre { get; set; }
     public string Description { get; set; }
     public BookStatus Status { get; set; }
+    public BookAccessType AccessType { get; set; }
     public DateTime? DueDate { get; set; }
     public List<string> Tags { get; set; }
 }

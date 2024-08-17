@@ -11,12 +11,13 @@
     "Genre": "Fiction",
     "Description": "A novel set in the Jazz Age that tells the story of Jay Gatsby's unrequited love.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["classic", "jazz age", "love"]
   },
   {
     "Id": "e0d6140a-3a6d-4b8e-90cf-c2d1c9e237d2",
-    "LibraryBranchId": "b3c9ec84-b1c4-40b5-8095-2b1f09c9299d",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-118280-3",
     "Title": "1984",
     "Author": "George Orwell",
@@ -26,12 +27,13 @@
     "Genre": "Dystopian",
     "Description": "A novel that presents a dystopian future under a totalitarian regime.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-10T00:00:00",
     "Tags": ["dystopian", "totalitarianism", "political"]
   },
   {
     "Id": "f0a18c61-8e49-49d5-a2d8-4c3b6d0a1e3b",
-    "LibraryBranchId": "a1f4ec12-53c8-48e9-857b-1c8f6a1c1ed2",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-7432-7356-5",
     "Title": "To Kill a Mockingbird",
     "Author": "Harper Lee",
@@ -41,12 +43,13 @@
     "Genre": "Fiction",
     "Description": "A novel about the serious issues of rape and racial inequality.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["classic", "race", "justice"]
   },
   {
     "Id": "b0b62c0b-6a74-469d-89e1-7c1b4b5d6c5b",
-    "LibraryBranchId": "9e8b8c30-9377-4b4c-9297-3b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-7432-7357-2",
     "Title": "Pride and Prejudice",
     "Author": "Jane Austen",
@@ -56,12 +59,13 @@
     "Genre": "Romance",
     "Description": "A romantic novel that charts the emotional development of the protagonist Elizabeth Bennet.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["romance", "classic", "society"]
   },
   {
     "Id": "a0c46b3b-7d42-4d3b-928f-8c3a1c9e247a",
-    "LibraryBranchId": "0a8b2b8e-c8d2-46b3-b8c8-0c2f8b1f0b2f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-06-112008-4",
     "Title": "Brave New World",
     "Author": "Aldous Huxley",
@@ -71,12 +75,13 @@
     "Genre": "Dystopian",
     "Description": "A novel that anticipates developments in reproductive technology and sleep-learning.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-15T00:00:00",
     "Tags": ["dystopian", "science fiction", "technology"]
   },
   {
     "Id": "c0a54d3c-9e36-49d4-a2f8-6b2d3c9e1e0b",
-    "LibraryBranchId": "7d9b8c30-9377-4b4c-9297-4b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28423-4",
     "Title": "Moby-Dick",
     "Author": "Herman Melville",
@@ -86,12 +91,13 @@
     "Genre": "Adventure",
     "Description": "A novel that narrates the quest of Ahab to take revenge on the whale Moby Dick.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["adventure", "classic", "whale"]
   },
   {
     "Id": "d0c19c62-7c43-49f3-8a3c-4d2b1c9e1e3a",
-    "LibraryBranchId": "6a8b1b8e-c7d2-46b3-b8c7-0c2e8b1f0b3f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-0",
     "Title": "Jane Eyre",
     "Author": "Charlotte Brontë",
@@ -101,12 +107,13 @@
     "Genre": "Gothic",
     "Description": "A novel that follows the experiences of its eponymous heroine, including her growth to adulthood.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["gothic", "classic", "orphan"]
   },
   {
     "Id": "e0c83b62-8d64-4d0a-9c4a-5d3b1e1e247a",
-    "LibraryBranchId": "5b8b2b8e-c7d2-46b3-b8c6-0c2d8b1f0b4f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-7432-7358-9",
     "Title": "The Catcher in the Rye",
     "Author": "J.D. Salinger",
@@ -116,12 +123,13 @@
     "Genre": "Fiction",
     "Description": "A novel about the events and the protagonist's perspectives in the days following his expulsion from Pencey Prep.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["fiction", "classic", "coming-of-age"]
   },
   {
     "Id": "f0a46c3c-7e52-49c2-9d4b-6e3a1c9e2e5a",
-    "LibraryBranchId": "4c9b8c30-9377-4b4c-9297-2b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-7432-7359-6",
     "Title": "Animal Farm",
     "Author": "George Orwell",
@@ -131,12 +139,13 @@
     "Genre": "Political Satire",
     "Description": "A satirical tale about a group of farm animals who rebel against their human farmer.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-20T00:00:00",
     "Tags": ["satire", "political", "allegory"]
   },
   {
     "Id": "a0d62b1a-6c24-4d0c-9b3c-7d3a1c9e1e4b",
-    "LibraryBranchId": "3a9b8c30-9377-4b4c-9297-1b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28424-1",
     "Title": "War and Peace",
     "Author": "Leo Tolstoy",
@@ -146,6 +155,7 @@
     "Genre": "Historical Fiction",
     "Description": "A novel that chronicles the history of the French invasion of Russia.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["historical", "classic", "war"]
   },
@@ -161,12 +171,13 @@
     "Genre": "Epic",
     "Description": "An ancient Greek epic poem that follows the hero Odysseus and his journey home.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["epic", "classic", "mythology"]
   },
   {
     "Id": "c0c46b3b-8d64-4d4c-8c3a-5d3a1c9e3e7b",
-    "LibraryBranchId": "b3c9ec84-b1c4-40b5-8095-2b1f09c9299d",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-06-112008-5",
     "Title": "The Iliad",
     "Author": "Homer",
@@ -176,12 +187,13 @@
     "Genre": "Epic",
     "Description": "An ancient Greek epic poem that details the events of the Trojan War.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["epic", "classic", "mythology"]
   },
   {
     "Id": "d0e83b6a-8d31-4d4f-9c2a-5c3a1c9e4e7a",
-    "LibraryBranchId": "a1f4ec12-53c8-48e9-857b-1c8f6a1c1ed2",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-1",
     "Title": "The Divine Comedy",
     "Author": "Dante Alighieri",
@@ -191,12 +203,13 @@
     "Genre": "Epic",
     "Description": "An Italian long narrative poem that describes Dante's journey through Hell, Purgatory, and Paradise.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["epic", "classic", "poetry"]
   },
   {
     "Id": "e0c83b6a-9d31-4d4f-9c3a-6d3a1c9e5e7b",
-    "LibraryBranchId": "9e8b8c30-9377-4b4c-9297-3b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-2",
     "Title": "Don Quixote",
     "Author": "Miguel de Cervantes",
@@ -206,12 +219,13 @@
     "Genre": "Fiction",
     "Description": "A Spanish novel that follows the adventures of a nobleman who reads so many chivalric romances that he loses his sanity.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["fiction", "classic", "adventure"]
   },
   {
     "Id": "f0d62b1a-7c31-4d0c-8b2a-7d3a1c9e6e7a",
-    "LibraryBranchId": "0a8b2b8e-c8d2-46b3-b8c8-0c2f8b1f0b2f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-3",
     "Title": "Crime and Punishment",
     "Author": "Fyodor Dostoevsky",
@@ -221,12 +235,13 @@
     "Genre": "Psychological Fiction",
     "Description": "A novel that focuses on the mental anguish and moral dilemmas of an impoverished ex-student who kills a pawnbroker for her cash.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["psychological", "classic", "crime"]
   },
   {
     "Id": "a0c19c62-9d31-4d4c-8a3c-8d3a1c9e6e7b",
-    "LibraryBranchId": "7d9b8c30-9377-4b4c-9297-4b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-4",
     "Title": "War and Peace",
     "Author": "Leo Tolstoy",
@@ -236,12 +251,13 @@
     "Genre": "Historical Fiction",
     "Description": "A novel that chronicles the history of the French invasion of Russia.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["historical", "classic", "war"]
   },
   {
     "Id": "b0e83b6a-7d31-4d4f-9c2a-7d3a1c9e7e7a",
-    "LibraryBranchId": "5b8b2b8e-c7d2-46b3-b8c6-0c2d8b1f0b4f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-5",
     "Title": "Anna Karenina",
     "Author": "Leo Tolstoy",
@@ -251,12 +267,13 @@
     "Genre": "Literary Fiction",
     "Description": "A novel that tells of the tragic love affair between Anna Karenina and Count Vronsky.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["literary", "classic", "love"]
   },
   {
     "Id": "c0d83b6a-9d31-4d4f-9c3a-8d3a1c9e8e7b",
-    "LibraryBranchId": "4c9b8c30-9377-4b4c-9297-2b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-6",
     "Title": "The Brothers Karamazov",
     "Author": "Fyodor Dostoevsky",
@@ -266,12 +283,13 @@
     "Genre": "Philosophical Fiction",
     "Description": "A novel that explores the existential and spiritual aspects of human existence.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["philosophical", "classic", "existential"]
   },
   {
     "Id": "d0e83b6a-9d31-4d4f-9c3a-9d3a1c9e9e7b",
-    "LibraryBranchId": "3a9b8c30-9377-4b4c-9297-1b5c0f2c8f5b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-14-143960-7",
     "Title": "Middlemarch",
     "Author": "George Eliot",
@@ -281,12 +299,13 @@
     "Genre": "Fiction",
     "Description": "A novel that examines the lives and social issues of the residents of a fictional English town.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["fiction", "classic", "society"]
   },
   {
     "Id": "e1a93d52-3c85-4b2f-98b7-d1c9b2d1c3d7",
-    "LibraryBranchId": "d3a1f9e2-0c2b-40ef-8b34-567f2b6ef1e1",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28425-0",
     "Title": "Wuthering Heights",
     "Author": "Emily Brontë",
@@ -296,12 +315,13 @@
     "Genre": "Gothic",
     "Description": "A novel about the intense and doomed love between Catherine Earnshaw and Heathcliff.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["gothic", "classic", "romance"]
   },
   {
     "Id": "a2c83f62-5d4a-4e3b-9b4c-d3e9b1e1f9c2",
-    "LibraryBranchId": "b3c9ec85-b1c4-40b5-8095-2b1f09c9299e",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-06-112006-0",
     "Title": "The Grapes of Wrath",
     "Author": "John Steinbeck",
@@ -311,12 +331,13 @@
     "Genre": "Historical Fiction",
     "Description": "A novel that tells the story of the Joad family's migration from the Dust Bowl to California.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-25T00:00:00",
     "Tags": ["historical", "classic", "migration"]
   },
   {
     "Id": "c3d92e51-8b4a-4b8e-9f2d-e4b6d2c3e9a4",
-    "LibraryBranchId": "c2d3ec86-b2d4-40b5-9095-3b2f09c9299f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28426-7",
     "Title": "Great Expectations",
     "Author": "Charles Dickens",
@@ -326,12 +347,13 @@
     "Genre": "Fiction",
     "Description": "A novel that follows the life of Pip, an orphan who is given the chance to rise in society.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["classic", "society", "orphan"]
   },
   {
     "Id": "d4e83f63-7b5c-4b9e-8a4c-f5e9c1e1d9b3",
-    "LibraryBranchId": "d3b9ec87-b3c4-40b5-8095-4b3f09c9299d",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28427-4",
     "Title": "Frankenstein",
     "Author": "Mary Shelley",
@@ -341,12 +363,13 @@
     "Genre": "Gothic",
     "Description": "A novel that tells the story of Victor Frankenstein and his monstrous creation.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["gothic", "science fiction", "monster"]
   },
   {
     "Id": "e5c92d51-9b6a-4d2e-8b3f-a4d6c1e1f9c4",
-    "LibraryBranchId": "e3c9ec88-b4d4-40b5-9095-5b4f09c9299e",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28428-1",
     "Title": "Dracula",
     "Author": "Bram Stoker",
@@ -356,12 +379,13 @@
     "Genre": "Gothic",
     "Description": "A novel that introduces Count Dracula and establishes many conventions of subsequent vampire fantasy.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-08-01T00:00:00",
     "Tags": ["gothic", "vampire", "horror"]
   },
   {
     "Id": "f6e93f62-6b7c-4c2e-9c4d-b5d7d1e1e9a5",
-    "LibraryBranchId": "f4c9ec89-b5d4-40b5-9095-6b5f09c9299f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28429-8",
     "Title": "One Hundred Years of Solitude",
     "Author": "Gabriel García Márquez",
@@ -371,12 +395,13 @@
     "Genre": "Magic Realism",
     "Description": "A novel that tells the multi-generational story of the Buendía family.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["magic realism", "family", "classic"]
   },
   {
     "Id": "a7c93f63-8b8a-4d3f-8c5e-c6e9d1e1f9b6",
-    "LibraryBranchId": "a3c9ec90-b6d4-40b5-9095-7b6f09c9299b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28430-4",
     "Title": "Madame Bovary",
     "Author": "Gustave Flaubert",
@@ -386,12 +411,13 @@
     "Genre": "Literary Fiction",
     "Description": "A novel that focuses on a doctor's wife, Emma Bovary, who has adulterous affairs and lives beyond her means.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["literary", "classic", "adultery"]
   },
   {
     "Id": "a8d93f64-9c7a-4d4f-9d6e-d7e9c1e1g9b7",
-    "LibraryBranchId": "a3c9ec91-b7d4-40b5-9095-8b7f09c9299a",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28431-1",
     "Title": "Catch-22",
     "Author": "Joseph Heller",
@@ -401,12 +427,13 @@
     "Genre": "Satire",
     "Description": "A novel set during World War II, it follows Captain John Yossarian and his squadron.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-08-15T00:00:00",
     "Tags": ["satire", "war", "bureaucracy"]
   },
   {
     "Id": "a9e93f65-8d7a-4d5f-8e7f-e8e9c1e1h9b8",
-    "LibraryBranchId": "a3c9ec92-b8d4-40b5-9095-9b8f09c9299a",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28432-8",
     "Title": "Beloved",
     "Author": "Toni Morrison",
@@ -416,12 +443,13 @@
     "Genre": "Historical Fiction",
     "Description": "A novel based on the true story of an African American slave who escaped slavery.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["historical", "classic", "slavery"]
   },
   {
     "Id": "a1f93f66-9e8a-4e6f-9f8f-f9e9c1e1i9b9",
-    "LibraryBranchId": "a3c9ec93-b9d4-40b5-9095-0b9f09c9299b",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28433-5",
     "Title": "The Catcher in the Rye",
     "Author": "J.D. Salinger",
@@ -431,12 +459,13 @@
     "Genre": "Fiction",
     "Description": "A novel that deals with complex issues of innocence, identity, belonging, loss, and connection.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["fiction", "classic", "adolescence"]
   },
   {
     "Id": "a2f93f67-8e9a-4f7f-8g9f-g0e9c1e1j9ba",
-    "LibraryBranchId": "c3c9ec94-bad4-40b5-9095-1b0f09c9299d",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28434-2",
     "Title": "The Sun Also Rises",
     "Author": "Ernest Hemingway",
@@ -446,12 +475,13 @@
     "Genre": "Fiction",
     "Description": "A novel that portrays American and British expatriates who travel from Paris to Spain.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-20T00:00:00",
     "Tags": ["fiction", "classic", "expatriates"]
   },
   {
     "Id": "d3g93f68-9f8a-4g8f-9h0f-h1e9c1e1k9bb",
-    "LibraryBranchId": "d3c9ec95-bbd4-40b5-9095-2b1f09c9299e",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28435-9",
     "Title": "Slaughterhouse-Five",
     "Author": "Kurt Vonnegut",
@@ -461,12 +491,13 @@
     "Genre": "Science Fiction",
     "Description": "A novel that centers on the World War II experiences and journeys through time of Billy Pilgrim.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["science fiction", "war", "time travel"]
   },
   {
     "Id": "b4h93f69-0g9a-4h9f-0i0f-i2e9c1e1l9bc",
-    "LibraryBranchId": "e3c9ec96-bcd4-40b5-9095-3b2f09c9299f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28436-6",
     "Title": "Brave New World",
     "Author": "Aldous Huxley",
@@ -476,12 +507,13 @@
     "Genre": "Science Fiction",
     "Description": "A novel that anticipates developments in reproductive technology and sleep-learning that combine to change society.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-08-05T00:00:00",
     "Tags": ["science fiction", "dystopia", "society"]
   },
   {
     "Id": "c5i93f70-0h9a-4i0f-0j0f-j3e9c1e1m9bd",
-    "LibraryBranchId": "d3c9ec97-bdd4-40b5-9095-4b3f09c9299f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28437-3",
     "Title": "To the Lighthouse",
     "Author": "Virginia Woolf",
@@ -491,12 +523,13 @@
     "Genre": "Literary Fiction",
     "Description": "A novel that centers on the Ramsay family and their visits to the Isle of Skye in Scotland.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["literary", "classic", "family"]
   },
   {
     "Id": "a6j93f71-1i0a-4j1f-1k0f-k4e9c1e1n9be",
-    "LibraryBranchId": "b3c9ec98-bed4-40b5-9095-5b4f09c9299a",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28438-0",
     "Title": "Moby-Dick",
     "Author": "Herman Melville",
@@ -506,12 +539,13 @@
     "Genre": "Adventure",
     "Description": "A novel that tells the story of Captain Ahab's obsessive quest to kill the giant white whale Moby Dick.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-30T00:00:00",
     "Tags": ["adventure", "classic", "whale"]
   },
   {
     "Id": "c7k93f72-1j0a-4k2f-1l0f-l5e9c1e1o9bf",
-    "LibraryBranchId": "b3c9ec99-bfd4-40b5-9095-6b5f09c9299c",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28439-7",
     "Title": "Jane Eyre",
     "Author": "Charlotte Brontë",
@@ -521,12 +555,13 @@
     "Genre": "Gothic",
     "Description": "A novel that follows the experiences of its eponymous heroine, including her growth to adulthood and her love for Mr. Rochester.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["gothic", "classic", "romance"]
   },
   {
     "Id": "d8l93f73-2k0a-4l3f-2m0f-m6e9c1e1p9bd",
-    "LibraryBranchId": "d3c9ec00-c0d4-40b5-9095-7b6f09c9299a",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28440-3",
     "Title": "Anna Karenina",
     "Author": "Leo Tolstoy",
@@ -536,12 +571,13 @@
     "Genre": "Literary Fiction",
     "Description": "A novel that tells the tragic story of the aristocratic Anna Karenina and her affair with Count Vronsky.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["literary", "classic", "tragedy"]
   },
   {
     "Id": "f9m93f74-2l0a-4m4f-2n0f-n7e9c1e1q9bf",
-    "LibraryBranchId": "a3c9ec01-c1d4-40b5-9095-8b7f09c9299e",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28441-0",
     "Title": "The Picture of Dorian Gray",
     "Author": "Oscar Wilde",
@@ -551,12 +587,13 @@
     "Genre": "Gothic",
     "Description": "A novel that tells the story of a young man whose portrait ages while he remains young and beautiful.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["gothic", "classic", "fantasy"]
   },
   {
     "Id": "b0n93f75-3m0a-4n5f-3o0f-o8e9c1e1r9bc",
-    "LibraryBranchId": "b3c9ec02-c2d4-40b5-9095-9b8f09c9299c",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28442-7",
     "Title": "Heart of Darkness",
     "Author": "Joseph Conrad",
@@ -566,12 +603,13 @@
     "Genre": "Adventure",
     "Description": "A novel that tells the story of Charles Marlow's journey up the Congo River to meet Kurtz.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-08-10T00:00:00",
     "Tags": ["adventure", "classic", "colonialism"]
   },
   {
     "Id": "a1o93f76-3n0a-4o6f-3p0f-p9e9c1e1s9bb",
-    "LibraryBranchId": "d3c9ec03-c3d4-40b5-9095-0b9f09c9299c",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28443-4",
     "Title": "The Great Gatsby",
     "Author": "F. Scott Fitzgerald",
@@ -581,12 +619,13 @@
     "Genre": "Fiction",
     "Description": "A novel that explores themes of wealth, class, love, and the American Dream.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": null,
     "Tags": ["fiction", "classic", "American Dream"]
   },
   {
     "Id": "e2p93f77-4o0a-4p7f-4q0f-q0e9c1e1t9bf",
-    "LibraryBranchId": "a3c9ec04-c4d4-40b5-9095-1b0f09c9299f",
+    "LibraryBranchId": "ed4a1e1e-0c2b-40ef-8b34-567f2b6ef1e0",
     "Isbn": "978-0-452-28444-1",
     "Title": "1984",
     "Author": "George Orwell",
@@ -596,6 +635,7 @@
     "Genre": "Dystopian",
     "Description": "A novel that presents a dystopian future under a totalitarian regime.",
     "Status": "Available",
+    "AccessType": "Circulating",
     "DueDate": "2024-07-25T00:00:00",
     "Tags": ["dystopian", "classic", "political"]
   }
