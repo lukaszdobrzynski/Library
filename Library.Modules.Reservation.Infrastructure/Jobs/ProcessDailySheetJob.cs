@@ -23,9 +23,9 @@ public class ProcessDailySheetJob : IBackgroundJob
     {
         using (var connection = _connectionFactory.CreateNewConnection())
         {
-            const string sql = "SELECT id, bookId, patronId, libraryBranchId, till " +
+            const string sql = "SELECT id, book_id BookId, patron_id PatronId, library_branch_id LibraryBranchId, till " +
                                "FROM reservations.holds " +
-                               "WHERE status = 'Granted' OR status = 'ReadyToPick' AND till < now()::date;";
+                               "WHERE (status = 'Granted' OR status = 'ReadyToPick') AND till < now()::date;";
                                
             var holds = await connection.QueryAsync<HoldDto>(sql);
             var holdList = holds.ToList();
@@ -38,7 +38,7 @@ public class ProcessDailySheetJob : IBackgroundJob
             
             const string updateHoldStatusSql =
                 "UPDATE reservations.holds " +
-                "SET status = 'Cancelled', isActive = false " +
+                "SET status = 'Cancelled', is_active = false " +
                 "WHERE id = @Id;";
 
             foreach (var holdItem in holdList)
