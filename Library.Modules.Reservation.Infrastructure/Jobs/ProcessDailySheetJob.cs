@@ -1,7 +1,8 @@
 ﻿using Dapper;
+using Library.Modules.Reservation.Application.Contracts;
+using Library.Modules.Reservation.Application.Holds.CancelHold;
 using Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.DailySheet;
-using MediatR;
 using Serilog;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
@@ -10,11 +11,11 @@ public class ProcessDailySheetJob : IBackgroundJob
 {
     private readonly IPsqlConnectionFactory _connectionFactory;
     private readonly ILogger _logger;
-    private readonly IMediator _mediator;
+    private readonly IInternalCommandsScheduler _internalCommandsScheduler;
 
-    public ProcessDailySheetJob(IMediator mediator, IPsqlConnectionFactory connectionFactory, ILogger logger)
+    public ProcessDailySheetJob(IInternalCommandsScheduler internalCommandsScheduler, IPsqlConnectionFactory connectionFactory, ILogger logger)
     {
-        _mediator = mediator;
+        _internalCommandsScheduler = internalCommandsScheduler;
         _connectionFactory = connectionFactory;
         _logger = logger;
     }
@@ -36,18 +37,13 @@ public class ProcessDailySheetJob : IBackgroundJob
                 return;
             }
             
-            const string updateHoldStatusSql =
-                "UPDATE reservations.holds " +
-                "SET status = 'Cancelled', is_active = false " +
-                "WHERE id = @Id;";
-
             foreach (var holdItem in holdList)
             {
-                //TODO: send notification to the Catalogue context to make a book Available
-                
-                await connection.ExecuteAsync(updateHoldStatusSql, new
+                await _internalCommandsScheduler.Submit(new CancelExpiredHoldCommand
                 {
-                    holdItem.Id
+                    Id = Guid.NewGuid(),
+                    HoldId = holdItem.Id,
+                    BookId = holdItem.BookId
                 });
             }
         }

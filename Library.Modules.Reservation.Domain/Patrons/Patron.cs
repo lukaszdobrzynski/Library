@@ -1,6 +1,7 @@
 ﻿using Library.BuildingBlocks.Domain;
 using Library.Modules.Reservation.Domain.Books;
 using Library.Modules.Reservation.Domain.Holds;
+using Library.Modules.Reservation.Domain.Holds.Rules;
 using Library.Modules.Reservation.Domain.Patrons.Events;
 using Library.Modules.Reservation.Domain.Patrons.Rules;
 
@@ -51,6 +52,7 @@ public class Patron : AggregateRootBase
     public void CancelHold(HoldToCancel holdToCancel)
     {
         CheckRule(new PatronCannotCancelHoldOwnedByAnotherPatronRule(Id, holdToCancel));
+        CheckRule(new PatronCannotCancelHoldWhenHoldReadyToPickRule(holdToCancel.Status));
 
         AddDomainEvent(new HoldCanceledDomainEvent(holdToCancel.BookId, 
             holdToCancel.OwningPatronId, 

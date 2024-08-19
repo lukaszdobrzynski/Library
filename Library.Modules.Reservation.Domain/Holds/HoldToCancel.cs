@@ -13,18 +13,21 @@ public class HoldToCancel : ValueObject
     public BookId BookId { get; set; }
 
     public LibraryBranchId LibraryBranchId { get; set; }
+
+    public HoldStatus Status { get; set; }
     
 
-    private HoldToCancel(PatronId patronId, HoldId holdId, BookId bookId, LibraryBranchId libraryBranchId)
+    private HoldToCancel(PatronId patronId, HoldId holdId, BookId bookId, LibraryBranchId libraryBranchId, HoldStatus status)
     {
         OwningPatronId = patronId;
         HoldId = holdId;
         BookId = bookId;
         LibraryBranchId = libraryBranchId;
+        Status = status;
     }
 
-    public static HoldToCancel Create(PatronId patronId, HoldId holdId, BookId bookId, LibraryBranchId libraryBranchId)
+    public static HoldToCancel Create(PatronId patronId, HoldId holdId, BookId bookId, LibraryBranchId libraryBranchId, HoldStatus status)
     {
-        return new HoldToCancel(patronId, holdId, bookId, libraryBranchId);
+        return new HoldToCancel(patronId, holdId, bookId, libraryBranchId, status);
     }
 }

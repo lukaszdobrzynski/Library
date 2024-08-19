@@ -52,7 +52,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Rejected;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new RejectHoldDecisionAppliedDomainEvent(Id));
+        AddDomainEvent(new RejectHoldDecisionAppliedDomainEvent(Id, BookId));
         IncreaseVersion();
     }
 
@@ -66,7 +66,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Granted;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new GrantHoldDecisionAppliedDomainEvent(Id));
+        AddDomainEvent(new GrantHoldDecisionAppliedDomainEvent(Id, BookId));
         IncreaseVersion();
     }
 
@@ -80,7 +80,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.Loaned;
         IsActive = IsHoldActive();
 
-        AddDomainEvent(new LoanHoldDecisionAppliedDomainEvent(Id));
+        AddDomainEvent(new LoanHoldDecisionAppliedDomainEvent(Id, BookId));
         IncreaseVersion();
     }
 
@@ -89,12 +89,11 @@ public class Hold : AggregateRootBase
         CheckRule(new CannotCancelHoldWhenHoldPendingRule(Status));
         CheckRule(new CannotCancelHoldWhenHoldRejectedRule(Status));
         CheckRule(new CannotCancelHoldWhenHoldLoanedRule(Status));
-        CheckRule(new PatronCannotCancelHoldWhenHoldReadyToPickRule(Status));
         
         Status = HoldStatus.Cancelled;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new CancelHoldDecisionAppliedDomainEvent(Id));
+        AddDomainEvent(new CancelHoldDecisionAppliedDomainEvent(Id, BookId, LibraryBranchId, PatronId));
         IncreaseVersion();
     }
 
@@ -108,7 +107,7 @@ public class Hold : AggregateRootBase
         Status = HoldStatus.ReadyToPick;
         IsActive = IsHoldActive();
         
-        AddDomainEvent(new CancelHoldDecisionAppliedDomainEvent(Id));
+        AddDomainEvent(new CancelHoldDecisionAppliedDomainEvent(Id, BookId, LibraryBranchId, PatronId));
         IncreaseVersion();
     }
     
