@@ -13,10 +13,10 @@ public static class JobsStartup
         RunJobAtIntervals<ProcessOutboxJob>(logger, TimeSpan.FromSeconds(5));
         RunJobAtIntervals<ProcessInboxJob>(logger, TimeSpan.FromSeconds(5));
         RunJobAtIntervals<ProcessInternalCommandJob>(logger, TimeSpan.FromSeconds(5));
-        RunJobAtHour<ProcessDailySheetJob>(logger, Hour.Midnight);
+        RunJobAtSpecificHour<ProcessDailySheetJob>(logger, Hour.Midnight);
     }
 
-    private static void RunJobAtHour<TBackgroundJob>(ILogger logger, Hour hour)
+    private static void RunJobAtSpecificHour<TBackgroundJob>(ILogger logger, Hour hour)
         where TBackgroundJob : IBackgroundJob
     {
         var backgroundJob = ReservationCompositionRoot.BeginLifetimeScope()
@@ -30,13 +30,13 @@ public static class JobsStartup
                 while(true)
                 {
                     var now = DateTime.UtcNow;
-                    var numberOfHoursToWait = CalculateNumberOfHoursToWaitForNextJobRun(hour, now);
             
                     if (now.Hour == (int)hour)
                     {
                         await backgroundJob.Run();
                     }
             
+                    var numberOfHoursToWait = CalculateNumberOfHoursToWaitForNextJobRun(hour, now);
                     await Delay(TimeSpan.FromHours(numberOfHoursToWait));    
                 }
             }
@@ -49,12 +49,12 @@ public static class JobsStartup
     
     private static int CalculateNumberOfHoursToWaitForNextJobRun(Hour jobStartHour, DateTime now)
     {
-        var startHourAsInt = (int)jobStartHour;
+        var startHour = (int)jobStartHour;
         var hourNow = now.Hour;    
         
-        return hourNow >= startHourAsInt
-            ? startHourAsInt + (24 - hourNow)
-            : startHourAsInt - hourNow;
+        return hourNow >= startHour
+            ? startHour + (24 - hourNow)
+            : startHour - hourNow;
     }
     
     private static void RunJobAtIntervals<TBackgroundJob>(

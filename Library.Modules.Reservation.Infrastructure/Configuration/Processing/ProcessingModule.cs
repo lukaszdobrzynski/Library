@@ -23,6 +23,10 @@ public class ProcessingModule : Autofac.Module
             .AsSelf()
             .SingleInstance();
 
+        builder.RegisterType<ProcessDailySheetJob>()
+            .AsSelf()
+            .SingleInstance();
+
         builder.RegisterType<InternalCommandsScheduler>()
             .As<IInternalCommandsScheduler>()
             .SingleInstance();
