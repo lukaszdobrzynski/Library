@@ -14,7 +14,7 @@ public static class CatalogueStartup
 {
     private static IContainer _container;
 
-    public static void Init(RavenDatabaseSettings ravenSettings, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)
+    public static void Init(RavenSettings ravenSettings, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)
     {
         var catalogueModuleLogger =  logger.ForContext("Module", "Catalogue");
         
@@ -24,7 +24,7 @@ public static class CatalogueStartup
         EventBusStartup.Initialize();
     }
 
-    private static void ConfigureContainer(RavenDatabaseSettings ravenSettings, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)
+    private static void ConfigureContainer(RavenSettings ravenSettings, IExecutionContextAccessor executionContextAccessor, ILogger logger, IEventBus eventBus)
     {
         var containerBuilder = new ContainerBuilder();
 

@@ -15,14 +15,14 @@ public class DocumentStoreHolder : IDocumentStoreHolder
 {
     private readonly IDocumentStore _documentStore;
     
-    public DocumentStoreHolder(RavenDatabaseSettings settings)
+    public DocumentStoreHolder(RavenSettings settings)
     {
         ValidateSettings(settings);
         
         _documentStore = CreateDocumentStore(settings);
     }
 
-    private DocumentStore CreateDocumentStore(RavenDatabaseSettings settings)
+    private DocumentStore CreateDocumentStore(RavenSettings settings)
     {
         var store = new DocumentStore
         {
@@ -71,24 +71,24 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         OutboxSubscription.Create(store);
     }
 
-    private static void DeployIndexes(IDocumentStore store, RavenDatabaseSettings settings)
+    private static void DeployIndexes(IDocumentStore store, RavenSettings settings)
     {
         var database = settings.DatabaseName;
         var assembly = Assembly.GetExecutingAssembly();
         IndexCreation.CreateIndexes(assembly, store, database: database);
     }
 
-    private void ValidateSettings(RavenDatabaseSettings settings)
+    private void ValidateSettings(RavenSettings settings)
     {
         if (string.IsNullOrWhiteSpace(settings.DatabaseName))
         {
             throw new DatabaseConfigurationException(
-                $"{nameof(RavenDatabaseSettings.DatabaseName)} was not provided in the settings.");
+                $"{nameof(RavenSettings.DatabaseName)} was not provided in the settings.");
         }
 
         if (settings.Urls == null || settings.Urls.Length < 1)
         {
-            throw new DatabaseConfigurationException($"Database configuration {nameof(RavenDatabaseSettings.Urls)} were not provided in the settings.");
+            throw new DatabaseConfigurationException($"Database configuration {nameof(RavenSettings.Urls)} were not provided in the settings.");
         }
         
 #if !DEBUG

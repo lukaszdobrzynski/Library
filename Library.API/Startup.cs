@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Library.API.ExecutionContext;
@@ -8,11 +9,11 @@ using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
 using Library.BuildingBlocks.EventBus;
 using Library.Modules.Catalogue.Infrastructure.Configuration;
-using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Converters;
 using Serilog;
@@ -23,14 +24,21 @@ namespace Library.API;
 public class Startup
 {
     private static ILogger _logger;
+    private readonly IConfiguration _configuration;
     
-    public Startup(IWebHostEnvironment env)
+    public Startup(IConfiguration configuration, IWebHostEnvironment env)
     {
+        _configuration = configuration;
         ConfigureLogger();
     }
     
     public void ConfigureServices(IServiceCollection services)
     {
+        var settings = new Settings();
+        _configuration.Bind(settings);
+        
+        ValidateSettings(settings);
+
         services.AddControllers()
             .AddNewtonsoftJson(options =>
             {
@@ -38,6 +46,7 @@ public class Startup
             });
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
+        services.AddSingleton(settings);
     }
     
     public void ConfigureContainer(ContainerBuilder containerBuilder)
@@ -72,18 +81,42 @@ public class Startup
     {
         var eventBus = new InMemoryEventBus();
         var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
-        var ravenSettings = new RavenDatabaseSettings
-        {
-            Urls = new[] { "http://localhost:8080", "http://localhost:8081", "http://localhost:8082" },
-            DatabaseName = "Library.Catalogue"
-        };
+        var settings = container.Resolve<Settings>();
         
         ReservationStartup.Init(
-            "Host=localhost;Port=5000;Database=library;Username=postgres;Password=postgres;IncludeErrorDetail=True", 
+            settings.Postgres.ConnectionString, 
             executionContextAccessor, 
             _logger, 
             eventBus);
 
-        CatalogueStartup.Init(ravenSettings, executionContextAccessor, _logger, eventBus);
+        CatalogueStartup.Init(settings.Raven, executionContextAccessor, _logger, eventBus);
+    }
+
+    private void ValidateSettings(Settings settings)
+    {
+        if (settings.Raven is null)
+        {
+            throw new ApplicationConfigurationException("Raven settings cannot be null.");
+        }
+
+        if (settings.Raven.Urls is null || settings.Raven.Urls.Any() == false)
+        {
+            throw new ApplicationConfigurationException("Raven connection url must be provided in the application settings.");
+        }
+
+        if (string.IsNullOrWhiteSpace(settings.Raven.DatabaseName))
+        {
+            throw new ApplicationConfigurationException("Raven database name must be provided in the application settings.");
+        }
+
+        if (settings.Postgres is null)
+        {
+            throw new ApplicationConfigurationException($"{nameof(Settings.Postgres)} settings cannot be null.");
+        }
+
+        if (string.IsNullOrWhiteSpace(settings.Postgres.ConnectionString))
+        {
+            throw new ApplicationConfigurationException("Postgres connection string must be provided in the application settings.");
+        }
     }
 }

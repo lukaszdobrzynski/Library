@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 
-public class RavenDatabaseSettings
+public class RavenSettings
 {
     public string DatabaseName { get; set; }
     public string[] Urls { get; set; }
