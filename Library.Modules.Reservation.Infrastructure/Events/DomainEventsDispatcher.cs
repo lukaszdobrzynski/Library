@@ -12,20 +12,20 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
 {
     private readonly IDomainEventsAccessor _domainEventsAccessor;
     private readonly IMediator _mediator;
-    private readonly IDomainEventToDomainEventNotificationResolver _domainEventToDomainEventNotificationResolver;
+    private readonly IDomainEventToDomainNotificationResolver _domainEventToDomainNotificationResolver;
     private readonly IOutboxAccessor _outboxAccessor;
     private readonly IDomainNotificationsRegistry _notificationsRegistry;
     
     public DomainEventsDispatcher(
         IDomainEventsAccessor domainEventsAccessor, 
         IMediator mediator,
-        IDomainEventToDomainEventNotificationResolver domainEventNotificationResolver,
+        IDomainEventToDomainNotificationResolver domainEventNotificationResolver,
         IOutboxAccessor outboxAccessor,
         IDomainNotificationsRegistry notificationsRegistry)
     {
         _domainEventsAccessor = domainEventsAccessor;
         _mediator = mediator;
-        _domainEventToDomainEventNotificationResolver = domainEventNotificationResolver;
+        _domainEventToDomainNotificationResolver = domainEventNotificationResolver;
         _outboxAccessor = outboxAccessor;
         _notificationsRegistry = notificationsRegistry;
     }
@@ -34,11 +34,11 @@ public class DomainEventsDispatcher : IDomainEventsDispatcher
     {
         var domainEvents = _domainEventsAccessor.GetAllDomainEvents();
 
-        var domainNotifications = new List<IDomainEventNotification<IDomainEvent>>();
+        var domainNotifications = new List<IDomainNotification<IDomainEvent>>();
         
         foreach (var domainEvent in domainEvents)
         {
-            var domainNotification = _domainEventToDomainEventNotificationResolver.ResolveOptional(domainEvent);
+            var domainNotification = _domainEventToDomainNotificationResolver.ResolveOptional(domainEvent);
 
             if (domainNotification is not null)
             {

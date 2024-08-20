@@ -3,7 +3,7 @@ using Library.Modules.Reservation.Application.Contracts;
 
 namespace Library.Modules.Reservation.Infrastructure.Events;
 
-public interface IDomainEventToDomainEventNotificationResolver
+public interface IDomainEventToDomainNotificationResolver
 {
-    IDomainEventNotification<IDomainEvent>? ResolveOptional(IDomainEvent domainEvent);
+    IDomainNotification<IDomainEvent>? ResolveOptional(IDomainEvent domainEvent);
 }

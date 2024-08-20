@@ -3,7 +3,7 @@ using Library.Modules.Reservation.Domain.Holds.Events;
 
 namespace Library.Modules.Reservation.Application.Holds.CancelHold;
 
-public class CancelHoldDecisionAppliedNotification : IDomainEventNotification<CancelHoldDecisionAppliedDomainEvent>
+public class CancelHoldDecisionAppliedNotification : IDomainNotification<CancelHoldDecisionAppliedDomainEvent>
 {
     public Guid Id { get; set; }
     public CancelHoldDecisionAppliedDomainEvent DomainEvent { get; }

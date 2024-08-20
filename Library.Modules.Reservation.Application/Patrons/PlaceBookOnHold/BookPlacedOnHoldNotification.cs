@@ -3,7 +3,7 @@ using Library.Modules.Reservation.Domain.Patrons.Events;
 
 namespace Library.Modules.Reservation.Application.Patrons.PlaceBookOnHold;
 
-public class BookPlacedOnHoldNotification : IDomainEventNotification<BookPlacedOnHoldDomainEvent>
+public class BookPlacedOnHoldNotification : IDomainNotification<BookPlacedOnHoldDomainEvent>
 {
     public BookPlacedOnHoldDomainEvent DomainEvent { get; }
     public Guid Id { get; set; }

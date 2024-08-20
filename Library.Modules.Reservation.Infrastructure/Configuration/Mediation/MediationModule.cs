@@ -36,7 +36,7 @@ public class MediationModule : Autofac.Module
         }
 
         builder.RegisterAssemblyTypes(typeof(IReservationModule).Assembly)
-            .AsClosedTypesOf(typeof(IDomainEventNotification<>))
+            .AsClosedTypesOf(typeof(IDomainNotification<>))
             .InstancePerDependency();
 
         builder.RegisterType<DomainNotificationsRegistry>()

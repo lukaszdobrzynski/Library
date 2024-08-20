@@ -58,7 +58,7 @@ public class ProcessOutboxJob : IBackgroundJob
             foreach (var message in messageList)
             {
                 var type = _notificationsRegistry.GetType(message.Type);
-                var notification = JsonConvert.DeserializeObject(message.Data, type) as IDomainEventNotification;
+                var notification = JsonConvert.DeserializeObject(message.Data, type) as IDomainNotification;
                 
                 await _mediator.Publish(notification);
                 

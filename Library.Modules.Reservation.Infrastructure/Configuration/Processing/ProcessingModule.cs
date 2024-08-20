@@ -35,8 +35,8 @@ public class ProcessingModule : Autofac.Module
             .As<IInternalCommandsRegistry>()
             .SingleInstance();
 
-        builder.RegisterType<DomainEventToDomainEventNotificationResolver>()
-            .As<IDomainEventToDomainEventNotificationResolver>()
+        builder.RegisterType<DomainEventToDomainNotificationResolver>()
+            .As<IDomainEventToDomainNotificationResolver>()
             .SingleInstance();
         
         builder.RegisterType<DomainEventsDispatcher>()
