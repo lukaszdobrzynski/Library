@@ -1,4 +1,5 @@
 ﻿using Library.Modules.Reservation.Domain.Holds;
+using Library.Modules.Reservation.Domain.Holds.Rules;
 using Library.Modules.Reservation.Domain.Patrons;
 using Library.Modules.Reservation.Domain.Patrons.Events;
 using Library.Modules.Reservation.Domain.Patrons.Rules;
@@ -13,7 +14,7 @@ public class RegularPatronCancelHoldTests : TestBase
     {
         var patron = Patron.CreateRegular(Guid.NewGuid());
 
-        var holdToCancel = HoldToCancel.Create(patron.Id, SomeHoldId1, SomeBookId1, SomeLibraryBranchId1);
+        var holdToCancel = HoldToCancel.Create(patron.Id, SomeHoldId1, SomeBookId1, SomeLibraryBranchId1, HoldStatus.Granted);
         
         patron.CancelHold(holdToCancel);
 
@@ -30,10 +31,22 @@ public class RegularPatronCancelHoldTests : TestBase
     {
         var patron = Patron.CreateRegular(Guid.NewGuid());
 
-        var holdToCancel = HoldToCancel.Create(SomePatronId1, SomeHoldId1, SomeBookId1, SomeLibraryBranchId1);
+        var holdToCancel = HoldToCancel.Create(SomePatronId1, SomeHoldId1, SomeBookId1, SomeLibraryBranchId1, HoldStatus.Granted);
         
         Assert.That(patron.Id, Is.Not.EqualTo(holdToCancel.OwningPatronId));
         
         AssertBusinessRuleBroken<PatronCannotCancelHoldOwnedByAnotherPatronRule>(() => patron.CancelHold(holdToCancel));
+    }
+    
+    [Test]
+    public void Fails_WhenHoldStatus_ReadyToPick()
+    {
+        const string holdStatus = HoldStatus.ReadyToPick;
+        var patron = Patron.CreateRegular(Guid.NewGuid());
+
+        var holdToCancel = HoldToCancel.Create(patron.Id, SomeHoldId1, SomeBookId1, SomeLibraryBranchId1,
+            holdStatus);
+        
+        AssertBusinessRuleBroken<PatronCannotCancelHoldWhenHoldReadyToPickRule>(() => patron.CancelHold(holdToCancel));
     }
 }

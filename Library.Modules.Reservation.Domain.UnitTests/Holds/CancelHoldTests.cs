@@ -49,18 +49,7 @@ public class CancelHoldTests : HoldTestBase
         AssertHoldInActive(hold);
     }
 
-    [Test]
-    public void Fails_WhenHold_IsReadyToPick()
-    {
-        var hold = CreateReadyToPickHold(SomeBookId1, SomeLibraryBranchId1, SomePatronId1);
-        
-        AssertBusinessRuleBroken<PatronCannotCancelHoldWhenHoldReadyToPickRule>(() => Act(hold));
-        
-        AssertHoldActive(hold);
-    }
-    
-
-    private void Act(Hold hold)
+    private static void Act(Hold hold)
     {
         hold.ApplyCancelDecision();
     }
