@@ -25,6 +25,8 @@ public static class JobsStartup
         
         Run(async () =>
         {
+            await Delay(TimeSpan.FromSeconds(5));
+            
             try
             {
                 while(true)
