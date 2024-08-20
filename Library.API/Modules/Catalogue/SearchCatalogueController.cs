@@ -3,7 +3,7 @@ using Library.Modules.Catalogue.Application.BookSearch;
 using Library.Modules.Catalogue.Application.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Library.API.Modules.CatalogueRootModule;
+namespace Library.API.Modules.Catalogue;
 
 [Route("api/catalogue/search")]
 [ApiController]

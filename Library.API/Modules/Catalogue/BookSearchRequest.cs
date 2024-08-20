@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Library.Modules.Catalogue.Application.BookSearch;
 
-namespace Library.API.Modules.CatalogueRootModule;
+namespace Library.API.Modules.Catalogue;
 
 public class BookSearchRequest
 {

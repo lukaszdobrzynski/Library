@@ -3,7 +3,7 @@ using System.IO;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Library.API.ExecutionContext;
-using Library.API.Modules.CatalogueRootModule;
+using Library.API.Modules.Catalogue;
 using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
 using Library.BuildingBlocks.EventBus;
