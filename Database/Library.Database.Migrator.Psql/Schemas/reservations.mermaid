@@ -25,15 +25,6 @@
         version_id int
     }
     
-    Checkout {
-        id uuid PK
-        patron_id uuid FK
-        book_id uuid FK
-        library_branch_id uuid
-        due_date date
-        version_id int
-    }
-    
     OutboxMessage {
         id uuid PK
         occurred_on date
@@ -44,5 +35,3 @@
     
     Hold || -- || Patron: is_placed_by
     Hold || -- || Book: is_placed_on
-    Patron || -- o{ Checkout: has
-    Book || -- o| Checkout: is_under   
