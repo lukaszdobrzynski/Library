@@ -11,7 +11,7 @@ public class EventBusStartup
         var scope = CatalogueCompositionRoot.BeginLifetimeScope();
         var eventBus = scope.Resolve<IEventBus>();
         
-        eventBus.Subscribe(new IntegrationEventHandler<HoldCancelledIntegrationEvent>());
-        eventBus.Subscribe(new IntegrationEventHandler<BookPlacedOnHoldIntegrationEvent>());
+        eventBus.Subscribe(new IntegrationEventListener<HoldCancelledIntegrationEvent>());
+        eventBus.Subscribe(new IntegrationEventListener<BookPlacedOnHoldIntegrationEvent>());
     }
 }

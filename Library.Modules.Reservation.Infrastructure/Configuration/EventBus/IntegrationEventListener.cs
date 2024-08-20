@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 
-public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
+public class IntegrationEventListener<T> : IIntegrationEventListener<T>
     where T : IntegrationEvent
 {
-    public async Task Handle(T integrationEvent)
+    public async Task Register(T integrationEvent)
     {
         var scope = ReservationCompositionRoot.BeginLifetimeScope();
         var connectionFactory = scope.Resolve<IPsqlConnectionFactory>();

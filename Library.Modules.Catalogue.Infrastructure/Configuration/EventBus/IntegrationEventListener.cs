@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Library.BuildingBlocks.EventBus;
 using Library.Modules.Catalogue.Application.Contracts;
-using Library.Modules.Catalogue.Infrastructure.Inbox;
 using Library.Modules.Catalogue.Models;
 using Newtonsoft.Json;
 using Raven.Client.Documents;
@@ -9,10 +8,10 @@ using Raven.Client.Documents.Session;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.EventBus;
 
-public class IntegrationEventHandler<T> : IIntegrationEventHandler<T>
+public class IntegrationEventListener<T> : IIntegrationEventListener<T>
     where T : IntegrationEvent
 {
-    public async Task Handle(T integrationEvent)
+    public async Task Register(T integrationEvent)
     {
         var scope = CatalogueCompositionRoot.BeginLifetimeScope();
         var documentStoreHolder = scope.Resolve<IDocumentStoreHolder>();

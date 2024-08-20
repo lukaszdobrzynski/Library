@@ -2,7 +2,7 @@
 
 public class InMemoryEventBus : IEventBus
 {
-    private readonly Dictionary<string, List<IIntegrationEventHandler>> _registry = new();
+    private readonly Dictionary<string, List<IIntegrationEventListener>> _registry = new();
 
     public async Task Publish<T>(T integrationEvent) where T : IIntegrationEvent
     {
@@ -10,35 +10,35 @@ public class InMemoryEventBus : IEventBus
 
         if (eventName is not null)
         {
-            var subscribersExist = _registry.TryGetValue(eventName, out var handlers);
+            var subscribersExist = _registry.TryGetValue(eventName, out var listeners);
 
             if (subscribersExist == false)
                 return;
 
-            foreach (var handler in handlers)
+            foreach (var listener in listeners)
             {
-                if (handler is IIntegrationEventHandler<T> eventHandler)
+                if (listener is IIntegrationEventListener<T> eventListener)
                 {
-                    await eventHandler.Handle(integrationEvent);
+                    await eventListener.Register(integrationEvent);
                 }
             }
         }
     }
 
-    public void Subscribe<T>(IIntegrationEventHandler<T> eventHandler) where T : IIntegrationEvent
+    public void Subscribe<T>(IIntegrationEventListener<T> eventListener) where T : IIntegrationEvent
     {
         var eventName = typeof(T).FullName;
 
         if (eventName is null) 
             return;
         
-        if (_registry.TryGetValue(eventName, out var handlers))
+        if (_registry.TryGetValue(eventName, out var listeners))
         {
-            handlers.Add(eventHandler);
+            listeners.Add(eventListener);
         }
         else
         {
-            _registry.Add(eventName, new List<IIntegrationEventHandler> {eventHandler});
+            _registry.Add(eventName, new List<IIntegrationEventListener> {eventListener});
         }
     }
 }

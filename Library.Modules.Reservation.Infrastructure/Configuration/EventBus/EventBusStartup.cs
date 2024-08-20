@@ -11,7 +11,7 @@ public class EventBusStartup
         var scope = ReservationCompositionRoot.BeginLifetimeScope();
         var eventBus = scope.Resolve<IEventBus>();
         
-        eventBus.Subscribe(new IntegrationEventHandler<BookHoldRejectedIntegrationEvent>());
-        eventBus.Subscribe(new IntegrationEventHandler<BookHoldGrantedIntegrationEvent>());
+        eventBus.Subscribe(new IntegrationEventListener<BookHoldRejectedIntegrationEvent>());
+        eventBus.Subscribe(new IntegrationEventListener<BookHoldGrantedIntegrationEvent>());
     }
 }
