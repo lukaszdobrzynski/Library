@@ -29,21 +29,21 @@ public class ProcessDailySheetJob : IBackgroundJob
                                "WHERE (status = 'Granted' OR status = 'ReadyToPick') AND till < now()::date;";
                                
             var holds = await connection.QueryAsync<HoldDto>(sql);
-            var holdList = holds.ToList();
+            var holdDtos = holds.ToList();
 
-            if (holdList.Any() == false)
+            if (holdDtos.Any() == false)
             {
-                _logger.Information("No holds to process.");
+                _logger.Information("No expired holds to process.");
                 return;
             }
             
-            foreach (var holdItem in holdList)
+            foreach (var dto in holdDtos)
             {
                 await _internalCommandsScheduler.Submit(new CancelExpiredHoldCommand
                 {
                     Id = Guid.NewGuid(),
-                    HoldId = holdItem.Id,
-                    BookId = holdItem.BookId
+                    HoldId = dto.Id,
+                    BookId = dto.BookId
                 });
             }
         }
