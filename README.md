@@ -1,4 +1,4 @@
-# About
+## About
 
 This is a PoC of a library. The project aims to incorporate various architectural styles as well as software design methods and software tooling to help a development team build a maintainable, scalable and resilient platform. The presented approach involves mulitple techniques such as:
 - DDD tactical patterns
