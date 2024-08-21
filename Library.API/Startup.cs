@@ -111,7 +111,7 @@ public class Startup
 
         if (settings.Postgres is null)
         {
-            throw new ApplicationConfigurationException($"{nameof(Settings.Postgres)} settings cannot be null.");
+            throw new ApplicationConfigurationException("Postgres settings cannot be null.");
         }
 
         if (string.IsNullOrWhiteSpace(settings.Postgres.ConnectionString))
