@@ -10,9 +10,9 @@ public static class JobsStartup
 {
     public static void Initialize(ILogger logger)
     {
-        RunJobAtIntervals<ProcessOutboxJob>(logger, TimeSpan.FromSeconds(5));
-        RunJobAtIntervals<ProcessInboxJob>(logger, TimeSpan.FromSeconds(5));
-        RunJobAtIntervals<ProcessInternalCommandJob>(logger, TimeSpan.FromSeconds(5));
+        RunJobAtIntervals<ProcessOutboxJob>(logger, TimeSpan.FromSeconds(1));
+        RunJobAtIntervals<ProcessInboxJob>(logger, TimeSpan.FromSeconds(1));
+        RunJobAtIntervals<ProcessInternalCommandJob>(logger, TimeSpan.FromSeconds(1));
         RunJobAtSpecificHour<ProcessDailySheetJob>(logger, Hour.Midnight);
     }
 

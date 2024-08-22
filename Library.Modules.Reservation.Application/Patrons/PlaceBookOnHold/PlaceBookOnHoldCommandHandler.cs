@@ -17,7 +17,7 @@ public class PlaceBookOnHoldCommandHandler(
     {
         var patron = await patronRepository.GetByIdAsync(new PatronId(command.PatronId));
         var book = await bookRepository.GetByIdAsync(new BookId(command.BookId));
-        var isBookOnActiveHold = await holdRepository.ActiveHoldExistsByBookIdAsync(book.Id);
+        var isBookOnActiveHold = await holdRepository.ActiveHoldExistsByBookIdAsync(book.Id, patron.Id);
         var checkouts =
             await checkoutRepository.GetOverdueCheckoutsByPatronIdAsync(new PatronId(command.PatronId));
         var holds = await holdRepository.GetWeeklyActiveHoldsByPatronIdAsync(new PatronId(command.PatronId));

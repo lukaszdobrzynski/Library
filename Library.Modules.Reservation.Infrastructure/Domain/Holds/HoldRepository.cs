@@ -24,10 +24,10 @@ public class HoldRepository : IHoldRepository
         return await _reservationContext.Holds.SingleAsync(x => x.HoldRequestId == holdRequestId);
     }
 
-    public async Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId)
+    public async Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId, PatronId patronId)
     {
         var hold = await _reservationContext.Holds
-            .Where(x => x.BookId == bookId && x.IsActive == true)
+            .Where(x => x.BookId == bookId && x.IsActive == true && x.PatronId == patronId)
             .SingleOrDefaultAsync();
 
         return hold?.IsActive ?? false;
