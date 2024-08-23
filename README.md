@@ -16,6 +16,7 @@ This is a PoC of a library. The project aims to incorporate various architectura
 - document modelling
 - indexing
 - database clustering
+- database subscriptions
 - optimistic concurrency control
 - unit testing
 - integration testing
@@ -44,5 +45,4 @@ Archetypes are well-known and well-defined solutions to a business problem. The 
 - *reservation hold*: Once its availability is confirmed, a resource can be held for a specified time.
 - *confirmation and expiry*: When a user or a system confirms the reservation, the resource is locked in. If not confirmed in time, e.g. a library member does not pick up a book or a hotel room reservation is not confirmed through payment, the reservation expires and the resource is released for other users.
 
-When implementing the reservation archetype in software systems one of the significant challenges is multiple simultaneous attempts to lock the same resource. This can usually be approached in a few ways depending on the system requirements and your use case.<br/>
-*The Library* chooses to utilize a simple messaging mechanism to avoid race conditions and provide data consistency guarantees in the concurrent environment.  
+When implementing the reservation archetype in software systems, one of the significant challenges is handling multiple simultaneous attempts to lock the same resource. This can typically be addressed in several ways, depending on system requirements and the specific use case. *The Library* opts to use a simple messaging mechanism to avoid race conditions and ensure data consistency in a concurrent environment while maintaining modularity and scalability. 
