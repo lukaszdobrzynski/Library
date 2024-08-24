@@ -2,6 +2,6 @@
 
 public interface IExecutionContextAccessor
 { 
-    Guid CorrelationId { get; }
-    bool IsAvailable { get; }
+    Guid CorrelationId { get;}
+    bool IsAvailable { get;}
 }
