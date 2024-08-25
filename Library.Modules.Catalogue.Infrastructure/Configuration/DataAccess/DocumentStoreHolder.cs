@@ -21,6 +21,8 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         
         _documentStore = CreateDocumentStore(settings);
     }
+    
+    public IDocumentStore RavenDocumentStore => _documentStore;
 
     private DocumentStore CreateDocumentStore(RavenSettings settings)
     {

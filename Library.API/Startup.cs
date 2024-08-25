@@ -9,6 +9,7 @@ using Library.API.Modules.Reservation;
 using Library.BuildingBlocks.Application;
 using Library.BuildingBlocks.EventBus;
 using Library.Modules.Catalogue.Infrastructure.Configuration;
+using Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 using Library.Modules.Reservation.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -82,6 +83,7 @@ public class Startup
         var eventBus = new InMemoryEventBus();
         var executionContextAccessor = container.Resolve<IExecutionContextAccessor>();
         var settings = container.Resolve<Settings>();
+        var documentStoreHolder = new DocumentStoreHolder(settings.Raven);
         
         ReservationStartup.Init(
             settings.Postgres.ConnectionString, 
@@ -89,7 +91,7 @@ public class Startup
             _logger, 
             eventBus);
 
-        CatalogueStartup.Init(settings.Raven, executionContextAccessor, _logger, eventBus);
+        CatalogueStartup.Init(documentStoreHolder, executionContextAccessor, _logger, eventBus);
     }
 
     private void ValidateSettings(Settings settings)

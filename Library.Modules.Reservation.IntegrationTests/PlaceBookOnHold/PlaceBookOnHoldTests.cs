@@ -6,24 +6,8 @@ using NUnit.Framework;
 
 namespace Library.Modules.Reservation.IntegrationTests.PlaceBookOnHold;
 
-[SetUpFixture]
-public class TestFixtureSetup : TestFixtureSetupBase
-{
-    [OneTimeSetUp]
-    public async Task TestSetup()
-    {
-        await BeforeEachTest();
-    }
-
-    [OneTimeTearDown]
-    public async Task TestTeardown()
-    {
-        await AfterEachTest();
-    }
-}
-
 [TestFixture]
-public class PlaceBookOnHoldTestsBase : TestBase
+public class PlaceBookOnHoldTests : TestBase
 {
     [Test]
     public async Task Succeeds()

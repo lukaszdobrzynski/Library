@@ -6,18 +6,16 @@ namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 
 public class DataAccessModule : Autofac.Module
 {
-    private readonly RavenSettings _ravenSettings; 
+    private readonly IDocumentStoreHolder _documentStoreHolder;
     
-    public DataAccessModule(RavenSettings ravenSettings)
+    public DataAccessModule(IDocumentStoreHolder documentStoreHolder)
     {
-        _ravenSettings = ravenSettings;
+        _documentStoreHolder = documentStoreHolder;
     }
     
     protected override void Load(ContainerBuilder builder)
     {
-        var documentStoreHolder = new DocumentStoreHolder(_ravenSettings);
-        
-        builder.RegisterInstance(documentStoreHolder)
+        builder.RegisterInstance(_documentStoreHolder)
             .As<IDocumentStoreHolder>()
             .SingleInstance();
 

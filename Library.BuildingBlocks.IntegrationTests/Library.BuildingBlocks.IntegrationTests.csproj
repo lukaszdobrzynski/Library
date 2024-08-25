@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Library.BuildingBlocks.EventBus\Library.BuildingBlocks.EventBus.csproj" />
       <ProjectReference Include="..\Library.BuildingBlocks.Infrastructure\Library.BuildingBlocks.Infrastructure.csproj" />
     </ItemGroup>
 
