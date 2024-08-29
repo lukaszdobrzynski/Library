@@ -7,8 +7,8 @@ on:
 
 jobs:
   
-  unit-tests: 
-    name: run unit tests
+  reservation-module-unit-tests: 
+    name: reservation module unit tests
     runs-on: ubuntu-latest
       
     steps: 
@@ -20,3 +20,17 @@ jobs:
           dotnet-version: 7.0
       - name: run reservation module unit tests
         run: dotnet test ./Library.Modules.Reservation.Domain.UnitTests
+  
+  catalogue-module-integration-tests:
+    name: catalogue module integration tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: set up dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0
+      - name: run catalogue module integration tests
+        run: dotnet test ./Library.Modules.Catalogue.IntegrationTests
