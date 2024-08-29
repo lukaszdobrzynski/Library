@@ -1,65 +1,32 @@
 name: ci-pipeline
 
 on:
-  push: 
+  push:
     branches:
       - master
 
 jobs:
-  
-  reservation-module-unit-tests: 
+  reservation-module-unit-tests:
     name: reservation module unit tests
-    runs-on: ubuntu-latest
-      
-    steps: 
-      - name: checkout repository
-        uses: actions/checkout@v4
-      - name: set up dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 7.0
-      - name: run tests
-        run: dotnet test ./Library.Modules.Reservation.Domain.UnitTests
-        
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      test-project: ./Library.Modules.Reservation.Domain.UnitTests
+
   reservation-module-integration-tests:
     name: reservation module integration tests
-    runs-on: ubuntu-latest
     needs: reservation-module-unit-tests
-    
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-      - name: set up dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 7.0
-      - name: run tests
-        run: dotnet test ./Library.Modules.Reservation.IntegrationTests
-  
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      test-project: ./Library.Modules.Reservation.IntegrationTests
+
   reservation-module-architecture-tests:
     name: reservation module architecture tests
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-      - name: set up dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 7.0
-      - name: run tests
-        run: dotnet test ./Library.Modules.Reservation.ArchTests
-  
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      test-project: ./Library.Modules.Reservation.ArchTests
+
   catalogue-module-integration-tests:
     name: catalogue module integration tests
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-      - name: set up dotnet
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 7.0
-      - name: run tests
-        run: dotnet test ./Library.Modules.Catalogue.IntegrationTests 
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      test-project: ./Library.Modules.Catalogue.IntegrationTests
