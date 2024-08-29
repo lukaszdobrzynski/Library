@@ -1,1 +1,22 @@
+name: ci-pipeline
 
+on:
+  push: 
+    branches:
+      - master
+
+jobs:
+  
+  unit-tests: 
+    name: run unit tests
+    runs-on: ubuntu-latest
+      
+    steps: 
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: set up dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0
+      - name: run reservation module unit tests
+        run: dotnet test ./Library.Modules.Reservation.Domain.UnitTests
