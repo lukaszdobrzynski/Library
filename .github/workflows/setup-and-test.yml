@@ -1,4 +1,4 @@
-name: Setup and Test
+name: setup-and-test
 
 on:
   workflow_call:
