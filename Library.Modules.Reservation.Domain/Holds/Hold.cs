@@ -15,8 +15,8 @@ public class Hold : AggregateRootBase
     public DateTime CreatedAt { get; private set; }
     public DateTime? Till { get; private set; }
     public HoldStatus Status { get; private set; }
-    public bool IsActive { get; set; }
-    public HoldRequestId HoldRequestId { get; set; }
+    public bool IsActive { get; private set; }
+    public HoldRequestId HoldRequestId { get; private set; }
 
     private Hold()
     {

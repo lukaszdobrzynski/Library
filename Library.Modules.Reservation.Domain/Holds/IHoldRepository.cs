@@ -7,7 +7,7 @@ public interface IHoldRepository
 {
     Task<Hold> GetByIdAsync(HoldId holdId);
     Task<Hold> GetByRequestHoldId(HoldRequestId holdRequestId);
-    public Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId, PatronId patronId);
-    public Task<List<Hold>> GetWeeklyActiveHoldsByPatronIdAsync(PatronId patronId);
+    Task<bool> ActiveHoldExistsByBookIdAsync(BookId bookId, PatronId patronId);
+    Task<List<Hold>> GetWeeklyActiveHoldsByPatronIdAsync(PatronId patronId);
     Task AddAsync(Hold hold);
 }

@@ -6,15 +6,15 @@ namespace Library.Modules.Reservation.Domain.Holds;
 
 public class HoldToCancel : ValueObject
 {
-    public PatronId OwningPatronId { get; set; }
+    public PatronId OwningPatronId { get; private set; }
 
-    public HoldId HoldId { get; set; }
+    public HoldId HoldId { get; private set; }
 
-    public BookId BookId { get; set; }
+    public BookId BookId { get; private set; }
 
-    public LibraryBranchId LibraryBranchId { get; set; }
+    public LibraryBranchId LibraryBranchId { get; private set; }
 
-    public HoldStatus Status { get; set; }
+    public HoldStatus Status { get; private set; }
     
 
     private HoldToCancel(PatronId patronId, HoldId holdId, BookId bookId, LibraryBranchId libraryBranchId, HoldStatus status)
