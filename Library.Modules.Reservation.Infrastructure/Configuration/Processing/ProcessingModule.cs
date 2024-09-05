@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 
-public class ProcessingModule : Autofac.Module
+internal class ProcessingModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {

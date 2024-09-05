@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 
-public class DataAccessModule : Autofac.Module
+internal class DataAccessModule : Autofac.Module
 {
     private readonly string _databaseConnectionString;
     

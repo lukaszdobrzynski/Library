@@ -6,7 +6,7 @@ using Library.Modules.Reservation.Infrastructure.Configuration;
 
 namespace Library.Modules.Reservation.Infrastructure.Events;
 
-public class DomainEventToDomainNotificationResolver : IDomainEventToDomainNotificationResolver
+internal class DomainEventToDomainNotificationResolver : IDomainEventToDomainNotificationResolver
 {
     public IDomainNotification<IDomainEvent>? ResolveOptional(IDomainEvent domainEvent)
     {

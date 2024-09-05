@@ -7,7 +7,7 @@ using Serilog;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
 
-public class ProcessInboxJob : IBackgroundJob
+internal class ProcessInboxJob : IBackgroundJob
 {
     private readonly IPsqlConnectionFactory _connectionFactory;
     private readonly ILogger _logger;

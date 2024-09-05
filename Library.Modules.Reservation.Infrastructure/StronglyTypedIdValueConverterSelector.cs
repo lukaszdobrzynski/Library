@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Modules.Reservation.Infrastructure;
 
-public class StronglyTypedIdValueConverterSelector : ValueConverterSelector
+internal class StronglyTypedIdValueConverterSelector : ValueConverterSelector
 {
     private readonly ConcurrentDictionary<(Type ModelClrType, Type ProviderClrType), ValueConverterInfo> _converters
         = new ConcurrentDictionary<(Type ModelClrType, Type ProviderClrType), ValueConverterInfo>();

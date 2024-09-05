@@ -6,7 +6,7 @@ using Timer = System.Timers.Timer;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
 
-public static class JobsStartup
+internal static class JobsStartup
 {
     public static void Initialize(ILogger logger)
     {

@@ -4,7 +4,7 @@ using Library.Modules.Reservation.Application.Holds.RejectHold;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration;
 
-public class InternalCommandsRegistry : IInternalCommandsRegistry
+internal class InternalCommandsRegistry : IInternalCommandsRegistry
 {
     private readonly Dictionary<string, Type> _entries = new ()
     {

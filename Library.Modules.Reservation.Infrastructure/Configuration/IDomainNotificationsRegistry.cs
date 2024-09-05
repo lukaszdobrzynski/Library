@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.Configuration
 {
-    public interface IDomainNotificationsRegistry
+    internal interface IDomainNotificationsRegistry
     {
         string GetName(Type type);
 

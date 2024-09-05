@@ -3,7 +3,7 @@ using Npgsql;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 
-public class PsqlConnectionFactory : IPsqlConnectionFactory, IDisposable
+internal class PsqlConnectionFactory : IPsqlConnectionFactory, IDisposable
 {
     private readonly string _connectionString;
     private IDbConnection _connection;

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Books;
 
-public class BookRepository : IBookRepository
+internal class BookRepository : IBookRepository
 {
     private readonly ReservationContext _reservationContext;
     

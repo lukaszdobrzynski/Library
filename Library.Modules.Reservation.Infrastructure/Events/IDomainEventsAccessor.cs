@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Infrastructure.Events;
 
-public interface IDomainEventsAccessor
+internal interface IDomainEventsAccessor
 {
     IReadOnlyCollection<IDomainEvent> GetAllDomainEvents();
 

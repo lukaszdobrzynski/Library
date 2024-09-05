@@ -3,7 +3,7 @@ using Library.BuildingBlocks.EventBus;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 
-public class EventBusModule : Autofac.Module
+internal class EventBusModule : Autofac.Module
 {
     private readonly IEventBus _eventBus;
     

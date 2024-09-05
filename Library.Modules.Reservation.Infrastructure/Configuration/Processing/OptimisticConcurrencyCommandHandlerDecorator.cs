@@ -5,7 +5,7 @@ using Polly.Retry;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 
-public class OptimisticConcurrencyCommandHandlerDecorator<T> : IRequestHandler<T>
+internal class OptimisticConcurrencyCommandHandlerDecorator<T> : IRequestHandler<T>
     where T : ICommand
 {
     private readonly IRequestHandler<T> _decorated;

@@ -4,7 +4,7 @@ using Library.Modules.Catalogue.IntegrationEvents;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 
-public class EventBusStartup
+internal class EventBusStartup
 {
     public static void Initialize()
     {

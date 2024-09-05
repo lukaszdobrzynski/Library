@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Books;
 
-public class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
+internal class BookEntityTypeConfiguration : IEntityTypeConfiguration<Book>
 {
     public void Configure(EntityTypeBuilder<Book> builder)
     {

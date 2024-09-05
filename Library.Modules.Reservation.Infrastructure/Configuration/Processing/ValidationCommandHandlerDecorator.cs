@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 
-public class ValidationCommandHandlerDecorator<T> : IRequestHandler<T>
+internal class ValidationCommandHandlerDecorator<T> : IRequestHandler<T>
     where T : ICommand
 {
     private readonly IRequestHandler<T> _handler;

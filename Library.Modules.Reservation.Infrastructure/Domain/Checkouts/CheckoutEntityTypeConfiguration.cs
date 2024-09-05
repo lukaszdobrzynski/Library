@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Checkouts;
 
-public class CheckoutEntityTypeConfiguration : IEntityTypeConfiguration<Checkout>
+internal class CheckoutEntityTypeConfiguration : IEntityTypeConfiguration<Checkout>
 {
     public void Configure(EntityTypeBuilder<Checkout> builder)
     {

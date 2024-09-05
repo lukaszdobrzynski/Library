@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.Events;
 
-public interface IDomainEventsDispatcher
+internal interface IDomainEventsDispatcher
 {
     Task DispatchEventsAsync();
 }

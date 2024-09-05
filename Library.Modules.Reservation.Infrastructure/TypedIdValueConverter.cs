@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Modules.Reservation.Infrastructure;
 
-public class TypedIdValueConverter<TTypedIdValue> : ValueConverter<TTypedIdValue, Guid>
+internal class TypedIdValueConverter<TTypedIdValue> : ValueConverter<TTypedIdValue, Guid>
     where TTypedIdValue : TypedIdBase
 {
     public TypedIdValueConverter(ConverterMappingHints mappingHints = null)

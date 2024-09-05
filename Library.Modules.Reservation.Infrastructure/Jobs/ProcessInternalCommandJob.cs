@@ -12,7 +12,7 @@ using Serilog;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
 
-public class ProcessInternalCommandJob : IBackgroundJob
+internal class ProcessInternalCommandJob : IBackgroundJob
 {
     private readonly IPsqlConnectionFactory _connectionFactory;
     private readonly ILogger _logger;

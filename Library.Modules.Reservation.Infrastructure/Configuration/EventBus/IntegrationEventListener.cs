@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.EventBus;
 
-public class IntegrationEventListener<T> : IIntegrationEventListener<T>
+internal class IntegrationEventListener<T> : IIntegrationEventListener<T>
     where T : IntegrationEvent
 {
     public async Task Register(T integrationEvent)

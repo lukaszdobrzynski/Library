@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 
-public class UnitOfWorkCommandHandlerDecorator<T>(IRequestHandler<T> decorated, IUnitOfWork unitOfWork, ReservationContext reservationContext)
+internal class UnitOfWorkCommandHandlerDecorator<T>(IRequestHandler<T> decorated, IUnitOfWork unitOfWork, ReservationContext reservationContext)
     : IRequestHandler<T>
     where T : ICommand
 {

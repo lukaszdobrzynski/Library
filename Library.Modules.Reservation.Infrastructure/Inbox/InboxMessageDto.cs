@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.Inbox;
 
-public class InboxMessageDto
+internal class InboxMessageDto
 {
     public Guid Id { get; set; }
 

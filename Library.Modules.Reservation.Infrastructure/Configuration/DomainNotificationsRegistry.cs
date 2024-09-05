@@ -4,7 +4,7 @@ using Library.Modules.Reservation.Application.Patrons.PlaceBookOnHold;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration
 {
-    public class DomainNotificationsRegistry : IDomainNotificationsRegistry
+    internal class DomainNotificationsRegistry : IDomainNotificationsRegistry
     {
         private readonly Dictionary<string, Type> _entries = new ()
         {

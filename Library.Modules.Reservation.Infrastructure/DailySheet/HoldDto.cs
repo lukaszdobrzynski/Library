@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.DailySheet;
 
-public class HoldDto
+internal class HoldDto
 {
     public Guid Id { get; set; }
 

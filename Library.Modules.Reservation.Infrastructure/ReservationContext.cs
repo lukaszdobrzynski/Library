@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure;
 
-public class ReservationContext : DbContext
+internal class ReservationContext : DbContext
 {
     internal DbSet<Patron> Patrons { get; set; }
     internal DbSet<Book> Books { get; set; }

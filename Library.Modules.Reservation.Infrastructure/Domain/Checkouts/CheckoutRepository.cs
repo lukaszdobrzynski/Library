@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Checkouts;
 
-public class CheckoutRepository : ICheckoutRepository
+internal class CheckoutRepository : ICheckoutRepository
 {
     private readonly ReservationContext _reservationContext;
     

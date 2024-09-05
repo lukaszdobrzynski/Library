@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Modules.Reservation.Infrastructure.InternalCommands;
 
-public class InternalCommandTypeConfiguration : IEntityTypeConfiguration<InternalCommand>
+internal class InternalCommandTypeConfiguration : IEntityTypeConfiguration<InternalCommand>
 {
     public void Configure(EntityTypeBuilder<InternalCommand> builder)
     {

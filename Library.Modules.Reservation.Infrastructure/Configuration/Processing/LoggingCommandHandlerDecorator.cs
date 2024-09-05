@@ -8,7 +8,7 @@ using Serilog.Events;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 
-public class LoggingCommandHandlerDecorator<T> : IRequestHandler<T>
+internal class LoggingCommandHandlerDecorator<T> : IRequestHandler<T>
     where T : ICommand
 {
     private readonly IRequestHandler<T> _decorated;

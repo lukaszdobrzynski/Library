@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Holds;
 
-public class HoldRepository : IHoldRepository
+internal class HoldRepository : IHoldRepository
 {
     private readonly ReservationContext _reservationContext;
 

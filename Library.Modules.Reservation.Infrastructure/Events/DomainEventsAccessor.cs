@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Events;
 
-public class DomainEventsAccessor : IDomainEventsAccessor
+internal class DomainEventsAccessor : IDomainEventsAccessor
 {
     private readonly DbContext _dbContext;
     

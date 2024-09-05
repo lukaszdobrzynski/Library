@@ -3,7 +3,7 @@ using Library.BuildingBlocks.Infrastructure;
 
 namespace Library.Modules.Reservation.Infrastructure.Outbox;
 
-public class OutboxModule : Autofac.Module
+internal class OutboxModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {

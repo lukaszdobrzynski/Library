@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.Jobs;
 
-public interface IBackgroundJob
+internal interface IBackgroundJob
 {
     Task Run();
 }

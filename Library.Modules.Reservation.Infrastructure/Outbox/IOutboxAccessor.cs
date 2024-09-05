@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Infrastructure.Outbox;
 
-public interface IOutboxAccessor
+internal interface IOutboxAccessor
 {
     void Add(OutboxMessage outboxMessage);
 }

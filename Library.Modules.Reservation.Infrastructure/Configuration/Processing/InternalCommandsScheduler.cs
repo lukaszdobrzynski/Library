@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.Processing;
 
-public class InternalCommandsScheduler : IInternalCommandsScheduler
+internal class InternalCommandsScheduler : IInternalCommandsScheduler
 {
     private readonly IPsqlConnectionFactory _connectionFactory;
     private readonly IInternalCommandsRegistry _internalCommandsRegistry;

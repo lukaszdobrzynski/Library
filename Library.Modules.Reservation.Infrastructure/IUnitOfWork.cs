@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure;
 
-public interface IUnitOfWork
+internal interface IUnitOfWork
 {
     Task<int> CommitAsync(CancellationToken cancellationToken = default);
 }

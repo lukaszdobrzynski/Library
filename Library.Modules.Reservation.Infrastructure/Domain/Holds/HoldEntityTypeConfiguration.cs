@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Holds;
 
-public class HoldEntityTypeConfiguration : IEntityTypeConfiguration<Hold>
+internal class HoldEntityTypeConfiguration : IEntityTypeConfiguration<Hold>
 {
     public void Configure(EntityTypeBuilder<Hold> builder)
     {

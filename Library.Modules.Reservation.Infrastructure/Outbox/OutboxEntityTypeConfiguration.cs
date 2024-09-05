@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Modules.Reservation.Infrastructure.Outbox;
 
-public class OutboxEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessage>
+internal class OutboxEntityTypeConfiguration : IEntityTypeConfiguration<OutboxMessage>
 {
     public void Configure(EntityTypeBuilder<OutboxMessage> builder)
     {

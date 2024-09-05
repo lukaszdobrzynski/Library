@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Library.Modules.Reservation.Infrastructure.Events;
 
-public class DomainEventsDispatcher : IDomainEventsDispatcher
+internal class DomainEventsDispatcher : IDomainEventsDispatcher
 {
     private readonly IDomainEventsAccessor _domainEventsAccessor;
     private readonly IMediator _mediator;

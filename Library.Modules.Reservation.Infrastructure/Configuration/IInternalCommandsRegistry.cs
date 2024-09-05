@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.Configuration;
 
-public interface IInternalCommandsRegistry
+internal interface IInternalCommandsRegistry
 {
     string GetName(Type type);
 

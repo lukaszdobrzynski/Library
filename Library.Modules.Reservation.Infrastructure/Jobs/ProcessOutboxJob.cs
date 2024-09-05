@@ -9,7 +9,7 @@ using Serilog;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
 
-public class ProcessOutboxJob : IBackgroundJob
+internal class ProcessOutboxJob : IBackgroundJob
 {
     private readonly IMediator _mediator;
     private readonly IPsqlConnectionFactory _connectionFactory;

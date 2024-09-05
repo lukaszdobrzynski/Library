@@ -7,7 +7,7 @@ using Serilog;
 
 namespace Library.Modules.Reservation.Infrastructure.Jobs;
 
-public class ProcessDailySheetJob : IBackgroundJob
+internal class ProcessDailySheetJob : IBackgroundJob
 {
     private readonly IPsqlConnectionFactory _connectionFactory;
     private readonly ILogger _logger;

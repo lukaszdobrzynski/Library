@@ -1,6 +1,6 @@
 ﻿namespace Library.Modules.Reservation.Infrastructure.InternalCommands
 {
-    public class InternalCommandDto
+    internal class InternalCommandDto
     {
         public Guid Id { get; set; }
 

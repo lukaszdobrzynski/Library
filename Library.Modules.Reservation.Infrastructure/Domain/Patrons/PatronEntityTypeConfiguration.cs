@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Patrons;
 
-public class PatronEntityTypeConfiguration : IEntityTypeConfiguration<Patron>
+internal class PatronEntityTypeConfiguration : IEntityTypeConfiguration<Patron>
 {
     public void Configure(EntityTypeBuilder<Patron> builder)
     {

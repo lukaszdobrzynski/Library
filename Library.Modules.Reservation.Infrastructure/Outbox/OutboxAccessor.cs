@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Infrastructure.Outbox;
 
-public class OutboxAccessor : IOutboxAccessor
+internal class OutboxAccessor : IOutboxAccessor
 {
     private readonly ReservationContext _reservationContext;
     

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Modules.Reservation.Infrastructure.Domain.Patrons;
 
-public class PatronRepository : IPatronRepository
+internal class PatronRepository : IPatronRepository
 {
     private readonly ReservationContext _reservationContext;
     

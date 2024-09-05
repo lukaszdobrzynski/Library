@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Reservation.Infrastructure.Configuration.DataAccess;
 
-public interface IPsqlConnectionFactory
+internal interface IPsqlConnectionFactory
 {
     IDbConnection GetOpenConnection();
     IDbConnection CreateNewConnection();
