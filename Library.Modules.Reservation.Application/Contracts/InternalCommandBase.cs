@@ -2,6 +2,5 @@
 
 public abstract class InternalCommandBase : ICommand
 {
-    public Guid Id { get; set; }
-    
+    public Guid Id { get; init; }
 }

@@ -8,9 +8,4 @@ public abstract class CommandBase : ICommand
     {
         Id = Guid.NewGuid();
     }
-
-    protected CommandBase(Guid id)
-    {
-        Id = id;
-    }
 }

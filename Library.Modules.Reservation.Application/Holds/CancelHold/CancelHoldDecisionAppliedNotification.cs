@@ -5,7 +5,7 @@ namespace Library.Modules.Reservation.Application.Holds.CancelHold;
 
 public class CancelHoldDecisionAppliedNotification : IDomainNotification<CancelHoldDecisionAppliedDomainEvent>
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; }
     public CancelHoldDecisionAppliedDomainEvent DomainEvent { get; }
 
     public CancelHoldDecisionAppliedNotification(CancelHoldDecisionAppliedDomainEvent domainEvent, Guid id)
