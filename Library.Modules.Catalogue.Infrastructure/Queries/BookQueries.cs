@@ -15,7 +15,7 @@ public class BookQueries : IBookQueries
         _documentStoreHolder = documentStoreHolder;
     }
 
-    public async Task<BookSearchQueryResult> GetMultiSearchResults(SearchBooksQueryParameters queryParameters)
+    public async Task<BookSearchQueryResult> GetMultiSearchResult(SearchBooksQueryParameters queryParameters)
     {
         using (var session = _documentStoreHolder.OpenAsyncSession())
         {

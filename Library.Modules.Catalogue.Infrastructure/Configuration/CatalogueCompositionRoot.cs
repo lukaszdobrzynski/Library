@@ -2,7 +2,7 @@
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration;
 
-public class CatalogueCompositionRoot
+internal class CatalogueCompositionRoot
 {
     private static IContainer _container;
 

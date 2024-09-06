@@ -4,7 +4,7 @@ using Raven.Client.Documents.Session;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
-public class InternalCommandHandlingStrategy
+internal class InternalCommandHandlingStrategy
 {
     private readonly IDocumentStoreHolder _documentStoreHolder;
     

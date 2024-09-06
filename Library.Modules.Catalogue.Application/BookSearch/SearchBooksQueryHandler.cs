@@ -14,7 +14,7 @@ public class SearchBooksQueryHandler : IRequestHandler<SearchBooksQuery, SearchB
 
     public async Task<SearchBooksResultDto> Handle(SearchBooksQuery query, CancellationToken cancellationToken)
     {
-        var queryResult = await _bookQueries.GetMultiSearchResults(new SearchBooksQueryParameters
+        var queryResult = await _bookQueries.GetMultiSearchResult(new SearchBooksQueryParameters
         {
             Term = query.Term,
             SearchType = query.SearchType,

@@ -4,7 +4,7 @@ using Raven.Client.Exceptions.Documents.Subscriptions;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
-public class InternalCommandsSubscription
+internal class InternalCommandsSubscription
 {
     public const string SubscriptionName = $"{nameof(InternalCommandsSubscription)}";
     

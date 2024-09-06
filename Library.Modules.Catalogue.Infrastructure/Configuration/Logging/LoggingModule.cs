@@ -3,7 +3,7 @@ using Serilog;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Logging;
 
-public class LoggingModule : Autofac.Module
+internal class LoggingModule : Autofac.Module
 {
     private readonly ILogger _logger;
     

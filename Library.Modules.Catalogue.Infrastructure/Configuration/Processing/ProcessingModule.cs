@@ -7,7 +7,7 @@ using Library.Modules.Catalogue.Infrastructure.Outbox;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
-public class ProcessingModule : Autofac.Module
+internal class ProcessingModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {

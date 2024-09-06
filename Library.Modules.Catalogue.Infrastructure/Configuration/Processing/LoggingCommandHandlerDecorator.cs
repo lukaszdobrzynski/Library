@@ -7,7 +7,7 @@ using Serilog.Events;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
-public class LoggingCommandHandlerDecorator<TCommand> : InternalCommandHandler<TCommand>
+internal class LoggingCommandHandlerDecorator<TCommand> : InternalCommandHandler<TCommand>
     where TCommand : InternalCommandBase
 {
     private readonly InternalCommandHandler<TCommand> _decorated;

@@ -8,7 +8,7 @@ using Raven.Client.Documents.Session;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.EventBus;
 
-public class IntegrationEventListener<T> : IIntegrationEventListener<T>
+internal class IntegrationEventListener<T> : IIntegrationEventListener<T>
     where T : IntegrationEvent
 {
     public async Task Register(T integrationEvent)

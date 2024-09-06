@@ -3,7 +3,7 @@ using Raven.Client.Documents.Subscriptions;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
-public class InternalCommandsSubscriptionProcessor : ISubscriptionProcessor
+internal class InternalCommandsSubscriptionProcessor : ISubscriptionProcessor
 {
     private const string SubscriptionName = InternalCommandsSubscription.SubscriptionName;
     private const int BatchSize = 5;

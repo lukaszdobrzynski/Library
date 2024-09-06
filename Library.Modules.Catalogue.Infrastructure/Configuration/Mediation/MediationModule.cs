@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Mediation;
 
-public class MediationModule : Autofac.Module
+internal class MediationModule : Autofac.Module
 {
     protected override void Load(ContainerBuilder builder)
     {

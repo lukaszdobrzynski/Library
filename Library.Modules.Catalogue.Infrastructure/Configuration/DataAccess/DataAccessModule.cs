@@ -4,7 +4,7 @@ using Library.Modules.Catalogue.Infrastructure.Queries;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.DataAccess;
 
-public class DataAccessModule : Autofac.Module
+internal class DataAccessModule : Autofac.Module
 {
     private readonly IDocumentStoreHolder _documentStoreHolder;
     

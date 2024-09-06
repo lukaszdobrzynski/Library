@@ -5,6 +5,5 @@ public enum InternalCommandStatus
     Submitted,
     Processing,
     Processed,
-    Error,
-    
+    Error
 }

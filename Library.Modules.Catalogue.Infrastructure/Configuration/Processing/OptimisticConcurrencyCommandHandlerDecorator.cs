@@ -4,7 +4,7 @@ using Polly.Retry;
 
 namespace Library.Modules.Catalogue.Infrastructure.Configuration.Processing;
 
-public class OptimisticConcurrencyCommandHandlerDecorator<TCommand> : InternalCommandHandler<TCommand>
+internal class OptimisticConcurrencyCommandHandlerDecorator<TCommand> : InternalCommandHandler<TCommand>
     where TCommand : InternalCommandBase
 {
     private readonly InternalCommandHandler<TCommand> _decorated;
