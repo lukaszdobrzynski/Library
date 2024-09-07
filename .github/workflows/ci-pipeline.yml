@@ -30,3 +30,9 @@ jobs:
     uses: ./.github/workflows/setup-and-test.yml
     with:
       test-project: ./Library.Modules.Catalogue.IntegrationTests
+  
+  catalogue-module-architecture-tests:
+    name: catalogue module architecture tests
+    uses: ./.github/workflows/setup-and-test.yml
+    with:
+      test-project: ./Library.Modules.Catalogue.ArchTests
