@@ -54,6 +54,17 @@ This is not a production-ready code. It is mainly intended to serve educational 
 - a book can be checked out for up to 60 days
 - a daily sheet is used to monitor expiring checkouts
 
+## Application ports
+
+*The Library*'s application layer can be run by different types of clients, as described by Alistair Cockburn in his renowned 2005 [article](https://web.archive.org/web/20180822100852/http://alistair.cockburn.us/Hexagonal+architecture) on ports and adapters. These clients can include humans, test runners, message queues, databases, or other externally hosted applications, such as SPAs. They are also referred to as actors or adapters, as highlighted by the article's title, and together they constitute the application's environment.
+
+The interactions between the application layer and the environment are organized into two groups of interfaces known as driver ports and driven ports. Driver ports expose the application's functionality to the outside world, while driven ports define the functionalities required by the application to implement and process business logic. Among the Library's interfaces, which define the contract between the core system and its actors, are:
+
+- `ICommand`, `IQuery`, and `IRequest`, used by clients to obtain information from the system or send requests to change the system's state.
+- `IPatronRepository`, `IBookRepository`, `ICheckoutrepository` or `IHoldRepository`, used by the Reservation module to access data needed for processing business logic.
+- `IDocumentStoreHolder`, used by the Catalogue module to persist or query data.
+- `IDomainNotification`, used to notify system actors about changes in the system and prevent domain event leakage.
+  
 ## Reservation Archetype
 
 Archetypes are well-known and well-defined solutions to a business problem. The reservation archetype is used when a user wants to reserve a resource for future use. It ensures that resources like appointments, flights, hotel rooms or library items are temporarily blocked or allocated, preventing overbooking or double-booking. The key concepts are:
