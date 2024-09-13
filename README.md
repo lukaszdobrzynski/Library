@@ -38,7 +38,9 @@ At the functional level *The Library* implements a few core requirements that an
 
 This is not a production-ready code. It is mainly intended to serve educational and training purposes. *The Library* focuses on the backend solution only. Despite being larger and possibly more complex than an average educational project of this sort, it is still a scaffolding rather than an impressive and completed skyscraper. <br/> Secondly, the architectural decisions made during the software design stage always have their upsides and downsides. There are no silver bullets and one-size-fits-all solutions. This is also true about *The Library*. As long as you are aware of the trade-offs or limitations and accept the responsibility for the design, the strategy you have implemented is probably the best one you can afford at a given moment.
 
-## Domain description
+## Domain
+
+The following are the detailed functional criteria which *The Library* implements:
 
 - library members are referred to as *patrons*
 - patrons can place books on hold at various library branches
@@ -53,6 +55,8 @@ This is not a production-ready code. It is mainly intended to serve educational 
 - any patron with more than two overdue checkouts will not be allowed to place a hold
 - a book can be checked out for up to 60 days
 - a daily sheet is used to monitor expiring checkouts
+
+It is worth emphasizing that *The Library* does not cover the domain discovery process. The techniques available for gathering knowledge about the problem space such as event storming or user story mapping are outside the scope of the project. Instead, *The Library*'s domain structure is largely informed by the widely recognized [ddd-by-examples / library](https://github.com/ddd-by-examples/library) repository. The domain analysis, context distillation or semantic examination for all the requirements have been well-described there and can provide valuable insights into *The Library*'s core functionality, business logic or some of the implementation decisions. Therefore, it is strongly recommended to become familiar with the `ddd-by-examples / library`'s domain description to better understand the practices that underpin *The Library*'s design and approach.<br/> 
 
 ## Application ports
 
