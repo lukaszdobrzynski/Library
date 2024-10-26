@@ -101,3 +101,12 @@ One important architectural decision regarding data persistence is that *The Lib
 - listening to data updates
 - optimistic concurrency control
 - contenerization
+
+## Setup and Run
+
+- [download](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) and install .NET 7.0 SDK
+- install Docker
+- checkout [Patroni](https://github.com/patroni/patroni) repository and adjust docker-compose build context in `Library.Database.Migrator.Psql` project
+- edit the local DNS mappings file (System32\drivers\etc\hosts on a Windows machine) and add `library-one`, `library-two` and `library-three` domain names to point to the loopback IP address (127.0.0.1)
+- navigate to Database directory and run `dbup.ps1` script
+- set the startup item in your IDE to `Library.API` project (not IIS Express) and run the selected configuration
