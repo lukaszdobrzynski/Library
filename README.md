@@ -71,14 +71,19 @@ The interactions between the application layer and the environment are organized
 
 Decoupling an application from its underlying technology using ports will inevitably introduce a layer of abstraction, which results in additional method calls during the interaction between the port and the adapter. This is necessary because the adapter facilitates communication between the generic application logic and the specific technology interfaces. Furthermore, it may require mapping or translating objects between the internal application domain and external systems, ensuring that the application remains modular. This indirection introduces most of the complexity within *The Library* and can present challenges when navigating the project or understanding the overall architecture at first glance.    
 
-## Reservation Archetype
+## Modularization
 
-Archetypes are well-known and well-defined solutions to a business problem. The reservation archetype is used when a user wants to reserve a resource for future use. It ensures that resources like appointments, flights, hotel rooms or library items are temporarily blocked or allocated, preventing overbooking or double-booking. The key concepts are:
-- *resource availability*: The system checks the availability of a resource before confirming the reservation.
-- *reservation hold*: Once its availability is confirmed, a resource can be held for a specified time.
-- *confirmation and expiry*: When a user or a system confirms the reservation, the resource is locked in. If not confirmed in time, e.g. a library member does not pick up a book or a hotel room reservation is not confirmed through payment, the reservation expires and the resource is released for other users.
+*The Library* is deployed and run as a single process, but it is architecturally designed to be modular. The project is organized into three primary modules: the API module, the Reservation module, and the Catalogue module.         
 
-When implementing the reservation archetype in software systems, one of the significant challenges is handling multiple simultaneous attempts to lock the same resource. This can typically be addressed in several ways, depending on system requirements and the specific use case. *The Library* opts to use a simple messaging mechanism to avoid race conditions and ensure data consistency in a concurrent environment while maintaining modularity and scalability.
+- API module serves as one of the driver ports, handling all request processing to ensure smooth communication between users and the system.
+- Reservation module enables library members to manage their interactions with the library. It allows them to place books on hold, view, and manage their reservations and loan activities.
+- Catalogue module is responsible for reliable search functionality, enabling users to find and locate resources efficiently. It also includes an availability engine, which maintains resource availability and consistency by preventing double-bookings.
+
+The Reservation and Catalogue modules each have their own encapsulated and independent data structures and components. They abstract their implementation details and internal structures from external systems, exposing only a public interface that is accessed through the API module. Each module has its own dependency injection container and utilizes a dedicated data store.
+
+Furthermore, each module implements a deep model tailored to its specific problem domain. The Reservation module is centered around a pure domain-driven design core, focusing on complex business logic and rules. In contrast, the Catalogue module follows a CRUD-oriented approach, prioritizing efficient management of resources and data persistence. 
+
+Monolithic modularization enables the independent and flexible evolution of models within a shared codebase. It facilitates independent team collaboration by defining clear module and language boundaries and responsibilities. Additionally, a well-modularized monolith can serve as a foundation for a relatively straightforward migration to a microservices architecture when needed.     
 
 ## Persistence
 
@@ -101,6 +106,28 @@ One important architectural decision regarding data persistence is that *The Lib
 - listening to data updates
 - optimistic concurrency control
 - contenerization
+
+## Reservation Archetype
+
+Archetypes are well-known and well-defined solutions to a business problem. The reservation archetype is used when a user wants to reserve a resource for future use. It ensures that resources like appointments, flights, hotel rooms or library items are temporarily blocked or allocated, preventing overbooking or double-booking. The key concepts are:
+- *resource availability*: The system checks the availability of a resource before confirming the reservation.
+- *reservation hold*: Once its availability is confirmed, a resource can be held for a specified time.
+- *confirmation and expiry*: When a user or a system confirms the reservation, the resource is locked in. If not confirmed in time, e.g. a library member does not pick up a book or a hotel room reservation is not confirmed through payment, the reservation expires and the resource is released for other users.
+
+When implementing the reservation archetype in software systems, one of the significant challenges is handling multiple simultaneous attempts to lock the same resource. This can typically be addressed in several ways, depending on system requirements and the specific use case. Some of the common options are:
+- pessimistic locking
+- optimistic concurrency control
+- transaction management with strict isolation level such as SERIALIZABLE
+- resource locking within an application using in-memory structures or distributed locking mechanisms
+- message passing with actor-based model or queues
+
+To avoid race conditions and ensure data consistency in a concurrent environment while maintaining modularity and scalability *The Library* opts to use a real time messaging tool based on RavenDB subscriptions. The mechanism comes with such features as:
+- built-in support for leader election among multiple clients
+- processing without duplication or loss
+- batch size configuration to adjust throughput
+- concurrent processing with multiple workers and a document lock applied
+
+When implementing a reservation archetype in a software system, using message passing as a communication mechanism introduces specific trade-offs. One notable drawback is the potential for increased latency, as reservation requests are routed through additional processes or intermediaries, such as message brokers or intermediate services, rather than being handled directly within a single system component. This trade-off, however, is a deliberate architectural decision made during *The Library*'s design phase to prioritize modularity and the independence of domain models.  
 
 ## Setup and Run
 
