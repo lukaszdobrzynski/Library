@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Library.Modules.Catalogue.Application.BookSearch;
 using Library.Modules.Catalogue.Application.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,14 +19,8 @@ public class SearchCatalogueController : ControllerBase
     [Route("all")]
     public async Task<IActionResult> All(BookSearchRequest request)
     {
-        var result = await _catalogueModule.ExecuteQueryAsync(new SearchBooksQuery
-            { 
-                Term = request.Term, 
-                SearchType = request.SearchType.Value, 
-                SearchSource = request.SearchSource.Value, 
-                PageNumber = request.PageNumber, 
-                PageSize = request.PageSize 
-            });
+        var query = request.ToSearchBooksQuery();
+        var result = await _catalogueModule.ExecuteQueryAsync(query);
 
         return Ok(result);
     }

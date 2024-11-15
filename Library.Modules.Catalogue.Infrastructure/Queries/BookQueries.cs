@@ -33,23 +33,32 @@ public class BookQueries : IBookQueries
         }
     }
 
-    private IAsyncDocumentQuery<BookMultiSearch.Result> GetQueryFromParameters(IAsyncDocumentSession session, SearchBooksQueryParameters parameters)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> GetQueryFromParameters(IAsyncDocumentSession session, SearchBooksQueryParameters parameters)
     {
         var query = session.Advanced.AsyncDocumentQuery<BookMultiSearch.Result, BookMultiSearch>();
-        var queryBuilder = BookSearchQueryBuilder.Init(query, parameters.Term);
+        var currentQuery = parameters.MainQuery.IsNegated
+            ? query.WithNotOperator(parameters.MainQuery.SearchSource, parameters.MainQuery.SearchType, parameters.MainQuery.Term)
+            : query.Untransformed(parameters.MainQuery.SearchSource, parameters.MainQuery.SearchType, parameters.MainQuery.Term);
         
-        var q = parameters.SearchSource switch
+        foreach (var additionalQuery in parameters.AdditionalQueries)
         {
-            BookSearchSource.Anywhere => queryBuilder.BuildSearchAnywhereQuery(parameters.SearchType),
-            BookSearchSource.Author => queryBuilder.BuildSearchAuthorQuery(parameters.SearchType),
-            BookSearchSource.Title => queryBuilder.BuildSearchTitleQuery(parameters.SearchType),
-            BookSearchSource.Isbn => queryBuilder.BuildSearchIsbnQuery(parameters.SearchType),
-            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchSource)}: {parameters.SearchSource}.")
-        };
+            currentQuery = additionalQuery.Operator switch
+            {
+                BookSearchQueryOperator.And => 
+                    additionalQuery.IsNegated ? 
+                        currentQuery.WithAndAlsoNotOperator(additionalQuery.SearchSource, additionalQuery.SearchType, additionalQuery.Term) : 
+                        currentQuery.WithAndAlsoOperator(additionalQuery.SearchSource, additionalQuery.SearchType, additionalQuery.Term),
+                BookSearchQueryOperator.Or => 
+                    additionalQuery.IsNegated ? 
+                        currentQuery.WithOrElseNotOperator(additionalQuery.SearchSource, additionalQuery.SearchType, additionalQuery.Term) :
+                        currentQuery.WithOrElseOperator(additionalQuery.SearchSource, additionalQuery.SearchType, additionalQuery.Term),
+                _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchQueryOperator)}: {additionalQuery.Operator}.")
+            };
+        }
         
         var skip = (parameters.PageNumber * parameters.PageSize) - parameters.PageSize;
 
-        return q.Skip(skip)
+        return currentQuery.Skip(skip)
             .Take(parameters.PageSize);
     }
 }

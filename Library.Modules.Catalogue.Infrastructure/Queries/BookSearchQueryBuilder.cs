@@ -7,24 +7,40 @@ namespace Library.Modules.Catalogue.Infrastructure.Queries;
 public class BookSearchQueryBuilder
 {
     private readonly IAsyncDocumentQuery<BookMultiSearch.Result> _query;
-
     private readonly string _term;
-
+    
     private BookSearchQueryBuilder(IAsyncDocumentQuery<BookMultiSearch.Result> query, string term)
     {
         _query = query;
         _term = term;
     }
 
-    public static BookSearchQueryBuilder Init(IAsyncDocumentQuery<BookMultiSearch.Result> query, string term) =>
-        new (query, term);
+    public static BookSearchQueryBuilder Init(IAsyncDocumentQuery<BookMultiSearch.Result> query, string term)
+    {
+        return new (query, term);
+    }
+        
 
-    public IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchAnywhereQuery(BookSearchType searchType)
+    public IAsyncDocumentQuery<BookMultiSearch.Result> Build(BookSearchSource searchSource, BookSearchType searchType)
+    {
+        var q = searchSource switch
+        {
+            BookSearchSource.Anywhere => BuildSearchAnywhereQuery(searchType),
+            BookSearchSource.Author => BuildSearchAuthorQuery(searchType),
+            BookSearchSource.Title => BuildSearchTitleQuery(searchType),
+            BookSearchSource.Isbn => BuildSearchIsbnQuery(searchType),
+            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchSource)}: {searchSource}.")
+        };
+
+        return q;
+    }
+
+    private IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchAnywhereQuery(BookSearchType searchType)
     {
         switch (searchType)
         {
             case BookSearchType.ExactPhrase:
-                _query.WhereEquals(nameof(BookMultiSearch.Result.ExactQuery), _term);
+                _query.WhereEquals(nameof(BookMultiSearch.Result.ExactQuery),_term);
                 return _query;
             case BookSearchType.AnyTerm:
                 _query.Search(x => x.AnywhereQuery, _term);
@@ -37,7 +53,7 @@ public class BookSearchQueryBuilder
         }
     }
 
-    public IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchAuthorQuery(BookSearchType searchType)
+    private IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchAuthorQuery(BookSearchType searchType)
     {
         switch (searchType)
         {
@@ -55,7 +71,7 @@ public class BookSearchQueryBuilder
         }
     }
 
-    public IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchTitleQuery(BookSearchType searchType)
+    private IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchTitleQuery(BookSearchType searchType)
     {
         switch (searchType)
         {
@@ -73,7 +89,7 @@ public class BookSearchQueryBuilder
         }
     }
 
-    public IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchIsbnQuery(BookSearchType searchType)
+    private IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchIsbnQuery(BookSearchType searchType)
     {
         switch (searchType)
         {
