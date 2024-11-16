@@ -1,7 +1,7 @@
 ﻿namespace Library.Modules.Catalogue.Application.BookSearch;
 
-public enum BookSearchQueryOperator
+public enum DateSequenceSearchOperator
 {
-    And,
-    Or
+    Before,
+    After,
 }

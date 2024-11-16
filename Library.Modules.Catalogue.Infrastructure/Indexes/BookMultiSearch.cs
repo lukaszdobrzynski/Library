@@ -10,6 +10,7 @@ public class BookMultiSearch : AbstractIndexCreationTask<Book, BookMultiSearch.R
         public string Author { get; set; }
         public string Title { get; set; }
         public string Isbn { get; set; }
+        public DateTime PublicationDate { get; set; }
         public string AuthorQuery { get; set; }
         public string TitleQuery { get; set; }
         public string AnywhereQuery { get; set; }
@@ -34,6 +35,7 @@ public class BookMultiSearch : AbstractIndexCreationTask<Book, BookMultiSearch.R
                 book.Author,
                 book.Title,
                 book.Isbn,
+                book.PublicationDate,
                 AuthorQuery = book.Author,
                 TitleQuery = book.Title,
                 AnywhereQuery = queryData,

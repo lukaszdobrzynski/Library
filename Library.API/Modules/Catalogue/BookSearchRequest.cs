@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Library.Modules.Catalogue.Application.BookSearch;
@@ -11,21 +12,36 @@ public class BookSearchRequest
     public BookSearchMainQueryRequest MainQuery { get; set; }
     
     [Required]
-    public List<BookSearchAdditionalQueryRequest> AdditionalQueries { get; set; } = new();
+    public List<BookSearchAdditionalTextQueryRequest> AdditionalTextQueries { get; set; }
+
+    [Required]
+    public List<BookSearchAdditionalDateRangeQueryRequest> AdditionalDateRangeQueries { get; set; }
+
+    [Required]
+    public List<BookSearchAdditionalDateSequenceQueryRequest> AdditionalDateSequenceQueries { get; set; }
+    
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 
     public SearchBooksQuery ToSearchBooksQuery()
     {
         var mainQuery = MainQuery.ToSearchBooksMainQuery();
-        var additionalQueries = AdditionalQueries
-            .Select(x => x.ToSearchBooksAdditionalQuery())
+        var additionalTextQueries = AdditionalTextQueries
+            .Select(x => x.ToSearchBooksAdditionalTextQuery())
+            .ToList();
+        var additionalDateRangeQueries = AdditionalDateRangeQueries
+            .Select(x => x.ToSearchBooksAdditionalDateRangeQuery())
+            .ToList();
+        var additionalDateSequenceQueries = AdditionalDateSequenceQueries
+            .Select(x => x.ToSearchBooksAdditionalDateSequenceQuery())
             .ToList();
 
         return new SearchBooksQuery
         {
             MainQuery = mainQuery,
-            AdditionalQueries = additionalQueries,
+            AdditionalTextQueries = additionalTextQueries,
+            AdditionalDateRangeQueries = additionalDateRangeQueries,
+            AdditionalDateSequenceQueries = additionalDateSequenceQueries,
             PageSize = PageSize,
             PageNumber = PageNumber
         };
@@ -38,10 +54,10 @@ public class BookSearchMainQueryRequest
     public string Term { get; set; }
     
     [Required]
-    public BookSearchType? SearchType { get; set; }
+    public BookTextSearchType? SearchType { get; set; }
 
     [Required]
-    public BookSearchSource? SearchSource { get; set; }
+    public BookTextSearchSource? SearchSource { get; set; }
 
     public bool IsNegated { get; set; }
 
@@ -57,31 +73,86 @@ public class BookSearchMainQueryRequest
     }
 }
 
-public class BookSearchAdditionalQueryRequest
+public class BookSearchAdditionalTextQueryRequest : BookSearchAdditionalQueryRequest
 {
     [Required]
     public string Term { get; set; }
     
     [Required]
-    public BookSearchType? SearchType { get; set; }
+    public BookTextSearchType? SearchType { get; set; }
 
     [Required]
-    public BookSearchSource? SearchSource { get; set; }
+    public BookTextSearchSource? SearchSource { get; set; }
 
-    [Required]
-    public BookSearchQueryOperator? Operator { get; set; }
-
-    public bool IsNegated { get; set; }
-
-    public SearchBooksAdditionalQuery ToSearchBooksAdditionalQuery()
+    public SearchBooksAdditionalTextQuery ToSearchBooksAdditionalTextQuery()
     {
-        return new SearchBooksAdditionalQuery
+        return new SearchBooksAdditionalTextQuery
         {
             Term = Term,
             SearchSource = SearchSource.Value,
             SearchType = SearchType.Value,
-            Operator = Operator.Value,
-            IsNegated = IsNegated
+            ConsecutiveQueryOperator = ConsecutiveQueryOperator.Value,
+            IsNegated = IsNegated,
+            Order = Order
         };
     }
+}
+
+public class BookSearchAdditionalDateRangeQueryRequest : BookSearchAdditionalQueryRequest
+{
+    [Required]
+    public DateTime? FromDate { get; set; }
+
+    [Required]
+    public DateTime? ToDate { get; set; }
+    
+    [Required]
+    public BookDateSearchSource? SearchSource { get; set; }
+   
+    public SearchBooksAdditionalDateRangeQuery ToSearchBooksAdditionalDateRangeQuery()
+    {
+        return new SearchBooksAdditionalDateRangeQuery
+        {
+            FromDate = FromDate.Value,
+            ToDate = ToDate.Value,
+            SearchSource = SearchSource.Value,
+            ConsecutiveQueryOperator = ConsecutiveQueryOperator.Value,
+            IsNegated = IsNegated,
+            Order = Order
+        };
+    }
+}
+
+public class BookSearchAdditionalDateSequenceQueryRequest : BookSearchAdditionalQueryRequest
+{
+    [Required]
+    public DateTime? DateToCompare { get; set; }
+    
+    [Required]
+    public DateSequenceSearchOperator? DateSequenceOperator { get; set; }
+    
+    [Required]
+    public BookDateSearchSource? SearchSource { get; set; }
+
+    public SearchBooksAdditionalDateSequenceQuery ToSearchBooksAdditionalDateSequenceQuery()
+    {
+        return new SearchBooksAdditionalDateSequenceQuery
+        {
+            DateToCompare = DateToCompare.Value,
+            SearchSource = SearchSource.Value,
+            ConsecutiveQueryOperator = ConsecutiveQueryOperator.Value,
+            DateSequenceOperator = DateSequenceOperator.Value,
+            IsNegated = IsNegated,
+            Order = Order
+        };
+    }
+}
+
+public abstract class BookSearchAdditionalQueryRequest
+{
+    public bool IsNegated { get; set; }
+    public int Order { get; set; }
+    
+    [Required]
+    public BookSearchConsecutiveQueryOperator? ConsecutiveQueryOperator { get; set; }
 }

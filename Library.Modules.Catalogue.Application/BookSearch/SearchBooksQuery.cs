@@ -5,7 +5,13 @@ namespace Library.Modules.Catalogue.Application.BookSearch;
 public class SearchBooksQuery : IQuery<SearchBooksResultDto>
 {
     public SearchBooksMainQuery MainQuery { get; set; }
-    public List<SearchBooksAdditionalQuery> AdditionalQueries { get; set; } = new();
+    
+    public List<SearchBooksAdditionalTextQuery> AdditionalTextQueries { get; set; } = new();
+
+    public List<SearchBooksAdditionalDateRangeQuery> AdditionalDateRangeQueries { get; set; } = new();
+
+    public List<SearchBooksAdditionalDateSequenceQuery> AdditionalDateSequenceQueries { get; set; } = new();
+    
     public int PageNumber { get; set; }
     public int PageSize { get; set; }
 }
@@ -13,16 +19,36 @@ public class SearchBooksQuery : IQuery<SearchBooksResultDto>
 public class SearchBooksMainQuery
 {
     public string Term { get; set; }
-    public BookSearchType SearchType { get; set; }
-    public BookSearchSource SearchSource { get; set; }
+    public BookTextSearchType SearchType { get; set; }
+    public BookTextSearchSource SearchSource { get; set; }
     public bool IsNegated { get; set; }
 }
 
-public class SearchBooksAdditionalQuery
+public abstract class SearchBooksAdditionalQuery
+{
+    public int Order { get; set; }
+    public bool IsNegated { get; set; }
+    
+    public BookSearchConsecutiveQueryOperator ConsecutiveQueryOperator { get; set; }
+}
+
+public class SearchBooksAdditionalTextQuery : SearchBooksAdditionalQuery
 {
     public string Term { get; set; }
-    public BookSearchType SearchType { get; set; }
-    public BookSearchSource SearchSource { get; set; }
-    public BookSearchQueryOperator Operator { get; set; }
-    public bool IsNegated { get; set; }
+    public BookTextSearchType SearchType { get; set; }
+    public BookTextSearchSource SearchSource { get; set; }
+}
+
+public class SearchBooksAdditionalDateRangeQuery : SearchBooksAdditionalQuery
+{
+    public DateTime FromDate { get; set; }
+    public DateTime ToDate { get; set; }
+    public BookDateSearchSource SearchSource { get; set; }
+}
+
+public class SearchBooksAdditionalDateSequenceQuery : SearchBooksAdditionalQuery
+{
+    public DateTime DateToCompare { get; set; }
+    public DateSequenceSearchOperator DateSequenceOperator { get; set; }
+    public BookDateSearchSource SearchSource { get; set; }
 }

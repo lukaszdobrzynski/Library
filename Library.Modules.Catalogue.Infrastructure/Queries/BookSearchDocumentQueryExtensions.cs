@@ -6,51 +6,99 @@ namespace Library.Modules.Catalogue.Infrastructure.Queries;
 
 public static class BookSearchDocumentQueryExtensions
 {
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> Untransformed(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchSource searchSource, BookSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> Untransformed(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
-        var q = BookSearchQueryBuilder.Init(query, term)
+        var q = BookTextSearchQueryBuilder.Init(query, term)
             .Build(searchSource, searchType);
 
         return q;
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchSource searchSource, BookSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
-        var q = BookSearchQueryBuilder.Init(query.Not, term)
+        var q = BookTextSearchQueryBuilder.Init(query.Not, term)
             .Build(searchSource, searchType);
 
         return q;
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchSource searchSource, BookSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
-        var q = BookSearchQueryBuilder.Init(query.AndAlso(), term)
+        var q = BookTextSearchQueryBuilder.Init(query.AndAlso(), term)
             .Build(searchSource, searchType);
 
         return q;
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchSource searchSource, BookSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
-        var q = BookSearchQueryBuilder.Init(query.OrElse(), term)
+        var q = BookTextSearchQueryBuilder.Init(query.OrElse(), term)
             .Build(searchSource, searchType);
 
         return q;
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchSource searchSource, BookSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
-        var q = BookSearchQueryBuilder.Init(query.AndAlso().Not, term)
+        var q = BookTextSearchQueryBuilder.Init(query.AndAlso().Not, term)
             .Build(searchSource, searchType);
 
         return q;
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchSource searchSource, BookSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
-        var q = BookSearchQueryBuilder.Init(query.OrElse().Not, term)
+        var q = BookTextSearchQueryBuilder.Init(query.OrElse().Not, term)
             .Build(searchSource, searchType);
 
         return q;
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoNotDateRangeOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource,  DateTime startDate, DateTime endDate)
+    {
+        return BookDateSearchQueryBuilder.Init(query.AndAlso().Not)
+            .BuildRangeQuery(searchSource, startDate, endDate);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoDateRangeOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource,  DateTime startDate, DateTime endDate)
+    {
+        return BookDateSearchQueryBuilder.Init(query.AndAlso())
+            .BuildRangeQuery(searchSource, startDate, endDate);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseNotDateRangeOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource,  DateTime startDate, DateTime endDate)
+    {
+        return BookDateSearchQueryBuilder.Init(query.OrElse().Not)
+            .BuildRangeQuery(searchSource, startDate, endDate);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseDateRangeOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateTime startDate, DateTime endDate)
+    {
+        return BookDateSearchQueryBuilder.Init(query.OrElse())
+            .BuildRangeQuery(searchSource, startDate, endDate);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoNotDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    {
+        return BookDateSearchQueryBuilder.Init(query.AndAlso().Not)
+            .BuildSequenceQuery(searchSource, sequenceOperator, date);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    {
+        return BookDateSearchQueryBuilder.Init(query.AndAlso())
+            .BuildSequenceQuery(searchSource, sequenceOperator, date);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseNotDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    {
+        return BookDateSearchQueryBuilder.Init(query.OrElse().Not)
+            .BuildSequenceQuery(searchSource, sequenceOperator, date);
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    {
+        return BookDateSearchQueryBuilder.Init(query.OrElse())
+            .BuildSequenceQuery(searchSource, sequenceOperator, date);
     }
 }
