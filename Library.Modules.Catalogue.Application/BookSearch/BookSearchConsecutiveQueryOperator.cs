@@ -3,5 +3,7 @@
 public enum BookSearchConsecutiveQueryOperator
 {
     And,
-    Or
+    Or,
+    AndNot,
+    OrNot
 }

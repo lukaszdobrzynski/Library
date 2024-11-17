@@ -97,7 +97,7 @@ public class BookTextSearchQueryBuilder
                 _query.WhereEquals(nameof(BookMultiSearch.Result.PublishingHouse), _term);
                 return _query;
             case BookTextSearchType.AnyTerm:
-                _query.Search(x => x.PublishingHouse, _term);
+                _query.Search(x => x.PublishingHouseQuery, _term);
                 return _query;
             case BookTextSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.PublishingHouse), _term);
