@@ -5,5 +5,6 @@ public enum BookTextSearchSource
     Anywhere,
     Author,
     Title,
-    Isbn
+    Isbn,
+    PublishingHouse
 }

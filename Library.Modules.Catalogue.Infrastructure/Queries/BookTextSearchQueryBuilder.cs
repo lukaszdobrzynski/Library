@@ -20,7 +20,6 @@ public class BookTextSearchQueryBuilder
         return new (query, term);
     }
         
-
     public IAsyncDocumentQuery<BookMultiSearch.Result> Build(BookTextSearchSource searchSource, BookTextSearchType searchType)
     {
         var q = searchSource switch
@@ -29,6 +28,7 @@ public class BookTextSearchQueryBuilder
             BookTextSearchSource.Author => BuildSearchAuthorQuery(searchType),
             BookTextSearchSource.Title => BuildSearchTitleQuery(searchType),
             BookTextSearchSource.Isbn => BuildSearchIsbnQuery(searchType),
+            BookTextSearchSource.PublishingHouse => BuildSearchPublishingHouseQuery(searchType),
             _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookTextSearchSource)}: {searchSource}.")
         };
 
@@ -83,6 +83,24 @@ public class BookTextSearchQueryBuilder
                 return _query;
             case BookTextSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.Title), _term);
+                return _query;
+            default:
+                throw new ArgumentException($"Unrecognized {nameof(BookTextSearchType)}: {searchType}.");
+        }
+    }
+    
+    private IAsyncDocumentQuery<BookMultiSearch.Result> BuildSearchPublishingHouseQuery(BookTextSearchType searchType)
+    {
+        switch (searchType)
+        {
+            case BookTextSearchType.ExactPhrase:
+                _query.WhereEquals(nameof(BookMultiSearch.Result.PublishingHouse), _term);
+                return _query;
+            case BookTextSearchType.AnyTerm:
+                _query.Search(x => x.PublishingHouse, _term);
+                return _query;
+            case BookTextSearchType.BeginsWith:
+                _query.WhereStartsWith(nameof(BookMultiSearch.Result.PublishingHouse), _term);
                 return _query;
             default:
                 throw new ArgumentException($"Unrecognized {nameof(BookTextSearchType)}: {searchType}.");
