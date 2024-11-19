@@ -78,25 +78,25 @@ public static class BookSearchDocumentQueryExtensions
             .BuildRangeQuery(searchSource, startDate, endDate);
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoNotDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoNotDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, BookSearchDateSequenceOperator sequenceOperator, DateTime date)
     {
         return BookDateSearchQueryBuilder.Init(query.AndAlso().Not)
             .BuildSequenceQuery(searchSource, sequenceOperator, date);
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithAndAlsoDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, BookSearchDateSequenceOperator sequenceOperator, DateTime date)
     {
         return BookDateSearchQueryBuilder.Init(query.AndAlso())
             .BuildSequenceQuery(searchSource, sequenceOperator, date);
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseNotDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseNotDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, BookSearchDateSequenceOperator sequenceOperator, DateTime date)
     {
         return BookDateSearchQueryBuilder.Init(query.OrElse().Not)
             .BuildSequenceQuery(searchSource, sequenceOperator, date);
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateSequenceSearchOperator sequenceOperator, DateTime date)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithOrElseDateSequenceOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, BookSearchDateSequenceOperator sequenceOperator, DateTime date)
     {
         return BookDateSearchQueryBuilder.Init(query.OrElse())
             .BuildSequenceQuery(searchSource, sequenceOperator, date);

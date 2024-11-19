@@ -44,9 +44,9 @@ public class BookQueries : IBookQueries
         {
             currentQuery = additionalQuery switch
             {
-                BookSearchAdditionalTextQueryParameters textQuery => ApplyTextQuery(currentQuery, textQuery),
-                BookSearchAdditionalDateRangeQueryParameters dateRangeQuery => ApplyDateRangeQuery(currentQuery, dateRangeQuery),
-                BookSearchAdditionalDateSequenceQueryParameters dateSequenceQuery => ApplyDateSequenceQuery(currentQuery, dateSequenceQuery),
+                BookSearchTextAdditionalQueryParameters textQuery => ApplyTextQuery(currentQuery, textQuery),
+                BookSearchDateRangeAdditionalQueryParameters dateRangeQuery => ApplyDateRangeQuery(currentQuery, dateRangeQuery),
+                BookSearchDateSequenceAdditionalQueryParameters dateSequenceQuery => ApplyDateSequenceQuery(currentQuery, dateSequenceQuery),
                 _ => throw new ArgumentException($"Unsupported query type: {additionalQuery.GetType().Name}")
             };
         }
@@ -57,9 +57,9 @@ public class BookQueries : IBookQueries
             .Take(parameters.PageSize);
     }
     
-    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyTextQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchAdditionalTextQueryParameters textQuery)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyTextQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchTextAdditionalQueryParameters textQuery)
     {
-        return textQuery.ConsecutiveQueryOperator switch
+        return textQuery.QueryOperator switch
         {
             BookSearchConsecutiveQueryOperator.And =>
                 currentQuery.WithAndAlsoOperator(textQuery.SearchSource, textQuery.SearchType, textQuery.Term),
@@ -69,13 +69,13 @@ public class BookQueries : IBookQueries
               currentQuery.WithOrElseOperator(textQuery.SearchSource, textQuery.SearchType, textQuery.Term),
             BookSearchConsecutiveQueryOperator.OrNot =>
                 currentQuery.WithOrElseNotOperator(textQuery.SearchSource, textQuery.SearchType, textQuery.Term),
-            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchConsecutiveQueryOperator)}: {textQuery.ConsecutiveQueryOperator}.")
+            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchConsecutiveQueryOperator)}: {textQuery.QueryOperator}.")
         };
     }
     
-    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateRangeQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchAdditionalDateRangeQueryParameters dateQuery)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateRangeQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchDateRangeAdditionalQueryParameters dateQuery)
     {
-        return dateQuery.ConsecutiveQueryOperator switch
+        return dateQuery.QueryOperator switch
         {
             BookSearchConsecutiveQueryOperator.And => 
                currentQuery.WithAndAlsoDateRangeOperator(dateQuery.SearchSource, dateQuery.FromDate, dateQuery.ToDate),
@@ -85,23 +85,23 @@ public class BookQueries : IBookQueries
                 currentQuery.WithOrElseDateRangeOperator(dateQuery.SearchSource, dateQuery.FromDate, dateQuery.ToDate),
             BookSearchConsecutiveQueryOperator.OrNot =>
                 currentQuery.WithOrElseNotDateRangeOperator(dateQuery.SearchSource, dateQuery.FromDate, dateQuery.ToDate),
-            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchConsecutiveQueryOperator)}: {dateQuery.ConsecutiveQueryOperator}.")
+            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchConsecutiveQueryOperator)}: {dateQuery.QueryOperator}.")
         };
     }
     
-    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateSequenceQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchAdditionalDateSequenceQueryParameters dateQuery)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateSequenceQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchDateSequenceAdditionalQueryParameters dateQuery)
     {
-        return dateQuery.ConsecutiveQueryOperator switch
+        return dateQuery.QueryOperator switch
         {
             BookSearchConsecutiveQueryOperator.And =>
-                currentQuery.WithAndAlsoDateSequenceOperator(dateQuery.SearchSource, dateQuery.DateSequenceOperator, dateQuery.DateToCompare),
+                currentQuery.WithAndAlsoDateSequenceOperator(dateQuery.SearchSource, dateQuery.SequenceOperator, dateQuery.Date),
             BookSearchConsecutiveQueryOperator.AndNot =>
-                currentQuery.WithAndAlsoNotDateSequenceOperator(dateQuery.SearchSource, dateQuery.DateSequenceOperator, dateQuery.DateToCompare),
+                currentQuery.WithAndAlsoNotDateSequenceOperator(dateQuery.SearchSource, dateQuery.SequenceOperator, dateQuery.Date),
             BookSearchConsecutiveQueryOperator.Or =>
-                currentQuery.WithOrElseDateSequenceOperator(dateQuery.SearchSource, dateQuery.DateSequenceOperator, dateQuery.DateToCompare),
+                currentQuery.WithOrElseDateSequenceOperator(dateQuery.SearchSource, dateQuery.SequenceOperator, dateQuery.Date),
             BookSearchConsecutiveQueryOperator.OrNot =>
-                currentQuery.WithOrElseNotDateSequenceOperator(dateQuery.SearchSource, dateQuery.DateSequenceOperator, dateQuery.DateToCompare),
-            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchConsecutiveQueryOperator)}: {dateQuery.ConsecutiveQueryOperator}.")
+                currentQuery.WithOrElseNotDateSequenceOperator(dateQuery.SearchSource, dateQuery.SequenceOperator, dateQuery.Date),
+            _ => throw new ArgumentOutOfRangeException($"Unrecognized {nameof(BookSearchConsecutiveQueryOperator)}: {dateQuery.QueryOperator}.")
         };
     }
 }

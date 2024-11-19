@@ -24,13 +24,13 @@ public class BookDateSearchQueryBuilder
     }
 
     public IAsyncDocumentQuery<BookMultiSearch.Result> BuildSequenceQuery(BookDateSearchSource searchSource,
-        DateSequenceSearchOperator sequenceOperator, DateTime date)
+        BookSearchDateSequenceOperator sequenceOperator, DateTime date)
     {
         return sequenceOperator switch
         {
-            DateSequenceSearchOperator.After => _query.WhereGreaterThan(searchSource.ToString(), date),
-            DateSequenceSearchOperator.Before => _query.WhereLessThan(searchSource.ToString(), date),
-            _ => throw new ArgumentException($"Unrecognized {nameof(DateSequenceSearchOperator)}: {sequenceOperator}.")
+            BookSearchDateSequenceOperator.After => _query.WhereGreaterThan(searchSource.ToString(), date),
+            BookSearchDateSequenceOperator.Before => _query.WhereLessThan(searchSource.ToString(), date),
+            _ => throw new ArgumentException($"Unrecognized {nameof(BookSearchDateSequenceOperator)}: {sequenceOperator}.")
         };
     }
 }

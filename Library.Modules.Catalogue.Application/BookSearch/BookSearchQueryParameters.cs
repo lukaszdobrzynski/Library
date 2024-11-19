@@ -13,7 +13,7 @@ public class BookSearchQueryParameters
 
         var additionalQueries =
             query.AdditionalQueries
-                .Select(MapAdditionalSearchQueryToAdditionalSearchQueryParameters)
+                .Select(MapSearchAdditionalQueryToSearchAdditionalQueryParameters)
                 .ToList();
 
         return new BookSearchQueryParameters
@@ -25,13 +25,13 @@ public class BookSearchQueryParameters
         };
     }
 
-    private static BookSearchAdditionalQueryParameters MapAdditionalSearchQueryToAdditionalSearchQueryParameters(BookSearchAdditionalQuery query)
+    private static BookSearchAdditionalQueryParameters MapSearchAdditionalQueryToSearchAdditionalQueryParameters(BookSearchAdditionalQuery query)
     {
         BookSearchAdditionalQueryParameters parameters = query switch
         {
-            BookSearchAdditionalTextQuery additionalTextQuery => BookSearchAdditionalTextQueryParameters.From(additionalTextQuery),
-            BookSearchAdditionalDateRangeQuery additionalDateRangeQuery => BookSearchAdditionalDateRangeQueryParameters.From(additionalDateRangeQuery),
-            BookSearchAdditionalDateSequenceQuery additionalDateSequenceQuery => BookSearchAdditionalDateSequenceQueryParameters.From(additionalDateSequenceQuery),
+            BookSearchTextAdditionalQuery additionalTextQuery => BookSearchTextAdditionalQueryParameters.From(additionalTextQuery),
+            BookSearchDateRangeAdditionalQuery additionalDateRangeQuery => BookSearchDateRangeAdditionalQueryParameters.From(additionalDateRangeQuery),
+            BookSearchDateSequenceAdditionalQuery additionalDateSequenceQuery => BookSearchDateSequenceAdditionalQueryParameters.From(additionalDateSequenceQuery),
             _ => throw new ArgumentException($"Unsupported query type: {query.GetType().Name}")
         };
 
@@ -60,59 +60,59 @@ public class BookSearchMainQueryParameters
 
 public abstract class BookSearchAdditionalQueryParameters
 {
-    public BookSearchConsecutiveQueryOperator ConsecutiveQueryOperator { get; set; }
+    public BookSearchConsecutiveQueryOperator QueryOperator { get; set; }
 }
 
-public class BookSearchAdditionalTextQueryParameters : BookSearchAdditionalQueryParameters
+public class BookSearchTextAdditionalQueryParameters : BookSearchAdditionalQueryParameters
 {
     public string Term { get; set; }
     public BookTextSearchType SearchType { get; set; }
     public BookTextSearchSource SearchSource { get; set; }
 
-    public static BookSearchAdditionalTextQueryParameters From(BookSearchAdditionalTextQuery query)
+    public static BookSearchTextAdditionalQueryParameters From(BookSearchTextAdditionalQuery query)
     {
-        return new BookSearchAdditionalTextQueryParameters
+        return new BookSearchTextAdditionalQueryParameters
         {
             Term = query.Term,
             SearchType = query.SearchType,
             SearchSource = query.SearchSource,
-            ConsecutiveQueryOperator = query.ConsecutiveQueryOperator,
+            QueryOperator = query.QueryOperator,
         };
     }
 }
 
-public class BookSearchAdditionalDateSequenceQueryParameters : BookSearchAdditionalQueryParameters
+public class BookSearchDateSequenceAdditionalQueryParameters : BookSearchAdditionalQueryParameters
 {
-    public DateTime DateToCompare { get; set; }
-    public DateSequenceSearchOperator DateSequenceOperator { get; set; }
+    public DateTime Date { get; set; }
+    public BookSearchDateSequenceOperator SequenceOperator { get; set; }
     public BookDateSearchSource SearchSource { get; set; }
 
-    public static BookSearchAdditionalDateSequenceQueryParameters From(BookSearchAdditionalDateSequenceQuery query)
+    public static BookSearchDateSequenceAdditionalQueryParameters From(BookSearchDateSequenceAdditionalQuery query)
     {
-        return new BookSearchAdditionalDateSequenceQueryParameters
+        return new BookSearchDateSequenceAdditionalQueryParameters
         {
-            DateToCompare = query.DateToCompare,
+            Date = query.Date,
             SearchSource = query.SearchSource,
-            DateSequenceOperator = query.DateSequenceOperator,
-            ConsecutiveQueryOperator = query.ConsecutiveQueryOperator,
+            SequenceOperator = query.SequenceOperator,
+            QueryOperator = query.QueryOperator,
         };
     }
 }
 
-public class BookSearchAdditionalDateRangeQueryParameters : BookSearchAdditionalQueryParameters
+public class BookSearchDateRangeAdditionalQueryParameters : BookSearchAdditionalQueryParameters
 {
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }
     public BookDateSearchSource SearchSource { get; set; }
 
-    public static BookSearchAdditionalDateRangeQueryParameters From(BookSearchAdditionalDateRangeQuery query)
+    public static BookSearchDateRangeAdditionalQueryParameters From(BookSearchDateRangeAdditionalQuery query)
     {
-        return new BookSearchAdditionalDateRangeQueryParameters
+        return new BookSearchDateRangeAdditionalQueryParameters
         {
             FromDate = query.FromDate,
             ToDate = query.ToDate,
             SearchSource = query.SearchSource,
-            ConsecutiveQueryOperator = query.ConsecutiveQueryOperator,
+            QueryOperator = query.QueryOperator,
         };
     }
 }

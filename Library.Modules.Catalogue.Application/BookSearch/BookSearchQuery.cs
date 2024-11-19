@@ -22,26 +22,26 @@ public class BookSearchMainQuery
 
 public abstract class BookSearchAdditionalQuery
 {
-    public BookSearchConsecutiveQueryOperator ConsecutiveQueryOperator { get; set; }
+    public BookSearchConsecutiveQueryOperator QueryOperator { get; set; }
 }
 
-public class BookSearchAdditionalTextQuery : BookSearchAdditionalQuery
+public class BookSearchTextAdditionalQuery : BookSearchAdditionalQuery
 {
     public string Term { get; set; }
     public BookTextSearchType SearchType { get; set; }
     public BookTextSearchSource SearchSource { get; set; }
 }
 
-public class BookSearchAdditionalDateRangeQuery : BookSearchAdditionalQuery
+public class BookSearchDateRangeAdditionalQuery : BookSearchAdditionalQuery
 {
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }
     public BookDateSearchSource SearchSource { get; set; }
 }
 
-public class BookSearchAdditionalDateSequenceQuery : BookSearchAdditionalQuery
+public class BookSearchDateSequenceAdditionalQuery : BookSearchAdditionalQuery
 {
-    public DateTime DateToCompare { get; set; }
-    public DateSequenceSearchOperator DateSequenceOperator { get; set; }
+    public DateTime Date { get; set; }
+    public BookSearchDateSequenceOperator SequenceOperator { get; set; }
     public BookDateSearchSource SearchSource { get; set; }
 }

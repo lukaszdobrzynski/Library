@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Converters;
 using Serilog;
 using Serilog.Formatting.Compact;
 
@@ -28,7 +27,7 @@ public class Startup
     private static ILogger _logger;
     private readonly IConfiguration _configuration;
     
-    public Startup(IConfiguration configuration, IWebHostEnvironment env)
+    public Startup(IConfiguration configuration)
     {
         _configuration = configuration;
         ConfigureLogger();
@@ -45,7 +44,6 @@ public class Startup
             .AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                options.JsonSerializerOptions.Converters.Add(new BookSearchAdditionalQueryRequestConverter());
             });
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IExecutionContextAccessor, ExecutionContextAccessor>();
