@@ -102,11 +102,9 @@ public class BookSearchTextAdditionalQueryRequest : BookSearchAdditionalQueryReq
 
 public class BookSearchDateRangeAdditionalQueryRequest : BookSearchAdditionalQueryRequest
 {
-    [Required]
-    public DateTime? FromDate { get; set; }
+    public DateTime FromDate { get; set; }
 
-    [Required]
-    public DateTime? ToDate { get; set; }
+    public DateTime ToDate { get; set; }
     
     [Required]
     public BookDateSearchSource? SearchSource { get; set; }
@@ -115,8 +113,8 @@ public class BookSearchDateRangeAdditionalQueryRequest : BookSearchAdditionalQue
     {
         return new BookSearchDateRangeAdditionalQuery
         {
-            FromDate = FromDate.Value,
-            ToDate = ToDate.Value,
+            FromDate = FromDate,
+            ToDate = ToDate,
             SearchSource = SearchSource.Value,
             QueryOperator = QueryOperator.Value,
         };
@@ -125,8 +123,7 @@ public class BookSearchDateRangeAdditionalQueryRequest : BookSearchAdditionalQue
 
 public class BookSearchDateSequenceAdditionalQueryRequest : BookSearchAdditionalQueryRequest
 {
-    [Required]
-    public DateTime? Date { get; set; }
+    public DateTime Date { get; set; }
     
     [Required]
     public BookSearchDateSequenceOperator? SequenceOperator { get; set; }
@@ -138,7 +135,7 @@ public class BookSearchDateSequenceAdditionalQueryRequest : BookSearchAdditional
     {
         return new BookSearchDateSequenceAdditionalQuery
         {
-            Date = Date.Value,
+            Date = Date,
             SearchSource = SearchSource.Value,
             QueryOperator = QueryOperator.Value,
             SequenceOperator = SequenceOperator.Value,
@@ -146,14 +143,12 @@ public class BookSearchDateSequenceAdditionalQueryRequest : BookSearchAdditional
     }
 }
 
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "Type")]
 [JsonDerivedType(typeof(BookSearchTextAdditionalQueryRequest), nameof(BookSearchAdditionalQueryType.Text))]
 [JsonDerivedType(typeof(BookSearchDateRangeAdditionalQueryRequest), nameof(BookSearchAdditionalQueryType.DateRange))]
 [JsonDerivedType(typeof(BookSearchDateSequenceAdditionalQueryRequest), nameof(BookSearchAdditionalQueryType.DateSequence))]
 public class BookSearchAdditionalQueryRequest
 {
-    [Required]
-    public BookSearchAdditionalQueryType Type { get; set; }
-    
     [Required]
     public BookSearchConsecutiveQueryOperator? QueryOperator { get; set; }
 }
