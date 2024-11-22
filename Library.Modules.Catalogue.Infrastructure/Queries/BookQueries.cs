@@ -36,17 +36,15 @@ public class BookQueries : IBookQueries
     private static IAsyncDocumentQuery<BookMultiSearch.Result> GetQueryFromParameters(IAsyncDocumentSession session, BookSearchQueryParameters parameters)
     {
         var query = session.Advanced.AsyncDocumentQuery<BookMultiSearch.Result, BookMultiSearch>();
-        var currentQuery = parameters.MainQuery.IsNegated
-            ? query.WithNotOperator(parameters.MainQuery.SearchSource, parameters.MainQuery.SearchType, parameters.MainQuery.Term)
-            : query.Untransformed(parameters.MainQuery.SearchSource, parameters.MainQuery.SearchType, parameters.MainQuery.Term);
+        var currentQuery = ApplyMainQuery(query, parameters.MainQuery);
 
         foreach (var additionalQuery in parameters.AdditionalQueries)
         {
             currentQuery = additionalQuery switch
             {
-                BookSearchTextAdditionalQueryParameters textQuery => ApplyTextQuery(currentQuery, textQuery),
-                BookSearchDateRangeAdditionalQueryParameters dateRangeQuery => ApplyDateRangeQuery(currentQuery, dateRangeQuery),
-                BookSearchDateSequenceAdditionalQueryParameters dateSequenceQuery => ApplyDateSequenceQuery(currentQuery, dateSequenceQuery),
+                BookSearchTextAdditionalQueryParameters textQuery => ApplyTextAdditionalQuery(currentQuery, textQuery),
+                BookSearchDateRangeAdditionalQueryParameters dateRangeQuery => ApplyDateRangeAdditionalQuery(currentQuery, dateRangeQuery),
+                BookSearchDateSequenceAdditionalQueryParameters dateSequenceQuery => ApplyDateSequenceAdditionalQuery(currentQuery, dateSequenceQuery),
                 _ => throw new ArgumentException($"Unsupported query type: {additionalQuery.GetType().Name}")
             };
         }
@@ -56,8 +54,42 @@ public class BookQueries : IBookQueries
         return currentQuery.Skip(skip)
             .Take(parameters.PageSize);
     }
+
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyMainQuery(
+        IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchMainQueryParameters parameters)
+    {
+        return parameters switch
+        {
+            BookSearchTextMainQueryParameters textQueryParameters => ApplyMainTextQuery(currentQuery, textQueryParameters),
+            BookSearchDateRangeMainQueryParameters dateRangeQueryParameters => ApplyMainDateRangeQuery(currentQuery, dateRangeQueryParameters),
+            BookSearchDateSequenceMainQueryParameters dateSequenceQueryParameters => ApplyMainDateSequenceQuery(currentQuery, dateSequenceQueryParameters),
+            _ => throw new ArgumentException($"Unsupported query type: {parameters.GetType().Name}")
+        };
+    }
     
-    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyTextQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchTextAdditionalQueryParameters textQuery)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyMainTextQuery(IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchTextMainQueryParameters parameters)
+    {
+        return parameters.IsNegated
+            ? query.TextWithNotOperator(parameters.SearchSource, parameters.SearchType, parameters.Term)
+            : query.TextUntransformed(parameters.SearchSource, parameters.SearchType, parameters.Term);
+    }
+
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyMainDateRangeQuery(IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchDateRangeMainQueryParameters parameters)
+    {
+        return parameters.IsNegated
+            ? query.WithNotDateRangeOperator(parameters.SearchSource, parameters.FromDate, parameters.ToDate)
+            : query.WithDateRangeOperator(parameters.SearchSource, parameters.FromDate, parameters.ToDate);
+    }
+
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyMainDateSequenceQuery(IAsyncDocumentQuery<BookMultiSearch.Result> query, BookSearchDateSequenceMainQueryParameters parameters)
+    {
+        return parameters.IsNegated
+            ? query.WithNotDateSequenceOperator(parameters.SearchSource, parameters.SequenceOperator,parameters.Date)
+            : query.WithDateSequenceOperator(parameters.SearchSource, parameters.SequenceOperator,parameters.Date);
+    }
+
+    
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyTextAdditionalQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchTextAdditionalQueryParameters textQuery)
     {
         return textQuery.QueryOperator switch
         {
@@ -73,7 +105,7 @@ public class BookQueries : IBookQueries
         };
     }
     
-    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateRangeQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchDateRangeAdditionalQueryParameters dateQuery)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateRangeAdditionalQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchDateRangeAdditionalQueryParameters dateQuery)
     {
         return dateQuery.QueryOperator switch
         {
@@ -89,7 +121,7 @@ public class BookQueries : IBookQueries
         };
     }
     
-    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateSequenceQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchDateSequenceAdditionalQueryParameters dateQuery)
+    private static IAsyncDocumentQuery<BookMultiSearch.Result> ApplyDateSequenceAdditionalQuery(IAsyncDocumentQuery<BookMultiSearch.Result> currentQuery, BookSearchDateSequenceAdditionalQueryParameters dateQuery)
     {
         return dateQuery.QueryOperator switch
         {

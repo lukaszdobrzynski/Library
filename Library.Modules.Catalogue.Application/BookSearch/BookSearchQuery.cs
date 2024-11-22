@@ -14,10 +14,28 @@ public class BookSearchQuery : IQuery<BookSearchResultDto>
 
 public class BookSearchMainQuery
 {
+    public bool IsNegated { get; set; }
+}
+
+public class BookSearchTextMainQuery : BookSearchMainQuery
+{
     public string Term { get; set; }
     public BookTextSearchType SearchType { get; set; }
     public BookTextSearchSource SearchSource { get; set; }
-    public bool IsNegated { get; set; }
+}
+
+public class BookSearchDateRangeMainQuery : BookSearchMainQuery
+{
+    public DateTime FromDate { get; set; }
+    public DateTime ToDate { get; set; }
+    public BookDateSearchSource SearchSource { get; set; }
+}
+
+public class BookSearchDateSequenceMainQuery : BookSearchMainQuery
+{
+    public DateTime Date { get; set; }
+    public BookSearchDateSequenceOperator SequenceOperator { get; set; }
+    public BookDateSearchSource SearchSource { get; set; }
 }
 
 public abstract class BookSearchAdditionalQuery

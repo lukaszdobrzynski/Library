@@ -41,18 +41,72 @@ public class BookSearchQueryParameters
 
 public class BookSearchMainQueryParameters
 {
-    public string Term { get; set; }
-    public BookTextSearchType SearchType { get; set; }
-    public BookTextSearchSource SearchSource { get; set; }
     public bool IsNegated { get; set; }
 
     public static BookSearchMainQueryParameters From(BookSearchMainQuery query)
     {
-        return new BookSearchMainQueryParameters
+        BookSearchMainQueryParameters parameters = query switch
+        {
+            BookSearchTextMainQuery textQuery => BookSearchTextMainQueryParameters.From(textQuery),
+            BookSearchDateRangeMainQuery dateRangeQuery => BookSearchDateRangeMainQueryParameters.From(dateRangeQuery),
+            BookSearchDateSequenceMainQuery dateSequenceQuery => BookSearchDateSequenceMainQueryParameters.From(
+                dateSequenceQuery),
+            _ => throw new ArgumentException($"Unsupported query type: {query.GetType().Name}")
+        };
+        
+        return parameters;
+    }
+}
+
+public class BookSearchTextMainQueryParameters : BookSearchMainQueryParameters
+{
+    public string Term { get; set; }
+    public BookTextSearchType SearchType { get; set; }
+    public BookTextSearchSource SearchSource { get; set; }
+
+    public static BookSearchTextMainQueryParameters From(BookSearchTextMainQuery query)
+    {
+        return new BookSearchTextMainQueryParameters
         {
             Term = query.Term,
             SearchSource = query.SearchSource,
             SearchType = query.SearchType,
+            IsNegated = query.IsNegated
+        };
+    }
+}
+
+public class BookSearchDateRangeMainQueryParameters : BookSearchMainQueryParameters
+{
+    public DateTime FromDate { get; set; }
+    public DateTime ToDate { get; set; }
+    public BookDateSearchSource SearchSource { get; set; }
+    
+    public static BookSearchDateRangeMainQueryParameters From(BookSearchDateRangeMainQuery query)
+    {
+        return new BookSearchDateRangeMainQueryParameters
+        {
+            FromDate = query.FromDate,
+            ToDate = query.ToDate,
+            SearchSource = query.SearchSource,
+            IsNegated = query.IsNegated
+        };
+    }
+}
+
+public class BookSearchDateSequenceMainQueryParameters : BookSearchMainQueryParameters
+{
+    public DateTime Date { get; set; }
+    public BookSearchDateSequenceOperator SequenceOperator { get; set; }
+    public BookDateSearchSource SearchSource { get; set; }
+
+    public static BookSearchDateSequenceMainQueryParameters From(BookSearchDateSequenceMainQuery query)
+    {
+        return new BookSearchDateSequenceMainQueryParameters
+        {
+            Date = query.Date,
+            SequenceOperator = query.SequenceOperator,
+            SearchSource = query.SearchSource,
             IsNegated = query.IsNegated
         };
     }

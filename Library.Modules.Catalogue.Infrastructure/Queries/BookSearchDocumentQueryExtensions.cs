@@ -6,7 +6,7 @@ namespace Library.Modules.Catalogue.Infrastructure.Queries;
 
 public static class BookSearchDocumentQueryExtensions
 {
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> Untransformed(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> TextUntransformed(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
         var q = BookTextSearchQueryBuilder.Init(query, term)
             .Build(searchSource, searchType);
@@ -14,11 +14,51 @@ public static class BookSearchDocumentQueryExtensions
         return q;
     }
     
-    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> TextWithNotOperator(this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookTextSearchSource searchSource, BookTextSearchType searchType, string term)
     {
         var q = BookTextSearchQueryBuilder.Init(query.Not, term)
             .Build(searchSource, searchType);
 
+        return q;
+    }
+
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithDateRangeOperator(
+        this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateTime startDate,
+        DateTime endDate)
+    {
+        var q = BookDateSearchQueryBuilder.Init(query)
+            .BuildRangeQuery(searchSource, startDate, endDate);
+        
+        return q;
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithNotDateRangeOperator(
+        this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource, DateTime startDate,
+        DateTime endDate)
+    {
+        var q = BookDateSearchQueryBuilder.Init(query.Not)
+            .BuildRangeQuery(searchSource, startDate, endDate);
+        
+        return q;
+    }
+
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithDateSequenceOperator(
+        this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource,
+        BookSearchDateSequenceOperator sequenceOperator, DateTime date)
+    {
+        var q = BookDateSearchQueryBuilder.Init(query)
+            .BuildSequenceQuery(searchSource, sequenceOperator, date);
+        
+        return q;
+    }
+    
+    public static IAsyncDocumentQuery<BookMultiSearch.Result> WithNotDateSequenceOperator(
+        this IAsyncDocumentQuery<BookMultiSearch.Result> query, BookDateSearchSource searchSource,
+        BookSearchDateSequenceOperator sequenceOperator, DateTime date)
+    {
+        var q = BookDateSearchQueryBuilder.Init(query.Not)
+            .BuildSequenceQuery(searchSource, sequenceOperator, date);
+        
         return q;
     }
     

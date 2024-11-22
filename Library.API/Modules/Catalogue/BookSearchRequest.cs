@@ -20,7 +20,7 @@ public class BookSearchRequest
 
     public BookSearchQuery ToSearchBooksQuery()
     {
-        var mainQuery = MainQuery.ToSearchBooksMainQuery();
+        var mainQuery = MainQuery.MapMainQueryRequestToMainQuery();
         var additionalQueries = AdditionalQueries
             .Select(MapAdditionalQueryRequestToAdditionalQuery)
             .ToList();
@@ -52,7 +52,32 @@ public class BookSearchRequest
     }
 }
 
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "Type")]
+[JsonDerivedType(typeof(BookSearchTextMainQueryRequest), nameof(BookSearchMainQueryType.Text))]
+[JsonDerivedType(typeof(BookSearchDateRangeMainQueryRequest), nameof(BookSearchMainQueryType.DateRange))]
+[JsonDerivedType(typeof(BookSearchDateSequenceMainQueryRequest), nameof(BookSearchMainQueryType.DateSequence))]
 public class BookSearchMainQueryRequest
+{
+    public bool IsNegated { get; set; }
+    
+    public BookSearchMainQuery MapMainQueryRequestToMainQuery()
+    {
+        BookSearchMainQuery mainQuery = this switch
+        {
+            BookSearchTextMainQueryRequest textRequest =>
+                textRequest.ToBookSearchTextMainQuery(),
+            BookSearchDateRangeMainQueryRequest dateRangeRequest =>
+                dateRangeRequest.ToBookSearchDateRangeMainQuery(),
+            BookSearchDateSequenceMainQueryRequest dateSequenceRequest =>
+                dateSequenceRequest.ToBookSearchDateSequenceMainQuery(),
+            _ => throw new ArgumentException($"Unsupported query type: {GetType().Name}")
+        };
+        
+        return mainQuery;
+    }
+}
+
+public class BookSearchTextMainQueryRequest : BookSearchMainQueryRequest
 {
     [Required]
     public string Term { get; set; }
@@ -63,15 +88,56 @@ public class BookSearchMainQueryRequest
     [Required]
     public BookTextSearchSource? SearchSource { get; set; }
 
-    public bool IsNegated { get; set; }
-
-    public BookSearchMainQuery ToSearchBooksMainQuery()
+    public BookSearchTextMainQuery ToBookSearchTextMainQuery()
     {
-        return new BookSearchMainQuery
+        return new BookSearchTextMainQuery
         {
             Term = Term,
-            SearchSource = SearchSource.Value,
             SearchType = SearchType.Value,
+            SearchSource = SearchSource.Value,
+            IsNegated = IsNegated
+        };
+    }
+}
+
+public class BookSearchDateRangeMainQueryRequest : BookSearchMainQueryRequest
+{
+    public DateTime FromDate { get; set; }
+
+    public DateTime ToDate { get; set; }
+    
+    [Required]
+    public BookDateSearchSource? SearchSource { get; set; }
+
+    public BookSearchDateRangeMainQuery ToBookSearchDateRangeMainQuery()
+    {
+        return new BookSearchDateRangeMainQuery
+        {
+            FromDate = FromDate,
+            ToDate = ToDate,
+            SearchSource = SearchSource.Value,
+            IsNegated = IsNegated
+        };
+    }
+}
+
+public class BookSearchDateSequenceMainQueryRequest : BookSearchMainQueryRequest
+{
+    public DateTime Date { get; set; }
+    
+    [Required]
+    public BookSearchDateSequenceOperator? SequenceOperator { get; set; }
+    
+    [Required]
+    public BookDateSearchSource? SearchSource { get; set; }
+
+    public BookSearchDateSequenceMainQuery ToBookSearchDateSequenceMainQuery()
+    {
+        return new BookSearchDateSequenceMainQuery
+        {
+            Date = Date,
+            SequenceOperator = SequenceOperator.Value,
+            SearchSource = SearchSource.Value,
             IsNegated = IsNegated
         };
     }
