@@ -10,6 +10,7 @@ namespace Library.API.Modules.Catalogue;
 public class BookSearchRequest
 {
     [Required]
+    [ValidatePolymorphicMainQuery]
     public BookSearchMainQueryRequest MainQuery { get; set; }
 
     [Required]
@@ -79,13 +80,10 @@ public class BookSearchMainQueryRequest
 
 public class BookSearchTextMainQueryRequest : BookSearchMainQueryRequest
 {
-    [Required]
     public string Term { get; set; }
     
-    [Required]
     public BookTextSearchType? SearchType { get; set; }
 
-    [Required]
     public BookTextSearchSource? SearchSource { get; set; }
 
     public BookSearchTextMainQuery ToBookSearchTextMainQuery()
@@ -106,7 +104,6 @@ public class BookSearchDateRangeMainQueryRequest : BookSearchMainQueryRequest
 
     public DateTime ToDate { get; set; }
     
-    [Required]
     public BookDateSearchSource? SearchSource { get; set; }
 
     public BookSearchDateRangeMainQuery ToBookSearchDateRangeMainQuery()
@@ -125,10 +122,8 @@ public class BookSearchDateSequenceMainQueryRequest : BookSearchMainQueryRequest
 {
     public DateTime Date { get; set; }
     
-    [Required]
     public BookSearchDateSequenceOperator? SequenceOperator { get; set; }
     
-    [Required]
     public BookDateSearchSource? SearchSource { get; set; }
 
     public BookSearchDateSequenceMainQuery ToBookSearchDateSequenceMainQuery()
@@ -145,13 +140,10 @@ public class BookSearchDateSequenceMainQueryRequest : BookSearchMainQueryRequest
 
 public class BookSearchTextAdditionalQueryRequest : BookSearchAdditionalQueryRequest
 {
-    [Required]
     public string Term { get; set; }
     
-    [Required]
     public BookTextSearchType? SearchType { get; set; }
 
-    [Required]
     public BookTextSearchSource? SearchSource { get; set; }
 
     public BookSearchTextAdditionalQuery ToSearchBooksAdditionalTextQuery()
@@ -172,7 +164,6 @@ public class BookSearchDateRangeAdditionalQueryRequest : BookSearchAdditionalQue
 
     public DateTime ToDate { get; set; }
     
-    [Required]
     public BookDateSearchSource? SearchSource { get; set; }
    
     public BookSearchDateRangeAdditionalQuery ToSearchBooksAdditionalDateRangeQuery()
@@ -191,10 +182,8 @@ public class BookSearchDateSequenceAdditionalQueryRequest : BookSearchAdditional
 {
     public DateTime Date { get; set; }
     
-    [Required]
     public BookSearchDateSequenceOperator? SequenceOperator { get; set; }
     
-    [Required]
     public BookDateSearchSource? SearchSource { get; set; }
 
     public BookSearchDateSequenceAdditionalQuery ToSearchBooksAdditionalDateSequenceQuery()
@@ -213,6 +202,7 @@ public class BookSearchDateSequenceAdditionalQueryRequest : BookSearchAdditional
 [JsonDerivedType(typeof(BookSearchTextAdditionalQueryRequest), nameof(BookSearchAdditionalQueryType.Text))]
 [JsonDerivedType(typeof(BookSearchDateRangeAdditionalQueryRequest), nameof(BookSearchAdditionalQueryType.DateRange))]
 [JsonDerivedType(typeof(BookSearchDateSequenceAdditionalQueryRequest), nameof(BookSearchAdditionalQueryType.DateSequence))]
+[ValidatePolymorphicAdditionalQuery]
 public class BookSearchAdditionalQueryRequest
 {
     [Required]
