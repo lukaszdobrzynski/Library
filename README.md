@@ -129,9 +129,13 @@ To avoid race conditions and ensure data consistency in a concurrent environment
 
 When implementing a reservation archetype in a software system, using message passing as a communication mechanism introduces specific trade-offs. One notable drawback is the potential for increased latency, as reservation requests are routed through additional processes or intermediaries, such as message brokers or intermediate services, rather than being handled directly within a single system component. This trade-off, however, is a deliberate architectural decision made during *The Library*'s design phase to prioritize modularity and the independence of domain models.  
 
-## Multi Search
+## Search Engine
 
+*The Library*'s catalogue contains 444,760 books, all migrated into the database using a specialized process optimized for bulk loading. This approach ensures that the entire write operation completes in under one minute as part of the cluster setup.
 
+The key feature of a search engine is quick and efficient retrieval of data. This is achieved through an index that organizes data structures for fast lookups regardless of dataset size. *The Library*'s search engine, powered by a static index deployed on a RavenDB database, responds to queries in under 200ms on a local machine. This ensures seamless access to the extensive catalogue, allowing users to search comprehensively and without delays.
+
+To enhance accessibility, The Library's search engine exposes a flexible search API, offering multiple search options for client applications. The API supports querying by individual text fields such as title, author, publishing house, or ISBN, as well as combined searches across these properties indexed together. Additionally, the API enables date queries, including date range and sequence queries. All query types can be integrated with other queries using logical operators, allowing users to build complex search expressions. This flexibility enables tailored queries, accommodates diverse use cases, and ensures an intuitive search experience.   
 
 ## Setup and Run
 
