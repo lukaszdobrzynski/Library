@@ -43,7 +43,7 @@ public class BookTextSearchQueryBuilder
                 _query.WhereEquals(nameof(BookMultiSearch.Result.ExactQuery),_term);
                 return _query;
             case BookTextSearchType.AnyTerm:
-                _query.Search(x => x.AnywhereQuery, _term);
+                _query.Search(x => x.AnyTermQuery, $"{_term}");
                 return _query;
             case BookTextSearchType.BeginsWith:
                 _query.WhereStartsWith(nameof(BookMultiSearch.Result.ExactQuery), _term);

@@ -15,7 +15,7 @@ public class BookMultiSearch : AbstractIndexCreationTask<Book, BookMultiSearch.R
         public string AuthorQuery { get; set; }
         public string TitleQuery { get; set; }
         public string PublishingHouseQuery { get; set; }
-        public string AnywhereQuery { get; set; }
+        public string AnyTermQuery { get; set; }
         public string ExactQuery { get; set; }
     }
 
@@ -42,11 +42,11 @@ public class BookMultiSearch : AbstractIndexCreationTask<Book, BookMultiSearch.R
                 AuthorQuery = book.Author,
                 TitleQuery = book.Title,
                 PublishingHouseQuery = book.PublishingHouse,
-                AnywhereQuery = queryData,
+                AnyTermQuery = queryData,
                 ExactQuery = queryData 
             };
         
-        Index(x => x.AnywhereQuery, FieldIndexing.Search);
+        Index(x => x.AnyTermQuery, FieldIndexing.Search);
         Index(x => x.AuthorQuery, FieldIndexing.Search);
         Index(x => x.TitleQuery, FieldIndexing.Search);
         Index(x => x.PublishingHouseQuery, FieldIndexing.Search);
