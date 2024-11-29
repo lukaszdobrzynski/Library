@@ -19,7 +19,7 @@ public class RequestHoldCommandHandler : InternalCommandHandler<RequestHoldComma
     
     protected override async Task HandleConcreteCommand(RequestHoldCommand command)
     {
-        using (var session = _documentStoreHolder.OpenAsyncSession())
+        using (var session = _documentStoreHolder.OpenAsyncSessionWithOptimisticConcurrencyControl())
         {
             var book = await session.LoadAsync<Book>(command.BookId.ToString());
 

@@ -107,6 +107,13 @@ public class DocumentStoreHolder : IDocumentStoreHolder
         return _documentStore.OpenAsyncSession();
     }
 
+    public IAsyncDocumentSession OpenAsyncSessionWithOptimisticConcurrencyControl()
+    {
+        var session = _documentStore.OpenAsyncSession();
+        session.Advanced.UseOptimisticConcurrency = true;
+        return session;
+    }
+
     public SubscriptionWorker<T> GetSubscriptionWorker<T>(SubscriptionWorkerOptions options) where T : class
     {
         return _documentStore.Subscriptions.GetSubscriptionWorker<T>(options);
