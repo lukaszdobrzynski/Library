@@ -125,7 +125,7 @@ To avoid race conditions and ensure data consistency in a concurrent environment
 - built-in support for leader election among multiple clients
 - processing without duplication or loss
 - batch size configuration to adjust throughput
-- concurrent processing with multiple workers and a document lock applied
+- concurrent processing with multiple workers
 
 When implementing a reservation archetype in a software system, using message passing as a communication mechanism introduces specific trade-offs. One notable drawback is the potential for increased latency, as reservation requests are routed through additional processes or intermediaries, such as message brokers or intermediate services, rather than being handled directly within a single system component. This trade-off, however, is a deliberate architectural decision made during *The Library*'s design phase to prioritize modularity and the independence of domain models.  
 
@@ -135,7 +135,7 @@ When implementing a reservation archetype in a software system, using message pa
 
 The key feature of a search engine is quick and efficient retrieval of data. This is achieved through an index that organizes data structures for fast lookups regardless of dataset size. *The Library*'s search engine, powered by a static index deployed on a RavenDB database, responds to queries in under 200ms on a local machine. This ensures seamless access to the extensive catalogue, allowing users to search comprehensively and without delays.
 
-To enhance accessibility, The Library's search engine exposes a flexible search API, offering multiple search options for client applications. The API supports querying by individual text fields such as title, author, publishing house, or ISBN, as well as combined searches across these properties indexed together. Additionally, the API enables date queries, including date range and sequence queries. All query types can be integrated with other queries using logical operators, allowing users to build complex search expressions. This flexibility enables tailored queries, accommodates diverse use cases, and ensures an intuitive search experience.   
+To enhance accessibility, The Library's search engine exposes a flexible search API, offering multiple search options for client applications. The API supports querying by individual text fields such as title, author, publishing house, or ISBN, as well as combined searches across these properties indexed together. Additionally, the API enables date queries, including date range and sequence queries. All query types can be integrated with other queries using logical operators, allowing users to build complex search expressions. This flexibility enables tailored queries, accommodates diverse use cases, and aims to ensure an intuitive search experience.   
 
 ## Setup and Run
 
@@ -143,5 +143,5 @@ To enhance accessibility, The Library's search engine exposes a flexible search 
 - install Docker
 - checkout [Patroni](https://github.com/patroni/patroni) repository and adjust docker-compose build context in `Library.Database.Migrator.Psql` project
 - edit the local DNS mappings file (System32\drivers\etc\hosts on a Windows machine) and add `library-one`, `library-two` and `library-three` domain names to point to the loopback IP address (127.0.0.1)
-- navigate to Database directory and run `dbup.ps1` script
-- set the startup item in your IDE to `Library.API` project (not IIS Express) and run the selected configuration
+- navigate to Database directory, run `dbup.ps1` script and wait for database migrations to complete
+- set the startup item in your IDE to `Library.API` project (not IIS Express), run the selected configuration and wait for indexes to run to completion
