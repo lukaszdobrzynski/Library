@@ -23,14 +23,18 @@ public class InboxMessagesSubscriptionProcessor : ISubscriptionProcessor
         var subscriptionWorkerOptions = new SubscriptionWorkerOptions(SubscriptionName)
         {
             MaxDocsPerBatch = BatchSize,
-            Strategy = SubscriptionOpeningStrategy.TakeOver
+            Strategy = SubscriptionOpeningStrategy.Concurrent
         };
         
-        var subscription = _documentStoreHolder.GetSubscriptionWorker<InboxMessage>(
+        var subscriptionOne = _documentStoreHolder.GetSubscriptionWorker<InboxMessage>(
+            subscriptionWorkerOptions);
+        var subscriptionTwo = _documentStoreHolder.GetSubscriptionWorker<InboxMessage>(
             subscriptionWorkerOptions);
         
-        var subscriptionTask = subscription.Run(ProcessInboxMessageBatch);
-        await subscriptionTask;
+        var subscriptionTaskOne = subscriptionOne.Run(ProcessInboxMessageBatch);
+        var subscriptionTaskTwo = subscriptionTwo.Run(ProcessInboxMessageBatch);
+        
+        await Task.WhenAll(subscriptionTaskOne, subscriptionTaskTwo);
     }
 
     private async Task ProcessInboxMessageBatch(SubscriptionBatch<InboxMessage> batch)

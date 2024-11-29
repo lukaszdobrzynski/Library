@@ -23,14 +23,18 @@ internal class InternalCommandsSubscriptionProcessor : ISubscriptionProcessor
         var subscriptionWorkerOptions = new SubscriptionWorkerOptions(SubscriptionName)
         {
             MaxDocsPerBatch = BatchSize,
-            Strategy = SubscriptionOpeningStrategy.TakeOver
+            Strategy = SubscriptionOpeningStrategy.Concurrent
         };
         
-        var subscription = _documentStoreHolder.GetSubscriptionWorker<InternalCommandBase>(
+        var subscriptionWorkerOne = _documentStoreHolder.GetSubscriptionWorker<InternalCommandBase>(
+            subscriptionWorkerOptions);
+        var subscriptionWorkerTwo = _documentStoreHolder.GetSubscriptionWorker<InternalCommandBase>(
             subscriptionWorkerOptions);
         
-        var subscriptionTask = subscription.Run(ProcessInternalCommandBatch);
-        await subscriptionTask;
+        var subscriptionTaskOne = subscriptionWorkerOne.Run(ProcessInternalCommandBatch);
+        var subscriptionTaskTwo = subscriptionWorkerTwo.Run(ProcessInternalCommandBatch);
+        
+        await Task.WhenAll(subscriptionTaskOne, subscriptionTaskTwo);
     }
     
     private async Task ProcessInternalCommandBatch(SubscriptionBatch<InternalCommandBase> batch)
